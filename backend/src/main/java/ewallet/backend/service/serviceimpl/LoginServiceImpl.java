@@ -68,16 +68,49 @@ public class LoginServiceImpl implements LoginService
     @Override
     public ResponseEntity<Map<String, Object>> authenticate(LoginModel body) 
     {
-        authenticationManager.authenticate
-        (
-            new UsernamePasswordAuthenticationToken(
-                body.getUsername(), 
-                body.getPassword())
-        );
-        user = TBL_USER_MSTDao.findByUsername(body.getUsername());
+        if(body == null)
+        {
+            response.put("message", "Input your credentials");
+            return ResponseEntity.status(401).body(response);
+        }
 
-        var jwt = jwtService.generateToken(user);
-        response.put("message", jwt);
+        if(body.getUsername() == null)
+        {
+            response.put("message", "Input your username");
+            return ResponseEntity.status(401).body(response);
+        }
+
+        if(body.getPassword() == null)
+        {
+            response.put("message", "Input your password");
+            return ResponseEntity.status(401).body(response);
+        }
+
+        user = TBL_USER_MSTDao.findByUsername(body.getUsername());
+        
+        if(user == null)
+        {
+            response.put("message", "User not found");
+            return ResponseEntity.status(404).body(response);
+        }
+        
+        if(bCryptPasswordEncoder.matches(body.getPassword(), user.getPassword()))
+        {
+            authenticationManager.authenticate
+            (
+                new UsernamePasswordAuthenticationToken(
+                    body.getUsername(), 
+                    body.getPassword())
+            );
+            var jwt = jwtService.generateToken(user);
+            response.put("message", jwt);
+        }
+        else 
+        {
+            response.put("message", "Incorrect Password");
+            return ResponseEntity.status(401).body(response);
+        }
+
         return ResponseEntity.ok(response);
     }
     

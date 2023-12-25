@@ -45,13 +45,6 @@ public class SecurityConfiguration
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-            // .logout()
-            //     .logoutUrl("/api/v1/logout") // Define your logout URL
-            //     .logoutSuccessUrl("/api/v1/authenticate") // Redirect after successful logout
-            //     .invalidateHttpSession(true) // Invalidate HTTP session
-            //     .deleteCookies("JSESSIONID", "jwtToken") // Remove cookies if any
-            //     .clearAuthentication(true) // Clear authentication
-            //     .permitAll(); // Allow anyone to access logout URL;
 
         return httpSecurity.build();
     }

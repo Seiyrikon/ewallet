@@ -1,0 +1,17 @@
+@media screen and (max-width: 425px) {
+  .dashboard {
+    margin: 20px;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-nav {
+    order: 1;
+  }
+
+  .main-content {
+    flex: 1 0 0%;
+  }
+}
