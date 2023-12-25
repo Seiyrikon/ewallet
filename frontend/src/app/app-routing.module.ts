@@ -6,6 +6,8 @@ import { GuardService } from './service/guard/guard.service';
 import { Error404Component } from './component/error404/error404.component';
 import { WalletComponent } from './component/dashboard/wallet/wallet.component';
 import { MainContentComponent } from './component/dashboard/main-content/main-content.component';
+import { ProfileComponent } from './component/dashboard/profile/profile.component';
+import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -15,10 +17,12 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [GuardService],
     children: [
-      { path: '', redirectTo: 'main-content', pathMatch: 'full' }, // Redirect to 'main-content' by default
-      { path: 'main-content', component: MainContentComponent, outlet: 'dashboardOutlet' },
-      { path: 'wallet', component: WalletComponent, outlet: 'dashboardOutlet' },
-      { path: '**', redirectTo: 'main-content', pathMatch: 'full' },
+      { path: '', redirectTo: 'main-content', pathMatch: 'full', outlet: 'dashboardOutlet' }, // Redirect to 'main-content' by default
+      { path: 'main-content', component: MainContentComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
+      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
+      { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
+      { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
+      { path: '**', redirectTo: '/404', pathMatch: 'full' },
     ],
   },
   { path: '404', component: Error404Component },

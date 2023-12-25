@@ -18,6 +18,8 @@ import { Error404Component } from './component/error404/error404.component';
 import { TopNavComponent } from './component/dashboard/top-nav/top-nav.component';
 import { MainContentComponent } from './component/dashboard/main-content/main-content.component';
 import { WalletComponent } from './component/dashboard/wallet/wallet.component';
+import { ProfileComponent } from './component/dashboard/profile/profile.component';
+import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { WalletComponent } from './component/dashboard/wallet/wallet.component';
     Error404Component,
     TopNavComponent,
     MainContentComponent,
-    WalletComponent
+    WalletComponent,
+    ProfileComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,

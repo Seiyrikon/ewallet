@@ -1,10 +1,12 @@
 @media screen and (max-width: 425px) {
   .dashboard {
+    border: 1px solid black;
     margin: 20px;
     padding: 20px;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
   }
 
   .top-nav {
@@ -12,6 +14,7 @@
   }
 
   .main-content {
+    border: 1px solid black;
     flex: 1 0 0%;
   }
 }
