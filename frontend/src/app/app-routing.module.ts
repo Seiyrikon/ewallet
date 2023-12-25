@@ -17,11 +17,11 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [GuardService],
     children: [
-      { path: '', redirectTo: 'main-content', pathMatch: 'full', outlet: 'dashboardOutlet' }, // Redirect to 'main-content' by default
-      { path: 'main-content', component: MainContentComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
-      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
-      { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
-      { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'dashboardOutlet' },
+      { path: '', redirectTo: 'home', pathMatch: 'full', outlet: 'contentOutlet' }, // Redirect to 'main-content' by default
+      { path: 'home', component: MainContentComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: '**', redirectTo: '/404', pathMatch: 'full' },
     ],
   },

@@ -1,6 +1,6 @@
 <nav class="top-nav-container">
-  <a [routerLink]="['/dashboard', { outlets: { dashboardOutlet: ['main-content'] } }]">Home</a>
-  <a [routerLink]="['/dashboard', { outlets: { dashboardOutlet: ['wallet'] } }]">Wallets</a>
-  <a [routerLink]="['/dashboard', { outlets: { dashboardOutlet: ['profile'] } }]">Profile</a>
-  <a [routerLink]="['/dashboard', { outlets: { dashboardOutlet: ['transaction'] } }]">Transactions</a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]">Home</a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]">Wallets</a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]">Profile</a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]">Transactions</a>
 </nav>

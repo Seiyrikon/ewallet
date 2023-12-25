@@ -1,6 +1,5 @@
 @media screen and (max-width: 425px) {
   .dashboard {
-    border: 1px solid black;
     margin: 20px;
     padding: 20px;
     height: 100vh;
@@ -13,8 +12,7 @@
     order: 1;
   }
 
-  .main-content {
-    border: 1px solid black;
+  .current-content {
     flex: 1 0 0%;
   }
 }
