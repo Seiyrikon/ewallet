@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_wallet_mstDao">
+
+    <!-- getAllWallet --> 
+    <select id="getAllWallet">
+        SELECT 
+            wallet_id, user_id, wallet_name, wallet_desc, del_flag, created_at, updated_at
+        FROM 
+            tbl_wallet_mst
+        WHERE
+            del_flag = 0
+    </select>
+    
+    <!-- getAllUserWallet --> 
+
+    <select id="getAllUserWallet" parameterType="long">
+        SELECT 
+            wallet_id, user_id, wallet_name, wallet_desc, del_flag, created_at, updated_at
+        FROM 
+            tbl_wallet_mst
+        WHERE
+            user_id = #{userId} AND del_flag = 0
+    </select>     
+
+    <!-- inserWallet --> 
+    <insert id="insertWallet" parameterType="ewallet.backend.model.tbl_wallet_mst">
+        INSERT INTO 
+            tbl_wallet_mst
+            (user_id, wallet_name, wallet_desc)
+            VALUES
+            (#{user_id}, #{wallet_name}, #{wallet_desc})
+        </insert>
+
+
+    <!-- getWalletById --> 
+
+    <select id="getWalletById" parameterType="long" resultType="ewallet.backend.model.tbl_wallet_mst">
+        SELECT 
+            wallet_id, user_id, wallet_name, wallet_desc, del_flag, created_at, updated_at
+        FROM
+            tbl_wallet_mst
+        WHERE
+            user_id = #{userId} AND wallet_id = #{walletId} AND del_flag = 0
+    </select>
+</mapper>

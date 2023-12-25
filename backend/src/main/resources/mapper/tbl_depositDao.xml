@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_depositDao">
+
+    <!-- getAllDeposit --> 
+
+    <select id="getAllDepositPerWallet" resultType="ewallet.backend.model.tbl_deposit">
+        SELECT
+            deposit_id, user_id, wallet_id, amount, deposit_desc, del_flag, created_at, updated_at
+        FROM
+            tbl_deposit
+        WHERE
+            user_id = #{userId} AND wallet_id = #{walletId} AND del_flag = 0
+    </select>
+
+    <!-- insertDeposit --> 
+
+    <insert id="insertDeposit" parameterType="ewallet.backend.model.tbl_deposit">
+        INSERT INTO
+            tbl_deposit
+            (user_id, wallet_id, amount, deposit_desc)
+        VALUES
+            (#{user_id}, #{wallet_id}, #{amount}, #{deposit_desc})
+    </insert>
+
+    <!-- getTotalDeposit --> 
+
+    <select id="getTotalDepositPerWallet" resultType="double">
+        SELECT SUM(amount) 
+            AS total_deposit 
+        FROM 
+            tbl_deposit 
+        WHERE 
+            wallet_id = #{walletId} AND user_id = #{userId} AND del_flag = 0
+    </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_personal_info_mstDao">
+
+        <!-- Login -->
+    <select id="getUserPersonalInfo" parameterType="java.lang.Long" resultType="ewallet.backend.model.tbl_personal_info_mst">
+        SELECT 
+            pi_id AS piId, 
+            user_id AS userId, 
+            first_name AS firstName, 
+            middle_name AS middleName, 
+            last_name AS lastName,
+            del_flag AS del_flag, 
+            created_at AS created_at, 
+            updated_at AS updated_at
+        FROM 
+            tbl_personal_info_mst
+        WHERE 
+            user_id = #{userId} AND del_flag = 0
+    </select>
+
+    <!-- insert --> 
+
+    <insert id="insertPersonalInfo" parameterType="ewallet.backend.model.tbl_personal_info_mst">
+        INSERT INTO
+            tbl_personal_info_mst
+            (user_id, first_name, middle_name, last_name)
+        VALUES
+            (#{userId}, #{body.firstName}, #{body.middleName}, #{body.lastName})
+    </insert>
+</mapper>

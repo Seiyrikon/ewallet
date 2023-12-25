@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.PrincipalDao">
+
+    <!-- getPrincipal --> 
+
+    <select id="getPrincipal" parameterType="java.lang.Long">
+        SELECT 
+            account.username AS username, 
+            account.role AS role, 
+            pi.first_name AS firstName, 
+            pi.middle_name AS middleName, 
+            pi.last_name AS lastName,
+            account.del_flag AS del_flag, 
+            account.created_at AS created_at, 
+            account.updated_at AS updated_at
+        FROM 
+            tbl_user_mst AS account
+        INNER JOIN 
+            tbl_personal_info_mst AS pi
+            ON account.user_id = pi.user_id
+        WHERE account.user_id = #{userId}
+            AND account.del_flag = 0
+    </select>
+</mapper>

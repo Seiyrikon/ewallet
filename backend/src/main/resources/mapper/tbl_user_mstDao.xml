@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_user_mstDao">
+
+        <!-- Login -->
+        <select id="getUserAccount" parameterType="long" resultType="ewallet.backend.model.tbl_user_mst">
+                SELECT 
+                        user_id, username, password, role, del_flag, created_at, updated_at
+                FROM 
+                        tbl_user_mst
+                WHERE 
+                        user_id = #{userId} AND del_flag = 0
+        </select>
+
+        <!-- insert --> 
+        <insert id="insertUser" parameterType="ewallet.backend.model.tbl_user_mst">
+                INSERT INTO 
+                        tbl_user_mst
+                        (username, password, role)
+                VALUES
+                        (#{username}, #{password}, #{role})
+        </insert>
+
+        <!-- findByUsername --> 
+
+        <select id="findByUsername" resultType="ewallet.backend.model.tbl_user_mst" parameterType="java.lang.String">
+                SELECT
+                        user_id AS userId, 
+                        username AS username, 
+                        password AS password, 
+                        role AS role, 
+                        del_flag AS del_flag, 
+                        created_at AS created_at, 
+                        updated_at AS updated_at
+                FROM 
+                        tbl_user_mst
+                WHERE
+                        username = #{username} AND del_flag = 0
+        </select>
+
+        <!-- used for authentication -->
+        <select id="loadByUsername" resultType="ewallet.backend.model.tbl_user_mst" parameterType="java.lang.String">
+                SELECT
+                        user_id AS userId, 
+                        username AS username, 
+                        password AS password, 
+                        role AS role,
+                        del_flag AS del_flag, 
+                        created_at AS created_at, 
+                        updated_at AS updated_at
+                FROM 
+                        tbl_user_mst
+                WHERE
+                        username = #{username} AND del_flag = 0
+        </select>
+
+        <!-- updateUser --> 
+
+        <update id="updateUser">
+                UPDATE 
+                        tbl_user_mst
+                SET
+                        username = #{body.username},
+                        password = #{body.password},
+                        del_flag = 0
+        </update>
+</mapper>

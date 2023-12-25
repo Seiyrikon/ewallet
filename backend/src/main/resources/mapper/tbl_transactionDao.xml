@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_transactionDao">
+
+    <!-- getAllTransactionPerWallet --> 
+
+    <select id="getAllTransactionPerWallet" parameterType="long" resultType="ewallet.backend.model.tbl_transaction">
+        SELECT 
+            transaction_id, user_id, wallet_id, transaction_type, transaction_amount, transaction_desc, del_flag, created_at, updated_at
+        FROM 
+            tbl_transaction
+        WHERE
+            user_id = #{userId} AND wallet_id = #{walletId} AND del_flag = 0
+    </select>
+
+    <!-- insertTransaction --> 
+
+    <insert id="insertTransaction" parameterType="ewallet.backend.model.tbl_transaction">
+        INSERT INTO
+            tbl_transaction
+            (user_id, wallet_id, transaction_type, transaction_amount, transaction_desc)
+        VALUES
+            (#{user_id}, #{wallet_id}, #{transaction_type}, #{transaction_amount}, #{transaction_desc})
+    </insert>
+
+</mapper>
