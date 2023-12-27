@@ -1,39 +1,41 @@
-<div class="login-form-container">
-  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-
-    <div class="container">
-      <div class="container-header">
-        <h1 class="title">
-          Login
-        </h1>
-      </div>
-
-      <div class="container-body">
-        <!-- <div class="label-container">
-          <label for="username">Username </label>
-        </div> -->
-        <div class="input-container">
-          <input id="username" type="text" formControlName="username" placeholder="Username">
-        </div>
-
-        <div>
-          <!-- <div class="label-container">
-            <label for="password">Password </label>
-          </div> -->
-          <div class="input-container">
-            <input id="password" type="password" formControlName="password" placeholder="Password">
-          </div>
-        </div>
-        <div *ngIf="errorMessage" class="error-message">
-          {{ errorMessage }}
-        </div>
-        <div class="button-container">
-          <button type="submit" [disabled]="!loginForm.valid">Login</button>
-        </div>
-      </div>
-
-      <div class="container-footer">
-      </div>
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Log in to your account
+      </h2>
     </div>
-  </form>
+    <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+          <input id="username" name="username" type="text" formControlName="username" required
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Username">
+        </div>
+        <div>
+          <input id="password" name="password" type="password" formControlName="password" required
+            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Password">
+        </div>
+      </div>
+      <div *ngIf="errorMessage" class="mt-2 text-red-600 text-sm">
+        {{ errorMessage }}
+      </div>
+      <div>
+        <button type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          [disabled]="!loginForm.valid">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4 5a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 2V4H5v3h9zM4 9a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V9zm10 2V8H5v3h9zM4 13a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zm10 2v-1H5v1h9z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

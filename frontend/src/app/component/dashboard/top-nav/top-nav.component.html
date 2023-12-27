@@ -1,6 +1,21 @@
-<nav class="top-nav-container">
+<!-- <nav class="top-nav-container">
   <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]">Home</a>
   <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]">Wallets</a>
   <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]">Profile</a>
   <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]">Transactions</a>
+</nav> -->
+
+<nav class="top-nav-container flex justify-center">
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]">
+    <i class="fas fa-home"></i>
+  </a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]">
+    <i class="fas fa-wallet"></i>
+  </a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]">
+    <i class="fas fa-user"></i>
+  </a>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]">
+    <i class="fas fa-exchange-alt"></i>
+  </a>
 </nav>

@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit, OnDestroy
   loginForm!: FormGroup;
   private _subscription!: Subscription;
   errorMessage: string = '';
+  tokenKey: string = 'token';
 
   constructor
   (
@@ -51,13 +52,25 @@ export class LoginComponent implements OnInit, OnDestroy
         (response) => {
           if (response && response.message) {
             const result = response.message; // Assuming the token is in the 'message' property
+            console.log(result);
 
-            localStorage.setItem('token', result); // Store token in local storage
+            if(localStorage.getItem(this.tokenKey) != null)
+            {
+              localStorage.removeItem(this.tokenKey);
+              localStorage.setItem(this.tokenKey, result); // Store token in local storage
+              this._router.navigate(['/dashboard']);
+            }
+            else
+            {
+              localStorage.setItem(this.tokenKey, result); // Store token in local storage
+              this._router.navigate(['/dashboard']);
+            }
 
-            this._router.navigate(['/dashboard']);
             // Perform any additional actions after successful login
             // For example, redirect the user to a different page
-          } else {
+          }
+          else
+          {
             console.error('Token not found in response');
           }
         },

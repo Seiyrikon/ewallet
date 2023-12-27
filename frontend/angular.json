@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/tailwindcss/base.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
