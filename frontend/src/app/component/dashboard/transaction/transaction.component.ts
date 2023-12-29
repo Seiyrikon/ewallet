@@ -15,7 +15,7 @@ export class TransactionComponent implements OnInit, OnDestroy
 
   constructor
   (
-    private _transactionService: TransactionService
+    private _transactionService: TransactionService,
   ) {}
 
   ngOnInit(): void {

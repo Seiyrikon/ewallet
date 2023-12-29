@@ -35,5 +35,7 @@
             tbl_transaction
         WHERE
             user_id = #{userId} AND del_flag = 0
+            ORDER BY 
+                transaction_id DESC
     </select>
 </mapper>

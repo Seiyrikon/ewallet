@@ -7,6 +7,7 @@
         <th class="text-left py-2">Transaction Type</th>
         <th class="text-left py-2">Amount</th>
         <th class="text-left py-2">Description</th>
+        <th class="text-left py-2">Date</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
           </span>
         </td>
         <td class="py-2">{{ transaction.transaction_desc }}</td>
+        <td class="py-2">{{ transaction.created_at }}</td>
       </tr>
     </tbody>
   </table>

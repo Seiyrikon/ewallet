@@ -53,6 +53,7 @@ export class WalletComponent implements OnInit, OnDestroy
         (response) => {
           if (response) {
             const result = response.message; // Assuming the token is in the 'message' property
+            this.getAllUserWallet();
             console.log(result);
           }
           else

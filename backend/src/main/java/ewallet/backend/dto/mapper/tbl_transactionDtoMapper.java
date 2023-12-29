@@ -30,7 +30,8 @@ public class tbl_transactionDtoMapper implements Function<tbl_transaction, tbl_t
             transaction.getWallet_name(),
             transaction.getTransaction_type(), 
             transaction.getTransaction_amount(), 
-            transaction.getTransaction_desc()
+            transaction.getTransaction_desc(),
+            transaction.getCreated_at()
         );
     }
     
