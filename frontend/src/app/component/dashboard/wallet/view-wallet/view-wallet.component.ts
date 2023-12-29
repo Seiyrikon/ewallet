@@ -12,7 +12,8 @@ import { WalletService } from 'src/app/service/wallet/wallet.service';
 export class ViewWalletComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription
-  wallet!: Wallet
+  wallet!: Wallet;
+  walletId!: any;
 
   constructor
   (
@@ -22,13 +23,13 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
+    this.walletId = this._route.snapshot.paramMap.get('walletId');
     this.getWalletById();
   }
 
   getWalletById(): any {
-    const walletId = this._route.snapshot.paramMap.get('walletId')
-    if (walletId) {
-      this._subscription = this._walletService.getWalletById(+walletId)
+    if (this.walletId) {
+      this._subscription = this._walletService.getWalletById(+this.walletId)
         .subscribe(
           (response) => {
             this.wallet = response.message[0];
@@ -40,6 +41,16 @@ export class ViewWalletComponent implements OnInit, OnDestroy
     } else {
       console.error("No wallet ID found in the route");
     }
+  }
+
+  onDeposit(walletId: number): any
+  {
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${walletId}`, 'deposit'] } }]);
+  }
+
+  onWithdraw(walletId: number): any
+  {
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${walletId}`, 'withdraw'] } }]);
   }
 
   onBack()

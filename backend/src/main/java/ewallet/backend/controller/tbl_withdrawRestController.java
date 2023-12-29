@@ -29,7 +29,7 @@ public class tbl_withdrawRestController
         return tbl_withdrawService.getAllWithdrawPerWallet(walletId);
     }
 
-    @PostMapping("insert/withdraw/{walletId}")
+    @PostMapping("withdraw/insert/{walletId}")
     public ResponseEntity<Map<String, Object>> insertWithdraw(@RequestBody tbl_withdraw body, @PathVariable Long walletId)
     {
         return tbl_withdrawService.insertWithdraw(body, walletId);

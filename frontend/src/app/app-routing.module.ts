@@ -10,6 +10,8 @@ import { ProfileComponent } from './component/dashboard/profile/profile.componen
 import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
 import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-wallet.component';
 import { ViewWalletComponent } from './component/dashboard/wallet/view-wallet/view-wallet.component';
+import { DepositComponent } from './component/dashboard/wallet/view-wallet/deposit/deposit.component';
+import { WithdrawComponent } from './component/dashboard/wallet/view-wallet/withdraw/withdraw.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,9 +23,11 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full', outlet: 'contentOutlet' }, // Redirect to 'main-content' by default
       { path: 'home', component: MainContentComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'wallet/view/:walletId', component: ViewWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'wallet/add', component: AddWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet/view/:walletId/deposit', component: DepositComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet/view/:walletId/withdraw', component: WithdrawComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet/view/:walletId', component: ViewWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: '**', redirectTo: '404', pathMatch: 'full' },

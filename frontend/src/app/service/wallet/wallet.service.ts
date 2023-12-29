@@ -50,6 +50,23 @@ export class WalletService {
       );
   }
 
+  getTotalBalancePerWallet(walletId: number): Observable<any>
+  {
+    return this._http.get<Wallet>(`${this.baseUrl}total-balance/${walletId}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
+
   inserWallet(addWalletForm: AddWalletForm): Observable<any>
   {
     return this._http.post<Response>(`${this.baseUrl}wallet/insert`, addWalletForm)

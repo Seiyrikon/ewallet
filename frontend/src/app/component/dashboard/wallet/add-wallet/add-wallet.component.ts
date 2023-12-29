@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AddWalletForm } from 'src/app/interface/add-wallet-form';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
@@ -18,7 +19,8 @@ export class AddWalletComponent implements OnInit, OnDestroy
 
   constructor
   (
-    private _walletService: WalletService
+    private _walletService: WalletService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class AddWalletComponent implements OnInit, OnDestroy
         (response) => {
           if (response) {
             const result = response.message; // Assuming the token is in the 'message' property
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
             console.log(result);
           }
           else
@@ -62,6 +65,11 @@ export class AddWalletComponent implements OnInit, OnDestroy
         }
       )
     }
+  }
+
+  onCancel(): any 
+  {
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
   }
 
   ngOnDestroy(): void {

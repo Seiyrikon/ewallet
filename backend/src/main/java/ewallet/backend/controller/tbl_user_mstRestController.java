@@ -31,7 +31,7 @@ public class tbl_user_mstRestController
         return TBL_USER_MSTService.getUserAccount(userId);
     }
 
-    @PostMapping("insert/user")
+    @PostMapping("user/insert")
     public ResponseEntity<Map<String, Object>> insertUser(@RequestBody tbl_user_mst body) 
     {
         return TBL_USER_MSTService.insertUser(body);

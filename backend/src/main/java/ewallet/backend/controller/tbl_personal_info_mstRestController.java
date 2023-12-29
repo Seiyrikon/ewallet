@@ -31,7 +31,7 @@ public class tbl_personal_info_mstRestController
         return TBL_PERSONAL_INFO_MSTService.getUserPersonalInfo(userId);
     }
 
-    @PostMapping("insert/personal-info")
+    @PostMapping("personal-info/insert")
     public ResponseEntity<Map<String, Object>> insertPersonalInfo(@RequestBody tbl_personal_info_mst body, Long username) 
     {
         return TBL_PERSONAL_INFO_MSTService.insertPersonalInfo(body, username);

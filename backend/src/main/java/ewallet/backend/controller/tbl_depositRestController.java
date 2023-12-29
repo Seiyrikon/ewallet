@@ -30,7 +30,7 @@ public class tbl_depositRestController
         return tbl_depositService.getAllDepositPerWallet(walletId);
     }
 
-    @PostMapping("insert/deposit/{walletId}")
+    @PostMapping("deposit/insert/{walletId}")
     public ResponseEntity<Map<String, Object>> insertDeposit(@RequestBody tbl_deposit body, @PathVariable Long walletId)
     {
         return tbl_depositService.insertDeposit(body, walletId);
