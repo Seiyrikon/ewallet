@@ -18,4 +18,7 @@ public class tbl_wallet_mst
     private int del_flag;
     private Timestamp created_at;
     private Timestamp updated_at;
+
+    //joined info
+    private Double balance;
 }

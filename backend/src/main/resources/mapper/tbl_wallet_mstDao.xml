@@ -46,4 +46,16 @@
         WHERE
             user_id = #{userId} AND wallet_id = #{walletId} AND del_flag = 0
     </select>
+
+    <!-- getWalletNameById --> 
+
+    <select id="getWalletNameById" parameterType="long" resultType="java.lang.String">
+        SELECT
+            wallet_name
+        FROM
+            tbl_wallet_mst
+        WHERE 
+            user_id = #{userId} AND wallet_id = #{walletId} AND del_flag = 0
+    </select>
+
 </mapper>

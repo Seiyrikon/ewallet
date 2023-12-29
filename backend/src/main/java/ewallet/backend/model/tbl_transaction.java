@@ -20,4 +20,7 @@ public class tbl_transaction
     private int del_flag;
     private Timestamp created_at;
     private Timestamp updated_at; 
+
+    //joined info
+    private String wallet_name;
 }

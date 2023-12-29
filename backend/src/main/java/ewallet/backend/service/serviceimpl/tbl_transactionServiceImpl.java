@@ -95,5 +95,62 @@ public class tbl_transactionServiceImpl implements tbl_transactionService
         }
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getAllTransactionPerUser() 
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try 
+        {
+            if (authentication != null && authentication.isAuthenticated()) 
+            {
+                String username = authentication.getName();
+
+                //fetch all the info of user from db using it's username
+                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
+                
+                //gets the userId of the logged in user
+                Long userId = user.getUserId();
+
+                List<tbl_wallet_mst> wallets = new ArrayList<tbl_wallet_mst>();
+    
+                wallets = tbl_wallet_mstDao.getAllUserWallet(userId);
+
+                if(wallets.size() != 0) 
+                {
+                    transactions = tbl_transactionDao.getAllTransactionPerUser(userId)
+                    .stream()
+                    .map(tbl_transactionDtoMapper).collect(Collectors.toList());
+
+                    if(transactions.size() != 0)
+                    {
+                        response.put("message", transactions);
+                    }
+                    else 
+                    {
+                        response.put("message", "No Transactions Yet");
+                        return ResponseEntity.status(404).body(response);
+                    }
+                }
+                else
+                {
+                    response.put("message", "Wallet Not Found");
+                    return ResponseEntity.status(404).body(response);
+                }
+            }
+            else 
+            {
+                response.put("message", "You must login first");
+                return ResponseEntity.status(403).body(response);
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(500).body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
     
 }

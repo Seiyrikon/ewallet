@@ -13,5 +13,6 @@ public interface tbl_wallet_mstDao
     List<tbl_wallet_mst> getAllUserWallet(Long userId);
     void insertWallet(tbl_wallet_mst body);
     List<tbl_wallet_mst> getWalletById(Long userId, Long walletId);
+    String getWalletNameById(Long userId, Long walletId);
 
 }

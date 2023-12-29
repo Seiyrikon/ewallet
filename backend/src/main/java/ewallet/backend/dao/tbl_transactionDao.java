@@ -10,5 +10,6 @@ import ewallet.backend.model.tbl_transaction;
 public interface tbl_transactionDao 
 {
     List<tbl_transaction> getAllTransactionPerWallet(Long userId, Long walletId);
+    List<tbl_transaction> getAllTransactionPerUser(Long userId);
     void insertTransaction(tbl_transaction body);
 }

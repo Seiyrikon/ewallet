@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Principal } from 'src/app/interface/principal';
+import { Wallet } from 'src/app/interface/wallet';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PrincipalService {
+export class WalletService {
   private baseUrl = 'http://localhost:8080/api/v1/';
 
   constructor
@@ -14,9 +14,9 @@ export class PrincipalService {
     private _http: HttpClient
   ) { }
 
-  //get the currently logged in user
-  getPrincipalInfo(): Observable<any>
+  //get all the wallets of user
+  getAllUserWallet(): Observable<any>
   {
-    return this._http.get<Principal[]>(`${this.baseUrl}principal`);
+    return this._http.get<Wallet[]>(`${this.baseUrl}user-wallet`);
   }
 }

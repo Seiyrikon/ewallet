@@ -22,7 +22,7 @@ const routes: Routes = [
       { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: '**', redirectTo: '/404', pathMatch: 'full' },
+      { path: '**', redirectTo: '404', pathMatch: 'full' },
     ],
   },
   { path: '404', component: Error404Component },

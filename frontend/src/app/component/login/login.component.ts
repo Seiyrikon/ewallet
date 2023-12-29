@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy
       this._subscription = this._loginService.authenticate(loginBody)
       .subscribe(
         (response) => {
-          if (response && response.message) {
+          if (response) {
             const result = response.message; // Assuming the token is in the 'message' property
             console.log(result);
 

@@ -27,8 +27,8 @@ export class MainContentComponent implements OnInit, OnDestroy
   {}
 
   ngOnInit(): void {
-    this.getOverAllBalancePerUser();
     this.getPrincipalInfo();
+    this.getOverAllBalancePerUser();
   }
 
   getOverAllBalancePerUser(): any {
