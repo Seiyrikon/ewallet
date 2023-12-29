@@ -21,6 +21,8 @@ import { WalletComponent } from './component/dashboard/wallet/wallet.component';
 import { ProfileComponent } from './component/dashboard/profile/profile.component';
 import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
 import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-wallet.component';
+import { ViewWalletComponent } from './component/dashboard/wallet/view-wallet/view-wallet.component';
+import { DepositComponent } from './component/dashboard/wallet/view-wallet/deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-
     WalletComponent,
     ProfileComponent,
     TransactionComponent,
-    AddWalletComponent
+    AddWalletComponent,
+    ViewWalletComponent,
+    DepositComponent
   ],
   imports: [
     BrowserModule,
