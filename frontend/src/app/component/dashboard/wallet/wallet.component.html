@@ -1,23 +1,30 @@
-<div class="wallet" *ngFor="let wallet of wallets">
-  <div class="wallet-container bg-blue-100 p-6">
-    <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      <div class="text-lg font-semibold mb-2 text-blue-900">{{ wallet.wallet_name }}</div>
-      <div class="border border-blue-200 rounded-md p-4">
-        <div class="mb-2">
-          <span class="font-semibold text-blue-800">Balance:</span>
-          <span class="text-blue-700">{{ wallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+<div class="wallet">
+  <nav class="top-nav-container flex justify-center">
+    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet', 'add'] } }]">
+      <i class="fas fa-wallet"></i> Add Wallet
+    </a>
+  </nav>
+  <div class="wallet" *ngFor="let wallet of wallets">
+    <div class="wallet-container bg-blue-100 p-6">
+      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div class="text-lg font-semibold mb-2 text-blue-900">{{ wallet.wallet_name }}</div>
+        <div class="border border-blue-200 rounded-md p-4">
+          <div class="mb-2">
+            <span class="font-semibold text-blue-800">Balance:</span>
+            <span class="text-blue-700">{{ wallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+          </div>
+          <div>
+            <span class="font-semibold text-blue-800">Wallet desc:</span>
+            <span class="text-blue-700">{{ wallet.wallet_desc }}</span>
+          </div>
+          <div>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              View
+            </button>
+          </div>
         </div>
-        <div>
-          <span class="font-semibold text-blue-800">Wallet desc:</span>
-          <span class="text-blue-700">{{ wallet.wallet_desc }}</span>
-        </div>
-        <div>
-          <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
-            View
-          </button>
-        </div>
+        <!-- Repeat this structure for each wallet in the ngFor loop -->
       </div>
-      <!-- Repeat this structure for each wallet in the ngFor loop -->
     </div>
   </div>
 </div>

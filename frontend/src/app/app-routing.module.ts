@@ -8,6 +8,7 @@ import { WalletComponent } from './component/dashboard/wallet/wallet.component';
 import { MainContentComponent } from './component/dashboard/main-content/main-content.component';
 import { ProfileComponent } from './component/dashboard/profile/profile.component';
 import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
+import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-wallet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full', outlet: 'contentOutlet' }, // Redirect to 'main-content' by default
       { path: 'home', component: MainContentComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet/add', component: AddWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: '**', redirectTo: '404', pathMatch: 'full' },

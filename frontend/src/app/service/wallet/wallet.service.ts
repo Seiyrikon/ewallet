@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { AddWalletForm } from 'src/app/interface/add-wallet-form';
 import { Wallet } from 'src/app/interface/wallet';
 
 @Injectable({
@@ -18,5 +19,24 @@ export class WalletService {
   getAllUserWallet(): Observable<any>
   {
     return this._http.get<Wallet[]>(`${this.baseUrl}user-wallet`);
+  }
+
+  inserWallet(addWalletForm: AddWalletForm): Observable<any>
+  {
+    return this._http.post<Response>(`${this.baseUrl}insert/wallet`, addWalletForm)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if(error.error instanceof ErrorEvent)
+          {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else
+          {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
   }
 }

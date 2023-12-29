@@ -28,9 +28,6 @@ export class WalletComponent implements OnInit, OnDestroy
     .subscribe(
       (response) => {
         this.wallets = response.message;
-        console.log(response);
-        console.log(this.wallets);
-
       },
       (error) => {
         console.error("An Error Occured", error);

@@ -20,6 +20,7 @@ import { MainContentComponent } from './component/dashboard/main-content/main-co
 import { WalletComponent } from './component/dashboard/wallet/wallet.component';
 import { ProfileComponent } from './component/dashboard/profile/profile.component';
 import { TransactionComponent } from './component/dashboard/transaction/transaction.component';
+import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-wallet.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TransactionComponent } from './component/dashboard/transaction/transact
     MainContentComponent,
     WalletComponent,
     ProfileComponent,
-    TransactionComponent
+    TransactionComponent,
+    AddWalletComponent
   ],
   imports: [
     BrowserModule,
