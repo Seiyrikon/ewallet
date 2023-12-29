@@ -14,5 +14,6 @@ public interface tbl_wallet_mstDao
     void insertWallet(tbl_wallet_mst body);
     List<tbl_wallet_mst> getWalletById(Long userId, Long walletId);
     String getWalletNameById(Long userId, Long walletId);
+    void logicalDeleteWalletById(Long userId, Long walletId);
 
 }

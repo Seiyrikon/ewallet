@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ewallet.backend.model.tbl_wallet_mst;
 import ewallet.backend.service.tbl_wallet_mstService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -35,7 +37,7 @@ public class tbl_wallet_mstRestController
         return tbl_wallet_mstService.getAllUserWallet();
     }
 
-    @PostMapping("insert/wallet")
+    @PostMapping("wallet/insert")
     public ResponseEntity<Map<String, Object>> insertWallet(@RequestBody tbl_wallet_mst body)
     {
         return tbl_wallet_mstService.insertWallet(body);
@@ -45,5 +47,10 @@ public class tbl_wallet_mstRestController
     public ResponseEntity<Map<String, Object>> getWalletById(@PathVariable Long walletId)
     {
         return tbl_wallet_mstService.getWalletById(walletId);
+    }
+
+    @PutMapping("wallet/delete/{walletId}")
+    public ResponseEntity<Map<String, Object>> logicalDeleteWalletById(@PathVariable Long walletId) {
+        return tbl_wallet_mstService.logicalDeleteWalletById(walletId);
     }
 }

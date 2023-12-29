@@ -25,6 +25,7 @@ public class tbl_wallet_mstDtoMapper implements Function<tbl_wallet_mst, tbl_wal
         wallet.setBalance(balance);
         return new tbl_wallet_mstDto
         (
+            wallet.getWallet_id(),
             wallet.getWallet_name(), 
             wallet.getWallet_desc(),
             wallet.getBalance()

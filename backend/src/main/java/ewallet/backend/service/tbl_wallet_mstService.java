@@ -12,4 +12,5 @@ public interface tbl_wallet_mstService
     public ResponseEntity<Map<String, Object>> getAllUserWallet();
     public ResponseEntity<Map<String, Object>> getWalletById(Long walletId);
     public ResponseEntity<Map<String, Object>> insertWallet(tbl_wallet_mst body);
+    public ResponseEntity<Map<String, Object>> logicalDeleteWalletById(Long walletId);
 }

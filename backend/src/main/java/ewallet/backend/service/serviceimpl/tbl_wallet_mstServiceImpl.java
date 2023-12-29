@@ -198,5 +198,48 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
         }
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> logicalDeleteWalletById(Long walletId) 
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try 
+        {
+            if (authentication != null && authentication.isAuthenticated()) 
+            {
+                //gets the username of the logged in user
+                String username = authentication.getName();
+
+                //fetch all the info of user from db using it's username
+                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
+                
+                //gets the userId of the logged in user
+                Long userId = user.getUserId();
+                
+                if(walletId != null)
+                {
+                    tbl_wallet_mstDao.logicalDeleteWalletById(userId, walletId);
+                    response.put("message", "Wallet Deleted Successfully");
+                }
+                else
+                {
+                    response.put("message", "Something went wrong");
+                    return ResponseEntity.status(401).body(response);
+                }
+            } 
+            else 
+            {
+                response.put("message", "You must login first");
+                return ResponseEntity.status(403).body(response);
+            }
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(500).body(response);
+        }  
+        return ResponseEntity.ok(response); 
+    }
     
 }
