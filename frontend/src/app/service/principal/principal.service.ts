@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Principal } from 'src/app/interface/principal';
 
 @Injectable({
@@ -17,6 +17,20 @@ export class PrincipalService {
   //get the currently logged in user
   getPrincipalInfo(): Observable<any>
   {
-    return this._http.get<Principal[]>(`${this.baseUrl}principal`);
+    return this._http.get<Principal[]>(`${this.baseUrl}principal`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent)
+        {
+          errorMessage = `error: ${error.error.message}`;
+        }
+        else
+        {
+          errorMessage = `${error.error.message}`
+        }
+        return throwError(errorMessage);
+      })
+    );
   }
 }

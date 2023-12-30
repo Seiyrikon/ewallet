@@ -14,6 +14,7 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   private _subscription!: Subscription
   wallet!: Wallet;
   walletId!: any;
+  errorMessage: string = '';
 
   constructor
   (
@@ -32,12 +33,19 @@ export class ViewWalletComponent implements OnInit, OnDestroy
       this._subscription = this._walletService.getWalletById(+this.walletId)
         .subscribe(
           (response) => {
-            this.wallet = response.message[0];
+            if (response) {
+              this.wallet = response.message[0];
+            }
+            else
+            {
+              console.error('Response is empty');
+            }
           },
           (error) => {
-            console.error("An Error Occurred", error);
+            console.error("An Error Occured", error);
+            this.errorMessage = error;
           }
-        );
+        )
     } else {
       console.error("No wallet ID found in the route");
     }

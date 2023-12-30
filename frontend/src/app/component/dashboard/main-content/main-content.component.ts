@@ -16,6 +16,7 @@ export class MainContentComponent implements OnInit, OnDestroy
   private _subscription!: Subscription;
   principal!: Principal;
   overAllBalance!: number;
+  errorMessage: string = '';
 
   constructor
   (
@@ -35,10 +36,17 @@ export class MainContentComponent implements OnInit, OnDestroy
     this._subscription = this._overAllBalanceService.getOverAllBalancePerUser()
     .subscribe(
       (response) => {
-        this.overAllBalance = response.message;
+        if (response) {
+          this.overAllBalance = response.message;
+        }
+        else
+        {
+          console.error('Response is empty');
+        }
       },
       (error) => {
         console.error("An Error Occured", error);
+        this.errorMessage = error;
       }
     )
   }

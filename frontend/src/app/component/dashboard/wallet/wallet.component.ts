@@ -31,10 +31,17 @@ export class WalletComponent implements OnInit, OnDestroy
     this._subscription = this._walletService.getAllUserWallet()
     .subscribe(
       (response) => {
-        this.wallets = response.message;
+        if (response) {
+          this.wallets = response.message;
+        }
+        else
+        {
+          console.error('Response is empty');
+        }
       },
       (error) => {
         console.error("An Error Occured", error);
+        this.errorMessage = error;
       }
     )
   }

@@ -11,6 +11,7 @@
     </div>
     <!-- Include additional user information as needed -->
   </div>
+  <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
   <button class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
           (click)="onLogout()">
     Logout

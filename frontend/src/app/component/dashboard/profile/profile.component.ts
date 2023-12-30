@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription;
   principal!: Principal;
+  errorMessage: string = '';
 
   constructor
   (
@@ -32,10 +33,17 @@ export class ProfileComponent implements OnInit, OnDestroy
     this._subscription = this._principalService.getPrincipalInfo()
     .subscribe(
       (response) => {
-        this.principal = response.message[0];
+        if (response) {
+          this.principal = response.message[0];
+        }
+        else
+        {
+          console.error('Response is empty');
+        }
       },
       (error) => {
         console.error("An Error Occured", error);
+        this.errorMessage = error;
       }
     )
   }

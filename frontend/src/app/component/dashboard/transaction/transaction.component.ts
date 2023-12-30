@@ -12,6 +12,7 @@ export class TransactionComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription;
   transactions!: Transaction[];
+  errorMessage: string = '';
 
   constructor
   (
@@ -27,13 +28,17 @@ export class TransactionComponent implements OnInit, OnDestroy
     this._subscription = this._transactionService.getAllTransactionPerUser()
     .subscribe(
       (response) => {
-        this.transactions = response.message;
-        console.log(response);
-        console.log(this.transactions);
-
+        if (response) {
+          this.transactions = response.message;
+        }
+        else
+        {
+          console.error('Response is empty');
+        }
       },
       (error) => {
         console.error("An Error Occured", error);
+        this.errorMessage = error;
       }
     )
   }

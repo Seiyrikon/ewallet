@@ -1,17 +1,17 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
     <h2 class="text-center text-3xl font-extrabold text-gray-900">Add Wallet</h2>
-    <form class="flex flex-col items-center space-y-4" [formGroup]="addWalletForm" (ngSubmit)="onSubmit()">
-      <div class="flex flex-col w-full">
+    <form class="flex flex-col space-y-6" [formGroup]="addWalletForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col w-full space-y-4">
         <input id="wallet_name" name="wallet_name" type="text" formControlName="wallet_name" required
-          class="input-field"
+          class="input-field px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Wallet Name">
         <input id="wallet_desc" name="wallet_desc" type="text" formControlName="wallet_desc" required
-          class="input-field"
+          class="input-field px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           placeholder="Description">
       </div>
       <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
-      <div class="flex space-x-4">
+      <div class="flex justify-center space-x-4"> <!-- Centering the buttons and providing space -->
         <button type="submit" class="add-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
           Add
         </button>
