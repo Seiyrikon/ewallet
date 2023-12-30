@@ -1,48 +1,27 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Add Deposit
-      </h2>
+  <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6 flex flex-col items-center">
+    <h2 class="text-3xl font-extrabold text-gray-900">Deposit Funds</h2>
+    <div class="flex justify-between items-center w-full">
+      <span class="text-lg font-semibold">Remaining Balance:</span>
+      <span class="text-lg font-semibold">{{ walletBalance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
     </div>
-    <div class="remaining-balance-container">
-      <span class="text-xl font-semibold mb-2">Remaining Balance: </span>
-      <span class="text-xl font-semibold mb-2">{{ walletBalance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
-    </div>
-    <form class="mt-8 space-y-6" [formGroup]="depositForm" (ngSubmit)="onSubmit()">
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <input id="amount" name="amount" type="number" formControlName="amount" required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-            placeholder="Amount">
-        </div>
-        <div>
-          <input id="deposit_desc" name="deposit_desc" type="textarea" formControlName="deposit_desc" required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-            placeholder="Description">
-        </div>
+    <form class="w-full space-y-4 flex flex-col items-center" [formGroup]="depositForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col w-full">
+        <input id="amount" name="amount" type="number" formControlName="amount" required
+          class="input-field"
+          placeholder="Amount">
+        <input id="deposit_desc" name="deposit_desc" type="text" formControlName="deposit_desc" required
+          class="input-field"
+          placeholder="Description">
       </div>
-      <div *ngIf="errorMessage" class="mt-2 text-red-600 text-sm">
-        {{ errorMessage }}
-      </div>
-      <div>
-        <button type="submit"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          [disabled]="!depositForm.valid">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M4 5a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 2V4H5v3h9zM4 9a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V9zm10 2V8H5v3h9zM4 13a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zm10 2v-1H5v1h9z"
-                clip-rule="evenodd" />
-            </svg>
-          </span>
+      <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+      <div class="flex space-x-4">
+        <button type="submit" class="deposit-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
           Deposit
         </button>
-        <button (click)="onCancel()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">
+        <button (click)="onCancel()" class="cancel-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">
           Cancel
         </button>
-        
       </div>
     </form>
   </div>

@@ -1,21 +1,14 @@
-<!-- <nav class="top-nav-container">
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]">Home</a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]">Wallets</a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]">Profile</a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]">Transactions</a>
-</nav> -->
-
-<nav class="top-nav-container flex justify-center">
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]">
-    <i class="fas fa-home"></i>
+<nav class="top-nav-container flex justify-center bg-blue-200 py-4">
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]" class="nav-link">
+    <i class="fas fa-home text-blue-500"></i>
   </a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]">
-    <i class="fas fa-wallet"></i>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]" class="nav-link">
+    <i class="fas fa-wallet text-green-500"></i>
   </a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]">
-    <i class="fas fa-user"></i>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]" class="nav-link">
+    <i class="fas fa-user text-purple-500"></i>
   </a>
-  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]">
-    <i class="fas fa-exchange-alt"></i>
+  <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]" class="nav-link">
+    <i class="fas fa-exchange-alt text-orange-500"></i>
   </a>
 </nav>
