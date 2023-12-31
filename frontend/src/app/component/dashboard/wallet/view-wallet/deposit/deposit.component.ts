@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
+import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { Deposit } from 'src/app/interface/deposit';
 import { Wallet } from 'src/app/interface/wallet';
 import { DepositService } from 'src/app/service/deposit/deposit.service';
@@ -26,7 +29,8 @@ export class DepositComponent implements OnInit, OnDestroy
     private _depositService: DepositService,
     private _walletService: WalletService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -98,9 +102,33 @@ export class DepositComponent implements OnInit, OnDestroy
     }
   }
 
-  onCancel(): any
-  {
-    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
+  openCancelConfirmationDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(CancelModalComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openLeaveConfirmationDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(LeaveModalComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {

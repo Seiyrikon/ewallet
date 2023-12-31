@@ -25,6 +25,11 @@ import { ViewWalletComponent } from './component/dashboard/wallet/view-wallet/vi
 import { DepositComponent } from './component/dashboard/wallet/view-wallet/deposit/deposit.component';
 import { WithdrawComponent } from './component/dashboard/wallet/view-wallet/withdraw/withdraw.component';
 import { RegisterComponent } from './component/register/register.component';
+import { LogoutModalComponent } from './component/common/logout-modal/logout-modal.component';
+
+import {MatDialogModule} from '@angular/material/dialog';
+import { CancelModalComponent } from './component/common/cancel-modal/cancel-modal.component';
+import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +46,10 @@ import { RegisterComponent } from './component/register/register.component';
     ViewWalletComponent,
     DepositComponent,
     WithdrawComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogoutModalComponent,
+    CancelModalComponent,
+    LeaveModalComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +60,8 @@ import { RegisterComponent } from './component/register/register.component';
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   providers: [
     {
