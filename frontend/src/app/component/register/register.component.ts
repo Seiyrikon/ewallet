@@ -1,9 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegisterForm } from 'src/app/interface/register-form';
 import { RegisterService } from 'src/app/service/register/register.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-register',
@@ -16,6 +24,13 @@ export class RegisterComponent implements OnInit, OnDestroy
   private _subscription!: Subscription;
   errorMessage: string = '';
   tokenKey: string = 'token';
+  username!: FormControl;
+  password!: FormControl;
+  firstName!: FormControl;
+  middleName!: FormControl;
+  lastName!: FormControl;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
@@ -37,13 +52,19 @@ export class RegisterComponent implements OnInit, OnDestroy
       lastName: ''
     };
 
+    this.username = new FormControl(initialFormValues.username, [Validators.required]);
+    this.password = new FormControl(initialFormValues.password, [Validators.required]);
+    this.firstName = new FormControl(initialFormValues.firstName, [Validators.required]);
+    this.middleName = new FormControl(initialFormValues.middleName);
+    this.lastName = new FormControl(initialFormValues.lastName);
+
     // Create a new FormGroup based on the LoginForm interface
     this.registerForm = new FormGroup({
-      username: new FormControl(initialFormValues.username, [Validators.required]),
-      password: new FormControl(initialFormValues.password, [Validators.required]),
-      firstName: new FormControl(initialFormValues.firstName, [Validators.required]),
-      middleName: new FormControl(initialFormValues.middleName, [Validators.required]),
-      lastName: new FormControl(initialFormValues.lastName, [Validators.required])
+      username: this.username,
+      password: this.password,
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName
     });
   }
 
