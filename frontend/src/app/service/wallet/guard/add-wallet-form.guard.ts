@@ -14,9 +14,14 @@ export class AddWalletFormGuard implements CanDeactivate<AddWalletComponent> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-      if (component.addWalletForm.dirty) {
+      if (component.addWalletForm.touched) {
         return component.openLeaveConfirmationDialog();
       }
+      if (component.addWalletForm.valid)
+      {
+        return true
+      }
+
       return true;
     }
 

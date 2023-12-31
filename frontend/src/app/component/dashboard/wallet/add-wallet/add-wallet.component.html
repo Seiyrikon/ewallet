@@ -3,12 +3,19 @@
     <h2 class="text-center text-3xl font-extrabold text-gray-900">Add Wallet</h2>
     <form class="flex flex-col space-y-6" [formGroup]="addWalletForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-col w-full space-y-4">
-        <input id="wallet_name" name="wallet_name" type="text" formControlName="wallet_name" required
-          class="input-field px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Wallet Name">
-        <input id="wallet_desc" name="wallet_desc" type="text" formControlName="wallet_desc" required
-          class="input-field px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Description">
+          <mat-form-field class="example-full-width">
+            <mat-label class="text-gray-700">Wallet Name</mat-label>
+            <input type="text" matInput [formControl]="wallet_name" [errorStateMatcher]="matcher"
+              placeholder="Ex. Physical Wallet" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+            <mat-error *ngIf="wallet_name.hasError('required')" class="text-red-600">Wallet Name is <strong>required</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label class="text-gray-700">Wallet Description</mat-label>
+            <input type="text" matInput [formControl]="wallet_desc" [errorStateMatcher]="matcher"
+              placeholder="Ex. This monitors my physical wallet"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+          </mat-form-field>
       </div>
       <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
       <div class="flex justify-center space-x-4"> <!-- Centering the buttons and providing space -->

@@ -13,8 +13,12 @@ export class AddDepositFormGuard implements CanDeactivate<DepositComponent> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-      if (component.depositForm.dirty) {
+      if (component.depositForm.touched) {
         return component.openLeaveConfirmationDialog();
+      }
+      if(component.depositForm.valid)
+      {
+        return true
       }
       return true;
     }

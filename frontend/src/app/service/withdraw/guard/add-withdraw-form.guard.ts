@@ -12,8 +12,12 @@ export class AddWithdrawFormGuard implements CanDeactivate<WithdrawComponent> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (component.withdrawForm.dirty) {
+      if (component.withdrawForm.touched) {
         return component.openLeaveConfirmationDialog();
+      }
+      if(component.withdrawForm.valid)
+      {
+        return true;
       }
       return true;
     }
