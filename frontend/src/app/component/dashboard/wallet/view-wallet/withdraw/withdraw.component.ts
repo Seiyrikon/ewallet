@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Wallet } from 'src/app/interface/wallet';
 import { Withdraw } from 'src/app/interface/withdraw';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { WithdrawService } from 'src/app/service/withdraw/withdraw.service';
@@ -18,6 +19,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
   errorMessage: string = '';
   walletId!: any;
   walletBalance!: number;
+  wallet!: Wallet;
 
   constructor
   (
@@ -29,7 +31,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     this.walletId = this._route.snapshot.paramMap.get('walletId');
-    this.getTotalBalancePerWallet();
+    this.getWalletById();
     this.initializeForm();
   }
 
@@ -73,24 +75,30 @@ export class WithdrawComponent implements OnInit, OnDestroy
     }
   }
 
-  getTotalBalancePerWallet(): any
-  {
+  getWalletById(): any {
     if (this.walletId) {
-      this._subscription = this._walletService.getTotalBalancePerWallet(+this.walletId)
+      this._subscription = this._walletService.getWalletById(+this.walletId)
         .subscribe(
           (response) => {
-            this.walletBalance = response.message;
+            if (response) {
+              this.wallet = response.message[0];
+            }
+            else
+            {
+              console.error('Response is empty');
+            }
           },
           (error) => {
-            console.error("An Error Occurred", error);
+            console.error("An Error Occured", error);
+            this.errorMessage = error;
           }
-        );
+        )
     } else {
       console.error("No wallet ID found in the route");
     }
   }
 
-  onCancel(): any 
+  onCancel(): any
   {
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
   }
