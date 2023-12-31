@@ -48,12 +48,6 @@ export class ProfileComponent implements OnInit, OnDestroy
     )
   }
 
-  onLogout(): void {
-    this._logoutService.logout(); // Call the logout method from the AuthService
-    // Perform any additional actions after logout (e.g., redirecting to login page)
-    this._router.navigate(['/login']);
-  }
-
   ngOnDestroy(): void {
     if(this._subscription)
     {
