@@ -12,9 +12,11 @@ import { AddWalletComponent } from './component/dashboard/wallet/add-wallet/add-
 import { ViewWalletComponent } from './component/dashboard/wallet/view-wallet/view-wallet.component';
 import { DepositComponent } from './component/dashboard/wallet/view-wallet/deposit/deposit.component';
 import { WithdrawComponent } from './component/dashboard/wallet/view-wallet/withdraw/withdraw.component';
+import { RegisterComponent } from './component/register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',

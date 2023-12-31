@@ -73,7 +73,7 @@ CREATE TABLE tbl_transaction(
     user_id INT(9) UNSIGNED NOT NULL,
     wallet_id INT(9) UNSIGNED NOT NULL,
     transaction_type VARCHAR(10) NOT NULL,
-    transaction_amount INT(15) NOT NULL,
+    transaction_amount DOUBLE NOT NULL,
     transaction_desc VARCHAR(255),
     del_flag int(9) NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

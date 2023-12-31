@@ -1,0 +1,53 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-image">
+    <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Create an account
+      </h2>
+      <form class="mt-8 space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <input id="username" name="username" type="text" formControlName="username" required
+              class="input-field"
+              placeholder="Username">
+          </div>
+          <div>
+            <input id="password" name="password" type="password" formControlName="password" required
+              class="input-field"
+              placeholder="Password">
+          </div>
+          <div>
+            <input id="firstName" name="firstName" type="text" formControlName="firstName" required
+              class="input-field"
+              placeholder="First Name">
+          </div>
+          <div>
+            <input id="middleName" name="middleName" type="text" formControlName="middleName" required
+              class="input-field"
+              placeholder="Middle Name">
+          </div>
+          <div>
+            <input id="lastName" name="lastName" type="text" formControlName="lastName" required
+              class="input-field"
+              placeholder="Last Name">
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="mt-2 text-red-600 text-sm">
+          {{ errorMessage }}
+        </div>
+        <div>
+          <button type="submit"
+            class="submit-btn">
+            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M4 5a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 2V4H5v3h9zM4 9a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V9zm10 2V8H5v3h9zM4 13a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zm10 2v-1H5v1h9z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
