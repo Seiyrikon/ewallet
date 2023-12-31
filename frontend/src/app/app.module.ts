@@ -30,6 +30,7 @@ import { LogoutModalComponent } from './component/common/logout-modal/logout-mod
 import {MatDialogModule} from '@angular/material/dialog';
 import { CancelModalComponent } from './component/common/cancel-modal/cancel-modal.component';
 import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.component';
+import { DeleteModalComponent } from './component/common/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.
     RegisterComponent,
     LogoutModalComponent,
     CancelModalComponent,
-    LeaveModalComponent
+    LeaveModalComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
