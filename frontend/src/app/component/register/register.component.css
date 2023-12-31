@@ -30,3 +30,13 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
+
+.submit-btn:hover {
+  background-color: #3182CE;
+}
+
+.bg-image {
+  background-image: url('https://images.pexels.com/photos/574070/pexels-photo-574070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'); /* Replace 'path_to_your_image.jpg' with the actual URL or path to your image */
+  background-size: cover;
+  background-position: center;
+}
