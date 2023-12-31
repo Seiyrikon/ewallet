@@ -66,14 +66,19 @@ export class MainContentComponent implements OnInit, OnDestroy
     )
   }
 
-  openLogoutConfirmationDialog(): void {
-    const dialogRef = this._dialog.open(LogoutModalComponent);
+  openLogoutConfirmationDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(LogoutModalComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this._logoutService.logout();
-        this._router.navigate(['/login']);
-      }
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._logoutService.logout();
+          this._router.navigate(['/login']);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
     });
   }
 

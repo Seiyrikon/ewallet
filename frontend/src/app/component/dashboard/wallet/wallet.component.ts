@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Wallet } from 'src/app/interface/wallet';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
+import { DeleteModalComponent } from '../../common/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-wallet',
@@ -19,7 +21,8 @@ export class WalletComponent implements OnInit, OnDestroy
   constructor
   (
     private _walletService: WalletService,
-    private _router: Router
+    private _router: Router,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +77,42 @@ export class WalletComponent implements OnInit, OnDestroy
         }
       )
     }
+  }
+
+  openDeleteConfirmationDialog(walletId: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(DeleteModalComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+
+          if(walletId)
+          {
+            this._subscription = this._walletService.logicalDeleteWalletById(walletId)
+            .subscribe(
+              (response) => {
+                if (response) {
+                  const result = response.message; // Assuming the token is in the 'message' property
+                  this.getAllUserWallet();
+                  console.log(result);
+                }
+                else
+                {
+                  console.error('Response is empty');
+                }
+              },
+              (error) => {
+                console.error('Add wallet failed', error);
+                this.errorMessage = error;
+              }
+            )
+          }
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {

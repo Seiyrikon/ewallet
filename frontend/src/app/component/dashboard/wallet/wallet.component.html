@@ -24,7 +24,7 @@
           <button (click)="onView(wallet.wallet_id)" class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
             View
           </button>
-          <button (click)="onDelete(wallet.wallet_id)" class="action-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-red-300">
+          <button (click)="openDeleteConfirmationDialog(wallet.wallet_id)" class="action-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-red-300">
             Delete
           </button>
         </div>
