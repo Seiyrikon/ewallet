@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,6 +10,13 @@ import { Deposit } from 'src/app/interface/deposit';
 import { Wallet } from 'src/app/interface/wallet';
 import { DepositService } from 'src/app/service/deposit/deposit.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-deposit',
@@ -22,7 +30,11 @@ export class DepositComponent implements OnInit, OnDestroy
   errorMessage: string = '';
   walletId!: any;
   walletBalance!: number;
-  wallet!: Wallet
+  wallet!: Wallet;
+  amount!: FormControl;
+  deposit_desc!: FormControl<string | null>;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
@@ -45,10 +57,13 @@ export class DepositComponent implements OnInit, OnDestroy
       deposit_desc: ''
     };
 
+    this.amount = new FormControl(initialFormValues.amount, [Validators.required]);
+    this.deposit_desc = new FormControl(initialFormValues.deposit_desc);
+
     // Create a new FormGroup based on the LoginForm interface
     this.depositForm = new FormGroup({
-      amount: new FormControl(initialFormValues.amount, [Validators.required]),
-      deposit_desc: new FormControl(initialFormValues.deposit_desc, [Validators.required])
+      amount: this.amount,
+      deposit_desc: this.deposit_desc
     });
   }
 
