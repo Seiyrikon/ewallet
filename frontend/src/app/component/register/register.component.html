@@ -5,38 +5,44 @@
       </h2>
       <form class="mt-8 space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="rounded-md shadow-sm -space-y-px">
-          <div>
+          <div class="flex">
             <input id="username" name="username" type="text" formControlName="username" required
               class="input-field"
               placeholder="Username">
+            <span class="required-indicator">*</span>
           </div>
-          <div>
+          <div class="flex">
             <input id="password" name="password" type="password" formControlName="password" required
               class="input-field"
               placeholder="Password">
+            <span class="required-indicator">*</span>
           </div>
-          <div>
+          <div class="flex">
             <input id="firstName" name="firstName" type="text" formControlName="firstName" required
               class="input-field"
               placeholder="First Name">
+            <span class="required-indicator">*</span>
           </div>
-          <div>
+          <div class="flex">
             <input id="middleName" name="middleName" type="text" formControlName="middleName" required
               class="input-field"
               placeholder="Middle Name">
+            <span class="required-indicator">*</span>
           </div>
-          <div>
+          <div class="flex">
             <input id="lastName" name="lastName" type="text" formControlName="lastName" required
               class="input-field"
               placeholder="Last Name">
+            <span class="required-indicator">*</span>
           </div>
         </div>
         <div *ngIf="errorMessage" class="mt-2 text-red-600 text-sm">
           {{ errorMessage }}
         </div>
         <div>
-          <button type="submit"
-            class="submit-btn">
+          <button type="submit" [disabled]="!registerForm.valid"
+            class="submit-btn"
+            [ngClass]="{'submit-btn-enabled': registerForm.valid, 'submit-btn-disabled': !registerForm.valid}">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
@@ -48,6 +54,7 @@
             Register
           </button>
         </div>
+
       </form>
       <div class="login-link-container">
         <span class="text-gray-600">Already have an account? </span>
