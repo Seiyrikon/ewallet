@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,6 +10,13 @@ import { Wallet } from 'src/app/interface/wallet';
 import { Withdraw } from 'src/app/interface/withdraw';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { WithdrawService } from 'src/app/service/withdraw/withdraw.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-withdraw',
@@ -23,6 +31,10 @@ export class WithdrawComponent implements OnInit, OnDestroy
   walletId!: any;
   walletBalance!: number;
   wallet!: Wallet;
+  amount!: FormControl;
+  withdraw_desc!: FormControl<string | null>;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
@@ -45,10 +57,13 @@ export class WithdrawComponent implements OnInit, OnDestroy
       withdraw_desc: ''
     };
 
+    this.amount = new FormControl(initialFormValues.amount, [Validators.required]);
+    this.withdraw_desc = new FormControl(initialFormValues.withdraw_desc);
+
     // Create a new FormGroup based on the LoginForm interface
     this.withdrawForm = new FormGroup({
-      amount: new FormControl(initialFormValues.amount, [Validators.required]),
-      withdraw_desc: new FormControl(initialFormValues.withdraw_desc, [Validators.required])
+      amount: this.amount,
+      withdraw_desc: this.withdraw_desc
     });
   }
 

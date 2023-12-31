@@ -11,16 +11,24 @@
     </div>
     <form class="w-full space-y-4 flex flex-col items-center" [formGroup]="withdrawForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-col w-full">
-        <input id="amount" name="amount" type="number" formControlName="amount" required
-          class="input-field"
-          placeholder="Amount">
-        <input id="withdraw_desc" name="withdraw_desc" type="text" formControlName="withdraw_desc" required
-          class="input-field"
-          placeholder="Description">
+        <mat-form-field class="example-full-width">
+          <mat-label class="text-gray-700">Amount</mat-label>
+          <input type="number" matInput [formControl]="amount" [errorStateMatcher]="matcher"
+            placeholder="Ex. 1000.00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+          <mat-error *ngIf="amount.hasError('required')" class="text-red-600">Amount is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label class="text-gray-700">Withdraw Description</mat-label>
+          <input type="text" matInput [formControl]="withdraw_desc" [errorStateMatcher]="matcher"
+            placeholder="Ex. For Weekly Foods"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+        </mat-form-field>
       </div>
       <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
       <div class="flex space-x-4">
-        <button type="submit" class="deposit-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+        <button type="submit" [disabled]="!withdrawForm.valid" class="submit-btn"
+          [ngClass]="{'submit-btn-enabled': withdrawForm.valid, 'submit-btn-disabled': !withdrawForm.valid}">
           Withdraw
         </button>
         <button (click)="openCancelConfirmationDialog()" class="cancel-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">

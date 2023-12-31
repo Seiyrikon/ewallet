@@ -19,7 +19,8 @@
       </div>
       <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
       <div class="flex justify-center space-x-4"> <!-- Centering the buttons and providing space -->
-        <button type="submit" class="add-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+        <button type="submit" [disabled]="!addWalletForm.valid" class="submit-btn"
+          [ngClass]="{'submit-btn-enabled': addWalletForm.valid, 'submit-btn-disabled': !addWalletForm.valid}">
           Add
         </button>
         <button (click)="openCancelConfirmationDialog()" class="cancel-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">
