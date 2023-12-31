@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Principal } from 'src/app/interface/principal';
 import { LogoutService } from 'src/app/service/logout/logout.service';
 import { OverallbalanceService } from 'src/app/service/overall/overallbalance.service';
 import { PrincipalService } from 'src/app/service/principal/principal.service';
+import { LogoutModalComponent } from '../../common/logout-modal/logout-modal.component';
 
 @Component({
   selector: 'app-main-content',
@@ -23,7 +25,8 @@ export class MainContentComponent implements OnInit, OnDestroy
     private _overAllBalanceService: OverallbalanceService,
     private _principalService: PrincipalService,
     private _logoutService: LogoutService,
-    private _router: Router
+    private _router: Router,
+    private _dialog: MatDialog
   )
   {}
 
@@ -63,10 +66,15 @@ export class MainContentComponent implements OnInit, OnDestroy
     )
   }
 
-  onLogout(): void {
-    this._logoutService.logout(); // Call the logout method from the AuthService
-    // Perform any additional actions after logout (e.g., redirecting to login page)
-    this._router.navigate(['/login']);
+  openLogoutConfirmationDialog(): void {
+    const dialogRef = this._dialog.open(LogoutModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this._logoutService.logout();
+        this._router.navigate(['/login']);
+      }
+    });
   }
 
   ngOnDestroy(): void {
