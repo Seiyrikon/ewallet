@@ -9,9 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { Error404Component } from './component/error404/error404.component';
@@ -28,6 +25,10 @@ import { RegisterComponent } from './component/register/register.component';
 import { LogoutModalComponent } from './component/common/logout-modal/logout-modal.component';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 import { CancelModalComponent } from './component/common/cancel-modal/cancel-modal.component';
 import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.component';
 import { DeleteModalComponent } from './component/common/delete-modal/delete-modal.component';

@@ -73,3 +73,7 @@
 .submit-btn-disabled:hover {
   background-color: #3182CE;
 }
+
+.example-full-width {
+  width: 100%;
+}

@@ -1,9 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginForm } from 'src/app/interface/login-form';
 import { LoginService } from 'src/app/service/login/login.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-login',
@@ -16,6 +24,10 @@ export class LoginComponent implements OnInit, OnDestroy
   private _subscription!: Subscription;
   errorMessage: string = '';
   tokenKey: string = 'token';
+  username!: FormControl;
+  password!: FormControl;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
@@ -34,10 +46,13 @@ export class LoginComponent implements OnInit, OnDestroy
       password: ''
     };
 
+    this.username = new FormControl(initialFormValues.username, [Validators.required]);
+    this.password = new FormControl(initialFormValues.password, [Validators.required]);
+
     // Create a new FormGroup based on the LoginForm interface
     this.loginForm = new FormGroup({
-      username: new FormControl(initialFormValues.username, [Validators.required]),
-      password: new FormControl(initialFormValues.password, [Validators.required])
+      username: this.username,
+      password: this.password
     });
   }
 
