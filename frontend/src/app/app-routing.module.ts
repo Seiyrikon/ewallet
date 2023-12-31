@@ -15,6 +15,7 @@ import { WithdrawComponent } from './component/dashboard/wallet/view-wallet/with
 import { RegisterComponent } from './component/register/register.component';
 import { AddWalletFormGuard } from './service/wallet/guard/add-wallet-form.guard';
 import { AddDepositFormGuard } from './service/deposit/guard/add-deposit-form.guard';
+import { AddWithdrawFormGuard } from './service/withdraw/guard/add-withdraw-form.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -29,7 +30,7 @@ const routes: Routes = [
       { path: 'home', component: MainContentComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'wallet/add', component: AddWalletComponent, canActivate: [GuardService], canDeactivate: [AddWalletFormGuard], outlet: 'contentOutlet' },
       { path: 'wallet/view/:walletId/deposit', component: DepositComponent, canActivate: [GuardService], canDeactivate: [AddDepositFormGuard], outlet: 'contentOutlet' },
-      { path: 'wallet/view/:walletId/withdraw', component: WithdrawComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
+      { path: 'wallet/view/:walletId/withdraw', component: WithdrawComponent, canActivate: [GuardService], canDeactivate: [AddWithdrawFormGuard], outlet: 'contentOutlet' },
       { path: 'wallet/view/:walletId', component: ViewWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
       { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },

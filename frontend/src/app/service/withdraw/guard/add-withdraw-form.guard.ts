@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DepositComponent } from 'src/app/component/dashboard/wallet/view-wallet/deposit/deposit.component';
+import { WithdrawComponent } from 'src/app/component/dashboard/wallet/view-wallet/withdraw/withdraw.component';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddDepositFormGuard implements CanDeactivate<DepositComponent> {
+export class AddWithdrawFormGuard implements CanDeactivate<WithdrawComponent> {
   canDeactivate(
-    component: DepositComponent,
+    component: WithdrawComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-    {
-      if (component.depositForm.dirty) {
+    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      if (component.withdrawForm.dirty) {
         return component.openLeaveConfirmationDialog();
       }
       return true;

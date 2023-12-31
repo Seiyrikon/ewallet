@@ -6,7 +6,7 @@ import { AddWalletComponent } from 'src/app/component/dashboard/wallet/add-walle
 @Injectable({
   providedIn: 'root'
 })
-export class AddWalletFormGuard implements CanDeactivate<unknown> {
+export class AddWalletFormGuard implements CanDeactivate<AddWalletComponent> {
 
   canDeactivate(
     component: AddWalletComponent,
