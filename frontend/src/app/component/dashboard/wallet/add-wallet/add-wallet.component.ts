@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
+import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { AddWalletForm } from 'src/app/interface/add-wallet-form';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 
@@ -20,7 +23,8 @@ export class AddWalletComponent implements OnInit, OnDestroy
   constructor
   (
     private _walletService: WalletService,
-    private _router: Router
+    private _router: Router,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +71,33 @@ export class AddWalletComponent implements OnInit, OnDestroy
     }
   }
 
-  onCancel(): any 
-  {
-    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
+  openCancelConfirmationDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(CancelModalComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openLeaveConfirmationDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(LeaveModalComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {
