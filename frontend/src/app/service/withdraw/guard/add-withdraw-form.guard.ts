@@ -12,12 +12,14 @@ export class AddWithdrawFormGuard implements CanDeactivate<WithdrawComponent> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (component.withdrawForm.touched) {
-        return component.openLeaveConfirmationDialog();
-      }
-      if(component.withdrawForm.valid)
-      {
-        return true;
+      if (component.amount.touched && component.withdraw_desc.touched) {
+        if (component.withdraw_desc.value !== null && component.withdraw_desc.value !== '') {
+          // Wallet description is not empty, return true
+          return true;
+        } else {
+          // Show confirmation dialog only if wallet description is empty
+          return component.openLeaveConfirmationDialog();
+        }
       }
       return true;
     }

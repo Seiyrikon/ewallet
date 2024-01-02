@@ -28,7 +28,7 @@ export class AddWalletComponent implements OnInit, OnDestroy
   addWalletForm!: FormGroup;
   errorMessage: string = '';
   wallet_name!: FormControl;
-  wallet_desc!: FormControl;
+  wallet_desc!: FormControl<string | null>;
 
   matcher = new MyErrorStateMatcher();
 

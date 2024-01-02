@@ -13,12 +13,14 @@ export class AddDepositFormGuard implements CanDeactivate<DepositComponent> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-      if ((component.deposit_desc !== null || component.deposit_desc !== '')  && (component.depositForm.touched || component.depositForm.dirty)) {
-        return component.openLeaveConfirmationDialog();
-      }
-      if(component.depositForm.valid)
-      {
-        return true
+      if (component.amount.touched && component.deposit_desc.touched) {
+        if (component.deposit_desc.value !== null && component.deposit_desc.value !== '') {
+          // Wallet description is not empty, return true
+          return true;
+        } else {
+          // Show confirmation dialog only if wallet description is empty
+          return component.openLeaveConfirmationDialog();
+        }
       }
       return true;
     }
