@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { WithdrawComponent } from 'src/app/component/dashboard/wallet/view-wallet/withdraw/withdraw.component';
 
@@ -7,21 +7,34 @@ import { WithdrawComponent } from 'src/app/component/dashboard/wallet/view-walle
   providedIn: 'root'
 })
 export class AddWithdrawFormGuard implements CanDeactivate<WithdrawComponent> {
+
+  constructor
+    (
+      private _router: Router,
+      private _route: ActivatedRoute
+    ) { }
+
   canDeactivate(
     component: WithdrawComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (component.amount.touched && component.withdraw_desc.touched) {
-        if (component.withdraw_desc.value !== null && component.withdraw_desc.value !== '') {
-          // Wallet description is not empty, return true
-          return true;
-        } else {
-          // Show confirmation dialog only if wallet description is empty
-          return component.openLeaveConfirmationDialog();
-        }
+    nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    {
+      if (component.isCancelled === true || component.isSubmitted === true)
+      {
+        return true;
       }
-      return true;
+
+      if(!component.withdrawForm.touched)
+      {
+        return true;
+      }
+
+      if(!component.withdrawForm.dirty) {
+        return true;
+      }
+
+      return component.openLeaveConfirmationDialog();
     }
 
 }

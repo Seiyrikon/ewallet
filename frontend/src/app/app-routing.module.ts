@@ -26,16 +26,69 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [GuardService],
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full', outlet: 'contentOutlet' }, // Redirect to 'main-content' by default
-      { path: 'home', component: MainContentComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'wallet/add', component: AddWalletComponent, canActivate: [GuardService], canDeactivate: [AddWalletFormGuard], outlet: 'contentOutlet' },
-      { path: 'wallet/view/:walletId/deposit', component: DepositComponent, canActivate: [GuardService], canDeactivate: [AddDepositFormGuard], outlet: 'contentOutlet' },
-      { path: 'wallet/view/:walletId/withdraw', component: WithdrawComponent, canActivate: [GuardService], canDeactivate: [AddWithdrawFormGuard], outlet: 'contentOutlet' },
-      { path: 'wallet/view/:walletId', component: ViewWalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'wallet', component: WalletComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'profile', component: ProfileComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: 'transaction', component: TransactionComponent, canActivate: [GuardService], outlet: 'contentOutlet' },
-      { path: '**', redirectTo: '404', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+        outlet: 'contentOutlet'
+      }, // Redirect to 'main-content' by default
+      {
+        path: 'wallet/view/:walletId/deposit',
+        component: DepositComponent,
+        canActivate: [GuardService],
+        canDeactivate: [AddDepositFormGuard],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'wallet/view/:walletId/withdraw',
+        component: WithdrawComponent,
+        canActivate: [GuardService],
+        canDeactivate: [AddWithdrawFormGuard],
+        outlet: 'contentOutlet',
+        data: { formType: 'withdraw' }
+      },
+      {
+        path: 'wallet/view/:walletId',
+        component: ViewWalletComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'wallet/add',
+        component: AddWalletComponent,
+        canActivate: [GuardService],
+        canDeactivate: [AddWalletFormGuard],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'home',
+        component: MainContentComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'wallet',
+        component: WalletComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: '**',
+        redirectTo: '404',
+        pathMatch: 'full'
+      },
     ],
   },
   { path: '404', component: Error404Component },

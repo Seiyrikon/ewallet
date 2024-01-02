@@ -32,9 +32,11 @@ export class WithdrawComponent implements OnInit, OnDestroy
   walletBalance!: number;
   wallet!: Wallet;
   amount!: FormControl;
-  withdraw_desc!: FormControl<string | null>;
+  withdraw_desc!: FormControl;
 
   matcher = new MyErrorStateMatcher();
+  isSubmitted: boolean = false;
+  isCancelled: boolean = false;
 
   constructor
   (
@@ -68,6 +70,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
   }
 
   onSubmit() {
+    this.isSubmitted = !this.isSubmitted;
     if(this.withdrawForm.valid && this.walletId)
     {
       const withdrawBody = this.withdrawForm.value;
@@ -118,6 +121,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
   }
 
   openCancelConfirmationDialog(): Promise<boolean> {
+    this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(CancelModalComponent);
 

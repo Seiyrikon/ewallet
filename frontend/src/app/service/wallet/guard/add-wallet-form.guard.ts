@@ -14,18 +14,22 @@ export class AddWalletFormGuard implements CanDeactivate<AddWalletComponent> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-      if (component.wallet_name.touched && component.wallet_desc.touched) {
-        if (component.wallet_desc.value !== null && component.wallet_desc.value !== '') {
-          // Wallet description is not empty, return true
+      if (component.isCancelled === true || component.isSubmitted === true)
+      {
+        return true;
+      }
+      else
+      {
+        if(!component.addWalletForm.touched)
+        {
           return true;
-        } else {
-          // Show confirmation dialog only if wallet description is empty
-          return component.openLeaveConfirmationDialog();
+        }
+
+        if(!component.addWalletForm.dirty) {
+          return true;
         }
       }
-
-
-      return true;
+      return component.openLeaveConfirmationDialog();
     }
 
 }

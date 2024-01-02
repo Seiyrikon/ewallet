@@ -32,7 +32,9 @@ export class DepositComponent implements OnInit, OnDestroy
   walletBalance!: number;
   wallet!: Wallet;
   amount!: FormControl;
-  deposit_desc!: FormControl<string | null>;
+  deposit_desc!: FormControl;
+  isSubmitted: boolean = false;
+  isCancelled: boolean = false;
 
   matcher = new MyErrorStateMatcher();
 
@@ -68,6 +70,7 @@ export class DepositComponent implements OnInit, OnDestroy
   }
 
   onSubmit() {
+    this.isSubmitted = !this.isSubmitted;
     if(this.depositForm.valid && this.walletId)
     {
       const depositBody = this.depositForm.value;
@@ -118,6 +121,7 @@ export class DepositComponent implements OnInit, OnDestroy
   }
 
   openCancelConfirmationDialog(): Promise<boolean> {
+    this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(CancelModalComponent);
 

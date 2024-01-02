@@ -28,7 +28,9 @@ export class AddWalletComponent implements OnInit, OnDestroy
   addWalletForm!: FormGroup;
   errorMessage: string = '';
   wallet_name!: FormControl;
-  wallet_desc!: FormControl<string | null>;
+  wallet_desc!: FormControl;
+  isSubmitted: boolean = false;
+  isCancelled: boolean = false;
 
   matcher = new MyErrorStateMatcher();
 
@@ -60,6 +62,7 @@ export class AddWalletComponent implements OnInit, OnDestroy
   }
 
   onSubmit() {
+    this.isSubmitted = !this.isSubmitted;
     if(this.addWalletForm.valid)
     {
       const addWalletBody = this.addWalletForm.value;
@@ -87,6 +90,7 @@ export class AddWalletComponent implements OnInit, OnDestroy
   }
 
   openCancelConfirmationDialog(): Promise<boolean> {
+    this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(CancelModalComponent);
 
