@@ -28,6 +28,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { CancelModalComponent } from './component/common/cancel-modal/cancel-modal.component';
 import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.component';
@@ -64,7 +67,10 @@ import { DeleteModalComponent } from './component/common/delete-modal/delete-mod
     MatInputModule,
     MatFormFieldModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {

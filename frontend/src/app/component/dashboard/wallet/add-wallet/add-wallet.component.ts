@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
@@ -21,8 +22,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './add-wallet.component.html',
   styleUrls: ['./add-wallet.component.css']
 })
-export class AddWalletComponent implements OnInit, OnDestroy
-{
+export class AddWalletComponent implements OnInit, OnDestroy {
 
   private _subscription!: Subscription;
   addWalletForm!: FormGroup;
@@ -31,15 +31,19 @@ export class AddWalletComponent implements OnInit, OnDestroy
   wallet_desc!: FormControl;
   isSubmitted: boolean = false;
   isCancelled: boolean = false;
+  showProgressBar: boolean = false;
+  showSubmitButton: boolean = true;
+  showCancelButton: boolean = true;
 
   matcher = new MyErrorStateMatcher();
 
   constructor
-  (
-    private _walletService: WalletService,
-    private _router: Router,
-    private _dialog: MatDialog
-  ) {}
+    (
+      private _walletService: WalletService,
+      private _router: Router,
+      private _dialog: MatDialog,
+      private _snackbar: MatSnackBar
+    ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -63,29 +67,40 @@ export class AddWalletComponent implements OnInit, OnDestroy
 
   onSubmit() {
     this.isSubmitted = !this.isSubmitted;
-    if(this.addWalletForm.valid)
-    {
+    if (this.addWalletForm.valid) {
+      this.showSubmitButton = false;
+      this.showCancelButton = false;
+      this.showProgressBar = true; // Show the progress bar
+
       const addWalletBody = this.addWalletForm.value;
       console.log(addWalletBody);
 
-      this._subscription = this._walletService.inserWallet(addWalletBody)
-      .subscribe(
+      // Display the progress bar while the wallet creation is in progress
+      const walletCreation$ = this._walletService.inserWallet(addWalletBody);
+
+      walletCreation$.subscribe(
         (response) => {
-          if (response) {
-            const result = response.message; // Assuming the token is in the 'message' property
-            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
-            console.log(result);
-          }
-          else
-          {
+          if (!response) {
             console.error('Response is empty');
           }
         },
         (error) => {
           console.error('Add wallet failed', error);
           this.errorMessage = error;
+        },
+        () => {
+          // Upon completion of wallet creation (when the observable completes)
+          this.showProgressBar = false; // Hide the progress bar
+          this.showSubmitButton = true; // Show the "Add Wallet" button
+          this.showCancelButton = true; // Show the "Cancel" button
+
+          this._snackbar.open('Wallet created successfully!', 'Close', {
+            duration: 1000, // Display duration in milliseconds (2 seconds) for the snackbar
+          }).afterDismissed().subscribe(() => {
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
+          });
         }
-      )
+      );
     }
   }
 
@@ -120,8 +135,7 @@ export class AddWalletComponent implements OnInit, OnDestroy
   }
 
   ngOnDestroy(): void {
-    if(this._subscription)
-    {
+    if (this._subscription) {
       this._subscription.unsubscribe();
     }
   }
