@@ -23,7 +23,7 @@
           [ngClass]="{'submit-btn-enabled': addWalletForm.valid, 'submit-btn-disabled': !addWalletForm.valid}">
           Add
         </button>
-        <button (click)="openCancelConfirmationDialog()" class="cancel-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">
+        <button type="button" (click)="openCancelConfirmationDialog()" class="cancel-btn bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-gray-300">
           Cancel
         </button>
       </div>
