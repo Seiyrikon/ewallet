@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
@@ -35,6 +36,9 @@ export class DepositComponent implements OnInit, OnDestroy
   deposit_desc!: FormControl;
   isSubmitted: boolean = false;
   isCancelled: boolean = false;
+  showProgressBar: boolean = false;
+  showSubmitButton: boolean = true;
+  showCancelButton: boolean = true;
 
   matcher = new MyErrorStateMatcher();
 
@@ -44,7 +48,8 @@ export class DepositComponent implements OnInit, OnDestroy
     private _walletService: WalletService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -73,27 +78,58 @@ export class DepositComponent implements OnInit, OnDestroy
     this.isSubmitted = !this.isSubmitted;
     if(this.depositForm.valid && this.walletId)
     {
+      this.showSubmitButton = false;
+      this.showCancelButton = false;
+      this.showProgressBar = true; // Show the progress bar
       const depositBody = this.depositForm.value;
       console.log(depositBody);
 
-      this._subscription = this._depositService.inserDeposit(+this.walletId, depositBody)
-      .subscribe(
+      const depositCreation$ = this._depositService.inserDeposit(+this.walletId, depositBody);
+
+      depositCreation$.subscribe
+      (
         (response) => {
-          if (response) {
-            const result = response.message; // Assuming the token is in the 'message' property
-            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
-            console.log(result);
-          }
-          else
-          {
+          if (!response) {
             console.error('Response is empty');
+
           }
         },
         (error) => {
           console.error('Add wallet failed', error);
           this.errorMessage = error;
+        },
+        () => {
+          // Upon completion of wallet creation (when the observable completes)
+          this.showProgressBar = false; // Hide the progress bar
+          this.showSubmitButton = true; // Show the "Add Wallet" button
+          this.showCancelButton = true; // Show the "Cancel" button
+
+          this._snackbar.open('Deposit Successful', 'Close', {
+            duration: 1000,
+          }).afterDismissed().subscribe(() => {
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
+          })
         }
-      )
+      );
+
+      // this._subscription = this._depositService.inserDeposit(+this.walletId, depositBody)
+      // .subscribe(
+      //   (response) => {
+      //     if (response) {
+      //       const result = response.message; // Assuming the token is in the 'message' property
+      //       this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
+      //       console.log(result);
+      //     }
+      //     else
+      //     {
+      //       console.error('Response is empty');
+      //     }
+      //   },
+      //   (error) => {
+      //     console.error('Add wallet failed', error);
+      //     this.errorMessage = error;
+      //   }
+      // )
     }
   }
 
