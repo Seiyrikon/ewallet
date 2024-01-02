@@ -111,25 +111,6 @@ export class DepositComponent implements OnInit, OnDestroy
           })
         }
       );
-
-      // this._subscription = this._depositService.inserDeposit(+this.walletId, depositBody)
-      // .subscribe(
-      //   (response) => {
-      //     if (response) {
-      //       const result = response.message; // Assuming the token is in the 'message' property
-      //       this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
-      //       console.log(result);
-      //     }
-      //     else
-      //     {
-      //       console.error('Response is empty');
-      //     }
-      //   },
-      //   (error) => {
-      //     console.error('Add wallet failed', error);
-      //     this.errorMessage = error;
-      //   }
-      // )
     }
   }
 
