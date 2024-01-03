@@ -75,6 +75,7 @@ export class DepositComponent implements OnInit, OnDestroy
   }
 
   onSubmit() {
+    this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if(this.depositForm.valid && this.walletId)
     {

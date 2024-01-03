@@ -66,6 +66,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if (this.addWalletForm.valid) {
       this.showSubmitButton = false;
