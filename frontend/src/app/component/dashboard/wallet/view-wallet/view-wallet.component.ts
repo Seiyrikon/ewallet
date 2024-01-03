@@ -15,6 +15,7 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   wallet!: Wallet;
   walletId!: any;
   errorMessage: string = '';
+  showProgressBar: boolean = false;
 
   constructor
   (
@@ -29,25 +30,53 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   }
 
   getWalletById(): any {
-    if (this.walletId) {
-      this._subscription = this._walletService.getWalletById(+this.walletId)
-        .subscribe(
-          (response) => {
-            if (response) {
-              this.wallet = response.message[0];
-            }
-            else
-            {
-              console.error('Response is empty');
-            }
-          },
-          (error) => {
-            console.error("An Error Occured", error);
-            this.errorMessage = error;
+    // if (this.walletId) {
+    //   this._subscription = this._walletService.getWalletById(+this.walletId)
+    //     .subscribe(
+    //       (response) => {
+    //         if (response) {
+    //           this.wallet = response.message[0];
+    //         }
+    //         else
+    //         {
+    //           console.error('Response is empty');
+    //         }
+    //       },
+    //       (error) => {
+    //         console.error("An Error Occured", error);
+    //         this.errorMessage = error;
+    //       }
+    //     )
+    // } else {
+    //   console.error("No wallet ID found in the route");
+    // }
+
+    if(this.walletId)
+    {
+      this.showProgressBar = true;
+      const wallet$ = this._walletService.getWalletById(+this.walletId);
+
+      wallet$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
           }
-        )
-    } else {
-      console.error("No wallet ID found in the route");
+          this.wallet = response.message[0];
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+        },
+        () => {
+          this.showProgressBar = false;
+        }
+      )
+    }
+    else
+    {
+      console.error('No wallet ID found in the route');
     }
   }
 
