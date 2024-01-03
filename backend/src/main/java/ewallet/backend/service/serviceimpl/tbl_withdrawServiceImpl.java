@@ -124,8 +124,11 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
                 if(body != null) 
                 {
                     Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(userId, walletId);
+                    Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(userId, walletId);
+
+                    Double overAllBalanceOfWallet = totalDeposit - totalWithdraw;
                     
-                    if(totalDeposit == null || body.getAmount() > totalDeposit)
+                    if(totalDeposit == null || body.getAmount() > overAllBalanceOfWallet)
                     {
                         response.put("message", "Insufficient  Funds");
                         return ResponseEntity.status(402).body(response);
