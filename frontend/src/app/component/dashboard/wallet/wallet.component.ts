@@ -17,6 +17,7 @@ export class WalletComponent implements OnInit, OnDestroy
   wallets!: Wallet[];
   wallet!: Wallet;
   errorMessage: string = '';
+  showProgressBar: boolean = false;
 
   constructor
   (
@@ -31,20 +32,41 @@ export class WalletComponent implements OnInit, OnDestroy
 
   getAllUserWallet(): any
   {
-    this._subscription = this._walletService.getAllUserWallet()
-    .subscribe(
+    // this._subscription = this._walletService.getAllUserWallet()
+    // .subscribe(
+    //   (response) => {
+    //     if (response) {
+    //       this.wallets = response.message;
+    //     }
+    //     else
+    //     {
+    //       console.error('Response is empty');
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error("An Error Occured", error);
+    //     this.errorMessage = error;
+    //   }
+    // )
+    this.showProgressBar = true;
+
+    const wallets$ = this._walletService.getAllUserWallet()
+
+    wallets$.subscribe
+    (
       (response) => {
-        if (response) {
-          this.wallets = response.message;
-        }
-        else
+        if (!response)
         {
           console.error('Response is empty');
         }
+        this.wallets = response.message;
       },
       (error) => {
-        console.error("An Error Occured", error);
+        console.error('Get Wallet Failed', error);
         this.errorMessage = error;
+      },
+      () => {
+        this.showProgressBar = false;
       }
     )
   }
