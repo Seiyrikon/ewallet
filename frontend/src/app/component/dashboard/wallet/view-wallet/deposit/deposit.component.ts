@@ -97,6 +97,9 @@ export class DepositComponent implements OnInit, OnDestroy
         },
         (error) => {
           console.error('Add wallet failed', error);
+          this.showProgressBar = false;
+          this.showSubmitButton = true;
+          this.showCancelButton = true; // Show the "Cancel" button
           this.errorMessage = error;
         },
         () => {
