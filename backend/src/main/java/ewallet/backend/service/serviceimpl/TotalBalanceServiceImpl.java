@@ -197,7 +197,7 @@ public class TotalBalanceServiceImpl implements TotalBalanceService
                 }
                 else
                 {
-                    response.put("message", "No Wallets Yet");
+                    response.put("message", ""); //Displays an empty string to frontend
                     return ResponseEntity.status(404).body(response);
                 }
             }

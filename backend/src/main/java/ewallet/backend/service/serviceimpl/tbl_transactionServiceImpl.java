@@ -77,7 +77,7 @@ public class tbl_transactionServiceImpl implements tbl_transactionService
                 }
                 else
                 {
-                    response.put("message", "Wallet Not Found");
+                    response.put("message", ""); //Displays an empty string in frontend
                     return ResponseEntity.status(404).body(response);
                 }
             }
@@ -134,7 +134,7 @@ public class tbl_transactionServiceImpl implements tbl_transactionService
                 }
                 else
                 {
-                    response.put("message", "Wallet Not Found");
+                    response.put("message", ""); //Displays an empty string in frontend
                     return ResponseEntity.status(404).body(response);
                 }
             }
