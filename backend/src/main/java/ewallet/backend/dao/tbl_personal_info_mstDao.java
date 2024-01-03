@@ -12,4 +12,6 @@ public interface tbl_personal_info_mstDao
     List<tbl_personal_info_mst> getUserPersonalInfo(Long userId);
 
     void insertPersonalInfo(tbl_personal_info_mst body, Long userId);
+
+    void updatePersonalInfo(Long user_id, tbl_personal_info_mst body);
 }

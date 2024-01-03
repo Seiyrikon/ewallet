@@ -31,4 +31,19 @@
         VALUES
             (#{userId}, #{body.firstName}, #{body.middleName}, #{body.lastName})
     </insert>
+
+    <!-- updatePersonalInfo --> 
+
+    <update id="updatePersonalInfo">
+        UPDATE 
+            tbl_personal_info_mst
+        SET 
+            first_name = #{body.firstName},
+            middle_name = #{body.middleName},
+            last_name = #{body.lastName},
+            updated_at = #{body.updated_at}
+        WHERE 
+            user_id = #{user_id};
+    </update>
+
 </mapper>

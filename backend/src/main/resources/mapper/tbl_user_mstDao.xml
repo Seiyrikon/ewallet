@@ -63,8 +63,9 @@
                 UPDATE 
                         tbl_user_mst
                 SET
-                        username = #{body.username},
-                        password = #{body.password},
-                        del_flag = 0
+                        <!-- username = #{body.username}, -->
+                        updated_at = #{body.updated_at}
+                WHERE
+                        user_id = #{user_id}
         </update>
 </mapper>
