@@ -75,6 +75,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
   }
 
   onSubmit() {
+    this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if(this.withdrawForm.valid && this.walletId)
     {
