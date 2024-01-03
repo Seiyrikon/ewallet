@@ -19,6 +19,7 @@ export class MainContentComponent implements OnInit, OnDestroy
   principal!: Principal;
   overAllBalance: number = 0.00;
   errorMessage: string = '';
+  showProgressBar: boolean = false;
 
   constructor
   (
@@ -36,32 +37,49 @@ export class MainContentComponent implements OnInit, OnDestroy
   }
 
   getOverAllBalancePerUser(): any {
-    this._subscription = this._overAllBalanceService.getOverAllBalancePerUser()
-    .subscribe(
+    this.showProgressBar = true;
+
+    const overAllBalance$ = this._overAllBalanceService.getOverAllBalancePerUser();
+
+    overAllBalance$.subscribe
+    (
       (response) => {
-        if (response) {
-          this.overAllBalance = response.message;
-        }
-        else
+        if(!response)
         {
           console.error('Response is empty');
         }
+        this.overAllBalance = response.message;
       },
       (error) => {
-        console.error("An Error Occured", error);
+        console.error('Overall Balance Missing', error);
         this.errorMessage = error;
+      },
+      () => {
+        this.showProgressBar = false; // Hide the progress bar
       }
     )
   }
 
   getPrincipalInfo(): any {
-    this._subscription = this._principalService.getPrincipalInfo()
-    .subscribe(
+    this.showProgressBar = true;
+
+    const principal$ = this._principalService.getPrincipalInfo();
+
+    principal$.subscribe
+    (
       (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
         this.principal = response.message[0];
       },
       (error) => {
-        console.error("An Error Occured", error);
+        console.error('Principal Info not found', error);
+        this.errorMessage = error;
+      },
+      () => {
+        this.showProgressBar = false;
       }
     )
   }
