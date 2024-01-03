@@ -52,14 +52,8 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
             // Check if the user is authenticated
             if (authentication != null && authentication.isAuthenticated()) 
             {
-                //gets the username of the logged in user
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                // Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                // Long userId = Long.parseLong(authentication.getName());
                 
                 //fetch all the info of user from db using it's userId
                 userAccountInfo = userAccountInfoDao.getUserAccountInfo(userId)
@@ -100,14 +94,8 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
             // Check if the user is authenticated
             if (authentication != null && authentication.isAuthenticated()) 
             {
-                //gets the username of the logged in user
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
 
                 Timestamp updateTimestamp = new Timestamp(System.currentTimeMillis());
 

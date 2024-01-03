@@ -73,13 +73,8 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
         {
             if (authentication != null && authentication.isAuthenticated()) 
             {
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
 
                 wallets = tbl_wallet_mstDao.getAllUserWallet(userId)
                 .stream()
@@ -119,13 +114,8 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
             if (authentication != null && authentication.isAuthenticated()) 
             {
                 //gets the username of the logged in user
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
                 
                 if(body != null)
                 {
@@ -162,13 +152,8 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
         {
             if (authentication != null && authentication.isAuthenticated()) 
             {
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
     
                 wallets = tbl_wallet_mstDao.getWalletById(userId, walletId)
                 .stream()
@@ -207,14 +192,8 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
         {
             if (authentication != null && authentication.isAuthenticated()) 
             {
-                //gets the username of the logged in user
-                String username = authentication.getName();
-
-                //fetch all the info of user from db using it's username
-                tbl_user_mst user = tbl_user_mstDao.findByUsername(username);
-                
-                //gets the userId of the logged in user
-                Long userId = user.getUserId();
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
                 
                 if(walletId != null)
                 {
