@@ -11,10 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import ewallet.backend.dao.tbl_depositDao;
 import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dao.tbl_wallet_mstDao;
-import ewallet.backend.dao.tbl_withdrawDao;
 import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.model.tbl_wallet_mst;
 import ewallet.backend.service.OverAllBalanceService;
@@ -32,12 +30,6 @@ public class OverAllBalanceServiceImpl implements OverAllBalanceService
 
     @Autowired
     private TotalBalanceService totalBalanceService;
-
-    @Autowired
-    private tbl_depositDao tbl_depositDao;
-
-    @Autowired
-    private tbl_withdrawDao tbl_withdrawDao;
 
     Map<String, Object> response = new HashMap<String, Object>();
 
@@ -65,64 +57,19 @@ public class OverAllBalanceServiceImpl implements OverAllBalanceService
                 {
                     Double overAllBalance = 0.00;
                     Double totalBalance = 0.00;
-
                     for(tbl_wallet_mst wallet : wallets)
                     {
-                        Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(userId, wallet.getWallet_id());
-                        Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(userId, wallet.getWallet_id());
-    
-                        if(totalWithdraw == null || totalDeposit == null)
-                        {
-                            if(totalWithdraw == null && totalDeposit == null)
-                            {
-                                overAllBalance = 0.00;
-                                totalBalance = 0.00;
-                                totalWithdraw = 0.00;
-                                totalDeposit = 0.00;
-                                totalBalance = totalDeposit - totalWithdraw;
+                        totalBalance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getWallet_id())
+                                       .getBody().get("message").toString());
 
-                                overAllBalance += totalBalance;
+                        overAllBalance += totalBalance;
 
-                                response.put("message", overAllBalance);
-                            }
-                            if(totalWithdraw == null && totalDeposit != null)
-                            {
-                                overAllBalance = 0.00;
-                                totalBalance = 0.00;
-                                totalWithdraw = 0.00;
-                                totalBalance = totalDeposit - totalWithdraw;
-                                
-                                overAllBalance += totalBalance;
-
-                                response.put("message", overAllBalance);
-                            }
-                            if(totalDeposit == null && totalWithdraw != null)
-                            {
-                                overAllBalance = 0.00;
-                                totalBalance = 0.00;
-                                totalDeposit = 0.00;
-                                totalBalance = totalDeposit - totalWithdraw;
-
-                                overAllBalance += totalBalance;
-
-                                response.put("message", overAllBalance);
-                            }
-                        }
-                        else 
-                        {
-                            overAllBalance = 0.00;
-                            totalBalance = 0.00;
-                            totalBalance = totalDeposit - totalWithdraw;
-
-                            overAllBalance += totalBalance;
-
-                            response.put("message", overAllBalance);
-                        }
+                        response.put("message", overAllBalance);
                     }
                 }
                 else
                 {
-                    response.put("message", ""); //Displays an empty string to frontend
+                    response.put("message", "");
                     return ResponseEntity.status(404).body(response);
                 }
             }
