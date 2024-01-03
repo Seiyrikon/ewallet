@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RegisterForm } from 'src/app/interface/register-form';
@@ -29,13 +30,17 @@ export class RegisterComponent implements OnInit, OnDestroy
   firstName!: FormControl;
   middleName!: FormControl;
   lastName!: FormControl;
+  showProgressBar: boolean = false;
+  showSubmitButton: boolean = true;
+  showCancelButton: boolean = true;
 
   matcher = new MyErrorStateMatcher();
 
   constructor
   (
     private _registerService: RegisterService,
-    private _router: Router
+    private _router: Router,
+    private _snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void
@@ -68,40 +73,60 @@ export class RegisterComponent implements OnInit, OnDestroy
     });
   }
 
-  onSubmit(): any{
+  onSubmit()
+  {
+    this.errorMessage = '';
     if(this.registerForm.valid)
     {
+      this.showSubmitButton = false;
+      this.showCancelButton = false;
+      this.showProgressBar = true; // Show the progress bar
+
       const registerBody = this.registerForm.value;
 
-      this._subscription = this._registerService.register(registerBody)
-      .subscribe(
+      const registerProcess$ = this._registerService.register(registerBody);
+
+      registerProcess$.subscribe
+      (
         (response) => {
-          if (response) {
+          if(!response)
+          {
+            this.showProgressBar = false;
+            console.error('Response is empty');
+          }
+          else
+          {
             const result = response.message; // Assuming the token is in the 'message' property
 
             if(localStorage.getItem(this.tokenKey) != null)
             {
               localStorage.removeItem(this.tokenKey);
               localStorage.setItem(this.tokenKey, result); // Store token in local storage
-              this._router.navigate(['/login']);
             }
             else
             {
               localStorage.setItem(this.tokenKey, result); // Store token in local storage
-              this._router.navigate(['/login']);
             }
-
-            // Perform any additional actions after successful login
-            // For example, redirect the user to a different page
-          }
-          else
-          {
-            console.error('Token not found in response');
           }
         },
         (error) => {
-          console.error('Login Failed', error);
+          console.error('Register Failed', error);
+          this.showProgressBar = false;
+          this.showSubmitButton = true;
           this.errorMessage = error;
+        },
+        () => {
+          this.errorMessage = '';
+          // Upon completion of wallet creation (when the observable completes)
+          this.showProgressBar = false; // Hide the progress bar
+          this.showSubmitButton = true; // Show the "Add Wallet" button
+          this.showCancelButton = true; // Show the "Cancel" button
+
+          this._snackbar.open('Register Successful', 'Close', {
+            duration: 1000,
+          }).afterDismissed().subscribe(() => {
+            this._router.navigate(['/login']);
+          });
         }
       )
     }
