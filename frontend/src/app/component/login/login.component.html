@@ -1,5 +1,6 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-image">
   <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
+    <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
     <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
       Log in to your account
     </h2>
@@ -23,7 +24,7 @@
         {{ errorMessage }}
       </div>
       <div>
-        <button type="submit" [disabled]="!loginForm.valid" class="submit-btn"
+        <button type="submit" *ngIf="showSubmitButton" [disabled]="!loginForm.valid" class="submit-btn"
           [ngClass]="{'submit-btn-enabled': loginForm.valid, 'submit-btn-disabled': !loginForm.valid}">
           <span class="absolute left-0 inset-y-0 flex items-center pl-3">
             <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
