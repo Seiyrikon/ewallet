@@ -1,16 +1,30 @@
 <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
 <div class="bg-gradient-to-r from-blue-200 to-blue-100 py-8 px-6 rounded-lg shadow-md">
   <h2 class="text-3xl font-bold text-blue-900 mb-4">User Information</h2>
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-800">
-    <div class="flex items-center">
-      <span class="font-semibold mr-2">Username:</span>
+    <div class="flex items-center mb-4">
+      <span class="font-semibold w-32">Username:</span>
       <span>{{ principal.username }}</span>
     </div>
-    <div class="flex items-center">
-      <span class="font-semibold mr-2">Name:</span>
-      <span>{{ principal.firstName }} {{ principal.middleName }} {{ principal.lastName }}</span>
+
+    <div class="flex items-center mb-4">
+      <span class="font-semibold w-32">First Name:</span>
+      <span>{{ principal.firstName }}</span>
+    </div>
+
+    <div class="flex items-center mb-4">
+      <span class="font-semibold w-32">Middle Name:</span>
+      <span>{{ principal.middleName }}</span>
+    </div>
+
+    <div class="flex items-center mb-4">
+      <span class="font-semibold w-32">Last Name:</span>
+      <span>{{ principal.lastName }}</span>
     </div>
     <!-- Include additional user information as needed -->
   </div>
+
   <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
 </div>
