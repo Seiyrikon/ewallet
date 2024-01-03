@@ -19,5 +19,7 @@ public interface tbl_user_mstDao
     tbl_user_mst findByUsername(String username);
     
     tbl_user_mst loadByUsername(String username);
+
+    tbl_user_mst getUserById(Long userId);
     
 }

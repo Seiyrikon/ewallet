@@ -10,12 +10,12 @@ import io.jsonwebtoken.Claims;
 
 public interface JwtService 
 {
-    public String extractUsername(String jwt);
+    public String extractUserId(String jwt);
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver);
     public Claims extractAllClaims(String jwt);
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails);
-    public String generateToken(UserDetails userDetails);
-    public boolean isTokenValid(String jwt, UserDetails userDetails);
+    public String generateToken(Map<String, Object> extraClaims, Long userId);
+    public String generateToken(Long userId);
+    public boolean isTokenValid(String jwt, Long userId);
     public boolean isTokenExpired(String jwt);
     public Date extractExpiration(String jwt);
 }

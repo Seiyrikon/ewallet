@@ -72,12 +72,12 @@ public class RegisterServiceImpl implements ResgisterService
                 //saves the USER_ID of user to variable USER_ID
                 //USER_ID is necessary for saving personalInfo as it is a 
                 //foreign key of TBL_PERSONAL_INFO_MST
-                Long USER_ID = user.getUserId();
+                Long userId = user.getUserId();
 
                 //saves the values of personalInfo to TBL_PERSONAL_INFO_MST
-                TBL_PERSONAL_INFO_MSTDao.insertPersonalInfo(personalInfo, USER_ID);
+                TBL_PERSONAL_INFO_MSTDao.insertPersonalInfo(personalInfo, userId);
 
-                var jwt = jwtService.generateToken(user);
+                var jwt = jwtService.generateToken(userId);
                 response.put("message", jwt);
             }
             else

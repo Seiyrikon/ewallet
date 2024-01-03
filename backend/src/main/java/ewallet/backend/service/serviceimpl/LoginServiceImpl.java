@@ -102,7 +102,7 @@ public class LoginServiceImpl implements LoginService
                     body.getUsername(), 
                     body.getPassword())
             );
-            var jwt = jwtService.generateToken(user);
+            var jwt = jwtService.generateToken(user.getUserId());
             response.put("message", jwt);
         }
         else 

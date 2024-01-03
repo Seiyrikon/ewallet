@@ -23,7 +23,7 @@ public class JwtServiceImpl implements JwtService
     private static final String SECRET_KEY = "A404AD4B5E8655F686922AB29CB59052DBD8018487D8DC95E8D0F2A6EE2E775F";
 
     @Override
-    public String extractUsername(String jwt) 
+    public String extractUserId(String jwt) 
     {
         return extractClaim(jwt, Claims::getSubject);
     }
@@ -53,12 +53,12 @@ public class JwtServiceImpl implements JwtService
     }
 
     @Override
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) 
+    public String generateToken(Map<String, Object> extraClaims, Long userId) 
     {
         return Jwts
             .builder()
             .setClaims(extraClaims)
-            .setSubject(userDetails.getUsername())
+            .setSubject(String.valueOf(userId))
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
             .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -66,16 +66,16 @@ public class JwtServiceImpl implements JwtService
     }
 
     @Override
-    public String generateToken(UserDetails userDetails) 
+    public String generateToken(Long userId) 
     {
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userId);
     }
 
     @Override
-    public boolean isTokenValid(String jwt, UserDetails userDetails) 
+    public boolean isTokenValid(String jwt, Long userId) 
     {
-        final String username = extractUsername(jwt);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(jwt);
+        final String extractedUserId = extractUserId(jwt);
+        return (extractedUserId.equals(String.valueOf(userId))) && !isTokenExpired(jwt);
     }
 
     @Override
