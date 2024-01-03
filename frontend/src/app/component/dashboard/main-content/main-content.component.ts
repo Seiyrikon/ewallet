@@ -17,7 +17,7 @@ export class MainContentComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription;
   principal!: Principal;
-  overAllBalance!: number;
+  overAllBalance: number = 0.00;
   errorMessage: string = '';
 
   constructor
