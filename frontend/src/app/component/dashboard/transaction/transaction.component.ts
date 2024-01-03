@@ -13,6 +13,7 @@ export class TransactionComponent implements OnInit, OnDestroy
   private _subscription!: Subscription;
   transactions!: Transaction[];
   errorMessage: string = '';
+  showProgressBar: boolean = false;
 
   constructor
   (
@@ -25,20 +26,25 @@ export class TransactionComponent implements OnInit, OnDestroy
 
   getAllTransactionPerUser(): any
   {
-    this._subscription = this._transactionService.getAllTransactionPerUser()
-    .subscribe(
+    this.showProgressBar = true;
+
+    const transactions$ = this._transactionService.getAllTransactionPerUser();
+
+    transactions$.subscribe
+    (
       (response) => {
-        if (response) {
-          this.transactions = response.message;
-        }
-        else
+        if(!response)
         {
           console.error('Response is empty');
         }
+        this.transactions = response.message;
       },
       (error) => {
-        console.error("An Error Occured", error);
+        console.error('Transactions not found', error);
         this.errorMessage = error;
+      },
+      () => {
+        this.showProgressBar = false
       }
     )
   }
