@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit, OnDestroy
   private _subscription!: Subscription;
   principal!: Principal;
   errorMessage: string = '';
+  showProgressBar: boolean = false;
 
   constructor
   (
@@ -30,20 +31,25 @@ export class ProfileComponent implements OnInit, OnDestroy
   }
 
   getPrincipalInfo(): any {
-    this._subscription = this._principalService.getPrincipalInfo()
-    .subscribe(
+    this.showProgressBar = true;
+
+    const principal$ = this._principalService.getPrincipalInfo();
+
+    principal$.subscribe
+    (
       (response) => {
-        if (response) {
-          this.principal = response.message[0];
-        }
-        else
+        if(!response)
         {
           console.error('Response is empty');
         }
+        this.principal = response.message[0];
       },
       (error) => {
-        console.error("An Error Occured", error);
+        console.error('Principal Info not found', error);
         this.errorMessage = error;
+      },
+      () => {
+        this.showProgressBar = false;
       }
     )
   }
