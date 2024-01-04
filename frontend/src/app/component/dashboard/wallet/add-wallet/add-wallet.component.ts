@@ -68,11 +68,12 @@ export class AddWalletComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
-    if (this.addWalletForm.valid) {
+    if (this.addWalletForm.valid)
+    {
       this.showSubmitButton = false;
       this.showCancelButton = false;
       this.showProgressBar = true; // Show the progress bar
-
+ 
       const addWalletBody = this.addWalletForm.value;
       console.log(addWalletBody);
 
@@ -105,6 +106,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
     }
   }
 
+  //modal for cancel button
   openCancelConfirmationDialog(): Promise<boolean> {
     this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
@@ -121,6 +123,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
     });
   }
 
+  //guard for leaving a route if form has unsaved value
   openLeaveConfirmationDialog(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(LeaveModalComponent);

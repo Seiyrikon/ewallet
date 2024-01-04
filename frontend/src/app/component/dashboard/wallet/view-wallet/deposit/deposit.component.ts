@@ -142,6 +142,7 @@ export class DepositComponent implements OnInit, OnDestroy
     }
   }
 
+  //modal for cancel button
   openCancelConfirmationDialog(): Promise<boolean> {
     this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
@@ -158,6 +159,7 @@ export class DepositComponent implements OnInit, OnDestroy
     });
   }
 
+  //guard for leaving a route if form has unsaved value
   openLeaveConfirmationDialog(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(LeaveModalComponent);

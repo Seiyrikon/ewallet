@@ -16,6 +16,7 @@ import { RegisterComponent } from './component/register/register.component';
 import { AddWalletFormGuard } from './service/wallet/guard/add-wallet-form.guard';
 import { AddDepositFormGuard } from './service/deposit/guard/add-deposit-form.guard';
 import { AddWithdrawFormGuard } from './service/withdraw/guard/add-withdraw-form.guard';
+import { EditProfileFormGuard } from './service/profile/guard/edit-profile-form.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -76,6 +77,7 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         canActivate: [GuardService],
+        canDeactivate: [EditProfileFormGuard],
         outlet: 'contentOutlet'
       },
       {

@@ -117,25 +117,6 @@ export class WithdrawComponent implements OnInit, OnDestroy
           })
         }
       );
-
-      // this._subscription = this._withdrawService.inserWithdraw(+this.walletId, withdrawBody)
-      // .subscribe(
-      //   (response) => {
-      //     if (response) {
-      //       const result = response.message; // Assuming the token is in the 'message' property
-      //       this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
-      //       console.log(result);
-      //     }
-      //     else
-      //     {
-      //       console.error('Response is empty');
-      //     }
-      //   },
-      //   (error) => {
-      //     console.error('Add wallet failed', error);
-      //     this.errorMessage = error;
-      //   }
-      // )
     }
   }
 
@@ -162,6 +143,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
     }
   }
 
+  //modal for cancel button
   openCancelConfirmationDialog(): Promise<boolean> {
     this.isCancelled = !this.isCancelled;
     return new Promise<boolean>((resolve, reject) => {
@@ -178,6 +160,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
     });
   }
 
+  //guard for leaving a route if form has unsaved value
   openLeaveConfirmationDialog(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(LeaveModalComponent);
