@@ -73,7 +73,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
       this.showSubmitButton = false;
       this.showCancelButton = false;
       this.showProgressBar = true; // Show the progress bar
- 
+
       const addWalletBody = this.addWalletForm.value;
       console.log(addWalletBody);
 
@@ -115,6 +115,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           resolve(true); // User confirmed leaving
+          this.errorMessage = '';
           this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
         } else {
           resolve(false); // User canceled leaving

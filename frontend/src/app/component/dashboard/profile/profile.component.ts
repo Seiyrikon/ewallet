@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit, OnDestroy
         if (result === true) {
           resolve(true); // User confirmed leaving
           this.isEditFormVisible = false;
-          // this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['profile'] } }]);
+          this.errorMessage = '';
         } else {
           resolve(false); // User canceled leaving
         }

@@ -152,6 +152,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           resolve(true); // User confirmed leaving
+          this.errorMessage = '';
           this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${this.walletId}`] } }]);
         } else {
           resolve(false); // User canceled leaving
