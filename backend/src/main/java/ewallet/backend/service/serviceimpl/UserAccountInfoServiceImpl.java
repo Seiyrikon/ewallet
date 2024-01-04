@@ -40,6 +40,7 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
 
     List<UserAccountInfoDto> userAccountInfo = new ArrayList<UserAccountInfoDto>();
     Map<String, Object> response = new HashMap<String, Object>();
+    List<tbl_user_mst> allUser = new ArrayList<tbl_user_mst>();
     tbl_user_mst userBody = new tbl_user_mst();
     tbl_personal_info_mst personalInfoBody = new tbl_personal_info_mst();
 
@@ -96,6 +97,17 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
             {
                 //gets the user_id of the currently logged in user
                 Long userId = Long.parseLong(authentication.getName());
+
+                allUser = tbl_user_mstDao.getAllUser();
+                
+                for(tbl_user_mst user : allUser)
+                {
+                    if(user.getUsername().equals(body.getUsername()))
+                    {
+                        response.put("message", "Username Already Taken");
+                        return ResponseEntity.status(409).body(response);
+                    }
+                }
 
                 Timestamp updateTimestamp = new Timestamp(System.currentTimeMillis());
 
