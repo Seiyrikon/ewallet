@@ -63,7 +63,7 @@
                 UPDATE 
                         tbl_user_mst
                 SET
-                        <!-- username = #{body.username}, -->
+                        username = #{body.username},
                         updated_at = #{body.updated_at}
                 WHERE
                         user_id = #{user_id}

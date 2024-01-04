@@ -99,7 +99,7 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
 
                 Timestamp updateTimestamp = new Timestamp(System.currentTimeMillis());
 
-                // userBody.setUsername(body.getUsername());
+                userBody.setUsername(body.getUsername());
                 userBody.setUpdated_at(updateTimestamp);
                 tbl_user_mstDao.updateUser(userId, userBody);
 
