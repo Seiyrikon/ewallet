@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_wallet_mstDao;
 import ewallet.backend.model.tbl_wallet_mst;
+import ewallet.backend.service.JwtService;
 import ewallet.backend.service.OverAllBalanceService;
 import ewallet.backend.service.TotalBalanceService;
+import io.jsonwebtoken.ExpiredJwtException;
 
 @Service
 public class OverAllBalanceServiceImpl implements OverAllBalanceService
@@ -25,54 +27,68 @@ public class OverAllBalanceServiceImpl implements OverAllBalanceService
     @Autowired
     private TotalBalanceService totalBalanceService;
 
+    @Autowired
+    private JwtService jwtService;
+
     Map<String, Object> response = new HashMap<String, Object>();
+    Long userId;
 
     @Override
     public ResponseEntity<Map<String, Object>> getOverAllBalancePerUser() 
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        try 
-        {
+        try {
             if (authentication != null && authentication.isAuthenticated()) 
-            {
-                //gets the user_id of the currently logged in user
-                Long userId = Long.parseLong(authentication.getName());
-
-                List<tbl_wallet_mst> wallets = new ArrayList<tbl_wallet_mst>();
-    
-                wallets = tbl_wallet_mstDao.getAllUserWallet(userId);
-
-                if(wallets.size() != 0) 
                 {
-                    Double overAllBalance = 0.00;
-                    Double totalBalance = 0.00;
-                    for(tbl_wallet_mst wallet : wallets)
+                    //gets the user_id of the currently logged in user
+                    userId = Long.parseLong(authentication.getName());
+                }
+            try 
+            {
+                if (authentication != null && authentication.isAuthenticated()) 
+                {
+                    //gets the user_id of the currently logged in user
+                    userId = Long.parseLong(authentication.getName());
+    
+                    List<tbl_wallet_mst> wallets = new ArrayList<tbl_wallet_mst>();
+        
+                    wallets = tbl_wallet_mstDao.getAllUserWallet(userId);
+    
+                    if(wallets.size() != 0) 
                     {
-                        totalBalance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getWallet_id())
-                                       .getBody().get("message").toString());
-
-                        overAllBalance += totalBalance;
-
-                        response.put("message", overAllBalance);
+                        Double overAllBalance = 0.00;
+                        Double totalBalance = 0.00;
+                        for(tbl_wallet_mst wallet : wallets)
+                        {
+                            totalBalance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getWallet_id())
+                                           .getBody().get("message").toString());
+    
+                            overAllBalance += totalBalance;
+    
+                            response.put("message", overAllBalance);
+                        }
+                    }
+                    else
+                    {
+                        response.put("message", "");
+                        return ResponseEntity.status(404).body(response);
                     }
                 }
-                else
+                else 
                 {
-                    response.put("message", "");
-                    return ResponseEntity.status(404).body(response);
+                    response.put("message", "You must login first");
+                    return ResponseEntity.status(403).body(response);
                 }
-            }
-            else 
+            } 
+            catch (Exception e) 
             {
-                response.put("message", "You must login first");
-                return ResponseEntity.status(403).body(response);
+                e.printStackTrace();
+                response.put("message", "Internal Server Error");
+                return ResponseEntity.status(500).body(response);
             }
-        } 
-        catch (Exception e) 
-        {
+        } catch (ExpiredJwtException e) {
             e.printStackTrace();
-            response.put("message", "Internal Server Error");
-            return ResponseEntity.status(500).body(response);
+            jwtService.generateToken(userId);
         }
         return ResponseEntity.ok(response);
     }

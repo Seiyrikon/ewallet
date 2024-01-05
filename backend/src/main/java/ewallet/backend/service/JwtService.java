@@ -16,4 +16,5 @@ public interface JwtService
     public boolean isTokenValid(String jwt, Long userId);
     public boolean isTokenExpired(String jwt);
     public Date extractExpiration(String jwt);
+    
 }
