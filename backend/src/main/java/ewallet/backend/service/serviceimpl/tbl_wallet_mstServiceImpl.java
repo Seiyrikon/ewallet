@@ -12,11 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dao.tbl_wallet_mstDao;
 import ewallet.backend.dto.tbl_wallet_mstDto;
 import ewallet.backend.dto.mapper.tbl_wallet_mstDtoMapper;
-import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.model.tbl_wallet_mst;
 import ewallet.backend.service.tbl_wallet_mstService;
 
@@ -26,9 +24,6 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
 
     @Autowired
     private tbl_wallet_mstDao tbl_wallet_mstDao;
-
-    @Autowired
-    private tbl_user_mstDao tbl_user_mstDao;
 
     @Autowired
     private tbl_wallet_mstDtoMapper tbl_wallet_mstDtoMapper;

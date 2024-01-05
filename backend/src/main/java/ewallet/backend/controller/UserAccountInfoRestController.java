@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ewallet.backend.model.UserAccountInfoModel;
 import ewallet.backend.service.UserAccountInfoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

@@ -12,10 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_depositDao;
-import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dao.tbl_wallet_mstDao;
 import ewallet.backend.dao.tbl_withdrawDao;
-import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.model.tbl_wallet_mst;
 import ewallet.backend.service.TotalBalanceService;
 
@@ -28,9 +26,6 @@ public class TotalBalanceServiceImpl implements TotalBalanceService
 
     @Autowired
     private tbl_withdrawDao tbl_withdrawDao;
-
-    @Autowired
-    private tbl_user_mstDao tbl_user_mstDao;
 
     @Autowired
     private tbl_wallet_mstDao tbl_wallet_mstDao;

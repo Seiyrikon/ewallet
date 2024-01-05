@@ -14,13 +14,11 @@ import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_depositDao;
 import ewallet.backend.dao.tbl_transactionDao;
-import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dao.tbl_wallet_mstDao;
 import ewallet.backend.dao.tbl_withdrawDao;
 import ewallet.backend.dto.tbl_withdrawDto;
 import ewallet.backend.dto.mapper.tbl_withdrawDtoMapper;
 import ewallet.backend.model.tbl_transaction;
-import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.model.tbl_wallet_mst;
 import ewallet.backend.model.tbl_withdraw;
 import ewallet.backend.service.tbl_withdrawService;
@@ -34,9 +32,6 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
 
     @Autowired
     private tbl_depositDao tbl_depositDao;
-
-    @Autowired
-    private tbl_user_mstDao tbl_user_mstDao;
 
     @Autowired
     private tbl_wallet_mstDao tbl_wallet_mstDao;

@@ -13,10 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.PrincipalDao;
-import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dto.PrincipalDto;
 import ewallet.backend.dto.mapper.PrincipalDtoMapper;
-import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.service.PrincipalService;
 
 @Service
@@ -28,9 +26,6 @@ public class PrincipalServiceImpl implements PrincipalService
 
     @Autowired
     private PrincipalDtoMapper principalDtoMapper;
-
-    @Autowired
-    private tbl_user_mstDao tbl_user_mstDao;
 
     List<PrincipalDto> principal = new ArrayList<PrincipalDto>();
     Map<String, Object> response = new HashMap<String, Object>();

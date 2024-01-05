@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import ewallet.backend.dao.tbl_wallet_mstDao;
 import ewallet.backend.dto.tbl_transactionDto;
 import ewallet.backend.model.tbl_transaction;
-import ewallet.backend.model.tbl_wallet_mst;
-import ewallet.backend.service.tbl_wallet_mstService;
 
 @Service
 public class tbl_transactionDtoMapper implements Function<tbl_transaction, tbl_transactionDto>
