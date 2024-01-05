@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Wallet } from 'src/app/interface/wallet';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { DeleteModalComponent } from '../../common/delete-modal/delete-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-wallet',
@@ -23,7 +24,8 @@ export class WalletComponent implements OnInit, OnDestroy
   (
     private _walletService: WalletService,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -32,22 +34,6 @@ export class WalletComponent implements OnInit, OnDestroy
 
   getAllUserWallet(): any
   {
-    // this._subscription = this._walletService.getAllUserWallet()
-    // .subscribe(
-    //   (response) => {
-    //     if (response) {
-    //       this.wallets = response.message;
-    //     }
-    //     else
-    //     {
-    //       console.error('Response is empty');
-    //     }
-    //   },
-    //   (error) => {
-    //     console.error("An Error Occured", error);
-    //     this.errorMessage = error;
-    //   }
-    // )
     this.showProgressBar = true;
 
     const wallets$ = this._walletService.getAllUserWallet()
@@ -80,22 +66,29 @@ export class WalletComponent implements OnInit, OnDestroy
     console.log(walletId);
     if(walletId)
     {
-      this._subscription = this._walletService.logicalDeleteWalletById(walletId)
-      .subscribe(
+      const walletDeletion$ = this._walletService.logicalDeleteWalletById(walletId);
+
+      walletDeletion$.subscribe
+      (
         (response) => {
-          if (response) {
-            const result = response.message; // Assuming the token is in the 'message' property
-            this.getAllUserWallet();
-            console.log(result);
-          }
-          else
+          if(!response)
           {
             console.error('Response is empty');
+
           }
         },
         (error) => {
-          console.error('Add wallet failed', error);
-          this.errorMessage = error;
+          console.error('Delete wallet failed', error);
+        },
+        () => {
+          this.showProgressBar = false;
+
+          this._snackbar.open('Wallet deleted successfully!', 'Close', {
+            duration: 1000,
+          }).afterDismissed().subscribe(() => {
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
+            this.getAllUserWallet();
+          });
         }
       )
     }
@@ -109,27 +102,34 @@ export class WalletComponent implements OnInit, OnDestroy
         if (result === true) {
           resolve(true); // User confirmed leaving
 
-          if(walletId)
-          {
-            this._subscription = this._walletService.logicalDeleteWalletById(walletId)
-            .subscribe(
-              (response) => {
-                if (response) {
-                  const result = response.message; // Assuming the token is in the 'message' property
-                  this.getAllUserWallet();
-                  console.log(result);
-                }
-                else
-                {
-                  console.error('Response is empty');
-                }
-              },
-              (error) => {
-                console.error('Add wallet failed', error);
-                this.errorMessage = error;
+        if(walletId)
+        {
+          const walletDeletion$ = this._walletService.logicalDeleteWalletById(walletId);
+
+          walletDeletion$.subscribe
+          (
+            (response) => {
+              if(!response)
+              {
+                console.error('Response is empty');
+
               }
-            )
-          }
+            },
+            (error) => {
+              console.error('Delete wallet failed', error);
+            },
+            () => {
+              this.showProgressBar = false;
+
+              this._snackbar.open('Wallet deleted successfully!', 'Close', {
+                duration: 1000,
+              }).afterDismissed().subscribe(() => {
+                this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]);
+                this.getAllUserWallet();
+              });
+            }
+          )
+        }
         } else {
           resolve(false); // User canceled leaving
         }

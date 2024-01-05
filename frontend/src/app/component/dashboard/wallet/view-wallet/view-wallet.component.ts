@@ -30,27 +30,6 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   }
 
   getWalletById(): any {
-    // if (this.walletId) {
-    //   this._subscription = this._walletService.getWalletById(+this.walletId)
-    //     .subscribe(
-    //       (response) => {
-    //         if (response) {
-    //           this.wallet = response.message[0];
-    //         }
-    //         else
-    //         {
-    //           console.error('Response is empty');
-    //         }
-    //       },
-    //       (error) => {
-    //         console.error("An Error Occured", error);
-    //         this.errorMessage = error;
-    //       }
-    //     )
-    // } else {
-    //   console.error("No wallet ID found in the route");
-    // }
-
     if(this.walletId)
     {
       this.showProgressBar = true;
