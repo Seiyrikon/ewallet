@@ -6,10 +6,10 @@ USE EWALLET_DB;
 DROP TABLE IF EXISTS tbl_user_mst;
 CREATE TABLE tbl_user_mst (
 	user_id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(20) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(255) NOT NULL,
-    del_flag int(9) NULL DEFAULT 0,
+    role VARCHAR(20) NOT NULL,
+    del_flag int(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL
 );
@@ -18,10 +18,10 @@ DROP TABLE IF EXISTS tbl_personal_info_mst;
 CREATE TABLE tbl_personal_info_mst(
 	pi_id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT(9) UNSIGNED NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    middle_name VARCHAR(255) NULL,
-    last_name VARCHAR(255) NULL,
-    del_flag int(9) NULL DEFAULT 0,
+    first_name VARCHAR(20) NOT NULL,
+    middle_name VARCHAR(20) NULL,
+    last_name VARCHAR(20) NULL,
+    del_flag int(1) NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     FOREIGN KEY (user_id) REFERENCES tbl_user_mst (user_id)
@@ -33,7 +33,7 @@ CREATE TABLE tbl_wallet_mst(
     user_id INT(9) UNSIGNED NOT NULL,
     wallet_name VARCHAR(50) NOT NULL,
     wallet_desc VARCHAR(255),
-    del_flag int(9) NULL DEFAULT 0,
+    del_flag int(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     FOREIGN KEY(user_id) REFERENCES tbl_user_mst (user_id)
@@ -46,7 +46,7 @@ CREATE TABLE tbl_withdraw(
     wallet_id INT(9) UNSIGNED NOT NULL,
     amount DOUBLE NOT NULL,
     withdraw_desc VARCHAR(255),
-    del_flag int(9) NULL DEFAULT 0,
+    del_flag int(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     FOREIGN KEY(user_id) REFERENCES tbl_user_mst (user_id),
@@ -60,7 +60,7 @@ CREATE TABLE tbl_deposit(
     wallet_id INT(9) UNSIGNED NOT NULL,
     amount DOUBLE NOT NULL,
     deposit_desc VARCHAR(255),
-    del_flag int(9) NULL DEFAULT 0,
+    del_flag int(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     FOREIGN KEY(user_id) REFERENCES tbl_user_mst (user_id),
@@ -75,7 +75,7 @@ CREATE TABLE tbl_transaction(
     transaction_type VARCHAR(10) NOT NULL,
     transaction_amount DOUBLE NOT NULL,
     transaction_desc VARCHAR(255),
-    del_flag int(9) NULL DEFAULT 0,
+    del_flag int(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
     FOREIGN KEY(user_id) REFERENCES tbl_user_mst (user_id),
