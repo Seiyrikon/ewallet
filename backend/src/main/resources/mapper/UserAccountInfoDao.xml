@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Mapper for tbl project   -->
-<mapper namespace="ewallet.backend.dao.UserAccountInfoDao">
+<mapper namespace="ewallet.backend.dao.tbl_user_friend_mstDao">
 
     <!-- getUserAccountInfo --> 
 

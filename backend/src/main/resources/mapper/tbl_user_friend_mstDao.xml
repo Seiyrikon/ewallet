@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ewallet.backend.dao.tbl_user_friend_mstDao">
+
+    <!-- getAllFriendsOfUser --> 
+
+    <select id="getAllFriendsOfUser" parameterType="java.lang.Long">
+        SELECT 
+            friend_account.user_id AS friendId,
+            friend_account.username AS username,
+            friend_pi.first_name AS firstName,
+            friend_pi.middle_name AS middleName,
+            friend_pi.last_name AS lastName
+        FROM 
+            tbl_user_friend_mst AS friends
+        INNER JOIN 
+            tbl_personal_info_mst AS friend_pi
+            ON friends.friend_id = friend_pi.user_id
+		LEFT JOIN 
+			tbl_user_mst AS friend_account
+            ON friends.friend_id = friend_account.user_id
+		LEFT JOIN 
+			tbl_user_mst AS user_account
+			ON friends.user_id = user_account.user_id
+        WHERE user_account.user_id = #{userId} AND user_account.del_flag = 0 AND friend_account.del_flag = 0 AND friends.block_flag = 0 AND friends.del_flag = 0
+    </select>
+
+    <!-- insertFriend --> 
+
+    <insert id="insertFriend" parameterType="java.lang.Long">
+        INSERT INTO 
+            tbl_user_friend_mst 
+            (user_id, friend_id) 
+        VALUES 
+            (#{userId}, #{friendId})
+    </insert>
+
+</mapper>
