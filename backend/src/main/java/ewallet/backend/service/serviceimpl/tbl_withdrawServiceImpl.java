@@ -109,31 +109,32 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
                 if(body != null) 
                 {
                     Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(userId, walletId);
-                    Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(userId, walletId);
 
-                    Double overAllBalanceOfWallet = totalDeposit - totalWithdraw;
-                    
-                    if(totalDeposit == null || body.getAmount() > overAllBalanceOfWallet)
+                    if(totalDeposit == null)
                     {
-                        response.put("message", "Insufficient  Funds");
+                        response.put("message", "Make deposit first");
                         return ResponseEntity.status(402).body(response);
                     }
-                    else 
-                    {
-                        body.setUser_id(userId);
-                        body.setWallet_id(walletId);
-                        tbl_withdrawDao.insertWithdraw(body);
-                        
-                        //saves transaction to db
-                        transaction.setUser_id(userId);
-                        transaction.setWallet_id(walletId);
-                        transaction.setTransaction_type("Withdraw");
-                        transaction.setTransaction_amount(body.getAmount());
-                        transaction.setTransaction_desc(body.getWithdraw_desc());
-                        tbl_transactionDao.insertTransaction(transaction);
 
-                        response.put("message", "Withdraw Successful");
+                    if(totalDeposit < body.getAmount())
+                    {
+                        response.put("message", "Insufficient Funds");
+                        return ResponseEntity.status(402).body(response);
                     }
+
+                    body.setUser_id(userId);
+                    body.setWallet_id(walletId);
+                    tbl_withdrawDao.insertWithdraw(body);
+                    
+                    //saves transaction to db
+                    transaction.setUser_id(userId);
+                    transaction.setWallet_id(walletId);
+                    transaction.setTransaction_type("Withdraw");
+                    transaction.setTransaction_amount(body.getAmount());
+                    transaction.setTransaction_desc(body.getWithdraw_desc());
+                    tbl_transactionDao.insertTransaction(transaction);
+
+                    response.put("message", "Withdraw Successful");
                 }
                 else
                 {
