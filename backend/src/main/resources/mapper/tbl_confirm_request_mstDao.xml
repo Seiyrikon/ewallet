@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ewallet.backend.dao.tbl_confirm_request_mstDao">
+
+    <!-- getAllFriendRequestofUser --> 
+
+    <!-- <select id="getAllFriendRequestofUser" parameterType="java.lang.Long">
+        SELECT 
+            friend_account.user_id AS friendId,
+            friend_account.username AS username,
+            friend_pi.first_name AS firstName,
+            friend_pi.middle_name AS middleName,
+            friend_pi.last_name AS lastName
+        FROM 
+            tbl_friend_request_mst AS requests
+        INNER JOIN 
+            tbl_personal_info_mst AS friend_pi
+            ON requests.requestee_id = friend_pi.user_id
+        LEFT JOIN 
+            tbl_user_mst AS friend_account
+            ON requests.requestee_id = friend_account.user_id
+        LEFT JOIN 
+            tbl_user_mst AS user_account
+            ON requests.requestor_id = user_account.user_id
+        WHERE user_account.user_id = #{userId} AND user_account.del_flag = 0 AND friend_account.del_flag = 0 AND requests.del_flag = 0
+    </select> -->
+
+    <!-- insertConfirmRequest --> 
+
+    <insert id="insertConfirmRequest">
+        INSERT INTO 
+            tbl_confirm_request_mst 
+            (requested_id, requesting_id) 
+        VALUES 
+            (#{requestedId}, #{requestingId})        
+    </insert>
+</mapper>
