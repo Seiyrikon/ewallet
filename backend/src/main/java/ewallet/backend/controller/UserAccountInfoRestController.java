@@ -30,6 +30,12 @@ public class UserAccountInfoRestController
         return userAccountInfoService.getUserAccountInfo(userId);
     }
 
+    @GetMapping("user/search/{username}")
+    public ResponseEntity<Map<String, Object>> getUserAccountInfo(@PathVariable String username)
+    {
+        return userAccountInfoService.searchUserByUsername(username);
+    }
+
     @PutMapping("user/update")
     public ResponseEntity<Map<String, Object>> updateUserAccount(@RequestBody UserAccountInfoModel body) {
         return userAccountInfoService.updateUserAccount(body);

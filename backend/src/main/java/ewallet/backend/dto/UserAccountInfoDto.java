@@ -2,6 +2,7 @@ package ewallet.backend.dto;
 
 public record UserAccountInfoDto
 (
+    Long userId,
     String username,
     String role,
     String firstName,

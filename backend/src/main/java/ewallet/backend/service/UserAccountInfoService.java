@@ -11,5 +11,7 @@ public interface UserAccountInfoService
     public ResponseEntity<Map<String, Object>> getUserAccountInfo(Long userId);
     
     public ResponseEntity<Map<String, Object>> updateUserAccount(UserAccountInfoModel body);
+    
+    public ResponseEntity<Map<String, Object>> searchUserByUsername(String username);
 
 }

@@ -16,6 +16,7 @@ public class UserAccountInfoDtoMapper implements Function<UserAccountInfoModel, 
     {
         return new UserAccountInfoDto
         (
+            user.getUserId(),
             user.getUsername(), 
             user.getRole(),
             user.getFirstName(),
