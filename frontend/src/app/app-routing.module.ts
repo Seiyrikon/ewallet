@@ -17,6 +17,7 @@ import { AddWalletFormGuard } from './service/wallet/guard/add-wallet-form.guard
 import { AddDepositFormGuard } from './service/deposit/guard/add-deposit-form.guard';
 import { AddWithdrawFormGuard } from './service/withdraw/guard/add-withdraw-form.guard';
 import { EditProfileFormGuard } from './service/profile/guard/edit-profile-form.guard';
+import { FriendComponent } from './component/dashboard/friend/friend.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -61,6 +62,7 @@ const routes: Routes = [
         canDeactivate: [AddWalletFormGuard],
         outlet: 'contentOutlet'
       },
+      //top nav
       {
         path: 'home',
         component: MainContentComponent,
@@ -86,6 +88,16 @@ const routes: Routes = [
         canActivate: [GuardService],
         outlet: 'contentOutlet'
       },
+      //top nav
+
+      //side nav
+      {
+        path: 'friend',
+        component: FriendComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      //side nav
       {
         path: '**',
         redirectTo: '404',

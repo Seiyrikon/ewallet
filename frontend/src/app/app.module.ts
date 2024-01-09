@@ -35,6 +35,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CancelModalComponent } from './component/common/cancel-modal/cancel-modal.component';
 import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.component';
 import { DeleteModalComponent } from './component/common/delete-modal/delete-modal.component';
+import { SideNavComponent } from './component/dashboard/side-nav/side-nav.component';
+import { FriendComponent } from './component/dashboard/friend/friend.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { DeleteModalComponent } from './component/common/delete-modal/delete-mod
     LogoutModalComponent,
     CancelModalComponent,
     LeaveModalComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    SideNavComponent,
+    FriendComponent
   ],
   imports: [
     BrowserModule,
