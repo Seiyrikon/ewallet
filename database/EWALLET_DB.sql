@@ -106,3 +106,15 @@ CREATE TABLE tbl_friend_request_mst (
     FOREIGN KEY(requestor_id) REFERENCES tbl_user_mst (user_id),
     FOREIGN KEY(requestee_id) REFERENCES tbl_user_mst (user_id)
 );
+
+DROP TABLE IF EXISTS tbl_confirm_request_mst;
+CREATE TABLE tbl_confirm_request_mst (
+	cr_id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    requested_id INT(9) UNSIGNED NOT NULL,
+    requesting_id INT(9) UNSIGNED NOT NULL,
+    del_flag INT(1) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY(requested_id) REFERENCES tbl_user_mst (user_id),
+    FOREIGN KEY(requesting_id) REFERENCES tbl_user_mst (user_id)
+);
