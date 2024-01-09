@@ -42,6 +42,7 @@ export class TransactionComponent implements OnInit, OnDestroy
       (error) => {
         console.error('Transactions not found', error);
         this.errorMessage = error;
+        this.showProgressBar = false;
       },
       () => {
         this.showProgressBar = false

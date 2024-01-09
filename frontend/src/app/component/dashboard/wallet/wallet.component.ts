@@ -50,6 +50,7 @@ export class WalletComponent implements OnInit, OnDestroy
       (error) => {
         console.error('Get Wallet Failed', error);
         this.errorMessage = error;
+        this.showProgressBar = false;
       },
       () => {
         this.showProgressBar = false;

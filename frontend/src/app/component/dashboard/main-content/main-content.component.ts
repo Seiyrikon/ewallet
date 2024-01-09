@@ -53,6 +53,7 @@ export class MainContentComponent implements OnInit, OnDestroy
       (error) => {
         console.error('Overall Balance Missing', error);
         this.errorMessage = error;
+        this.showProgressBar = false;
       },
       () => {
         this.showProgressBar = false; // Hide the progress bar
@@ -77,6 +78,7 @@ export class MainContentComponent implements OnInit, OnDestroy
       (error) => {
         console.error('Principal Info not found', error);
         this.errorMessage = error;
+        this.showProgressBar = false;
       },
       () => {
         this.showProgressBar = false;

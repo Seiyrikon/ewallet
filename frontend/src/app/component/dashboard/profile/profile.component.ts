@@ -77,6 +77,7 @@ export class ProfileComponent implements OnInit, OnDestroy
       (error) => {
         console.error('Principal Info not found', error);
         this.errorMessage = error;
+        this.showProgressBar = false;
       },
       () => {
         this.showProgressBar = false;

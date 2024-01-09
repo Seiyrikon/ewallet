@@ -47,6 +47,7 @@ export class ViewWalletComponent implements OnInit, OnDestroy
         (error) => {
           console.error('An error occured', error);
           this.errorMessage = error;
+          this.showProgressBar = false;
         },
         () => {
           this.showProgressBar = false;
