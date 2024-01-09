@@ -18,6 +18,7 @@ import { AddDepositFormGuard } from './service/deposit/guard/add-deposit-form.gu
 import { AddWithdrawFormGuard } from './service/withdraw/guard/add-withdraw-form.guard';
 import { EditProfileFormGuard } from './service/profile/guard/edit-profile-form.guard';
 import { FriendComponent } from './component/dashboard/friend/friend.component';
+import { RequestComponent } from './component/dashboard/request/request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -94,6 +95,12 @@ const routes: Routes = [
       {
         path: 'friend',
         component: FriendComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'request',
+        component: RequestComponent,
         canActivate: [GuardService],
         outlet: 'contentOutlet'
       },

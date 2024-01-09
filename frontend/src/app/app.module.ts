@@ -37,6 +37,7 @@ import { LeaveModalComponent } from './component/common/leave-modal/leave-modal.
 import { DeleteModalComponent } from './component/common/delete-modal/delete-modal.component';
 import { SideNavComponent } from './component/dashboard/side-nav/side-nav.component';
 import { FriendComponent } from './component/dashboard/friend/friend.component';
+import { RequestComponent } from './component/dashboard/request/request.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { FriendComponent } from './component/dashboard/friend/friend.component';
     LeaveModalComponent,
     DeleteModalComponent,
     SideNavComponent,
-    FriendComponent
+    FriendComponent,
+    RequestComponent
   ],
   imports: [
     BrowserModule,
