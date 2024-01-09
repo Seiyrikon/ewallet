@@ -36,4 +36,14 @@
         VALUES 
             (#{requestedId}, #{requestingId})        
     </insert>
+
+    <!-- deleteConfirmRequest --> 
+
+    <delete id="deleteConfirmRequest">
+        DELETE FROM 
+            tbl_confirm_request_mst
+        WHERE
+            requested_id = #{requestedId} AND requesting_id = #{requestingId}
+    </delete>
+
 </mapper>

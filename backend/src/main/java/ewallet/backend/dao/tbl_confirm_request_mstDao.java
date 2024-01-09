@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface tbl_confirm_request_mstDao 
 {
     void insertConfirmRequest(Long requestedId, Long requestingId);
+
+    void deleteConfirmRequest(Long requestedId, Long requestingId);
 }
