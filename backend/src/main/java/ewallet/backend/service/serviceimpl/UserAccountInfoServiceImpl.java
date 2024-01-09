@@ -17,7 +17,6 @@ import ewallet.backend.dao.UserAccountInfoDao;
 import ewallet.backend.dao.tbl_personal_info_mstDao;
 import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dto.UserAccountInfoDto;
-import ewallet.backend.dto.tbl_user_mstDto;
 import ewallet.backend.dto.mapper.UserAccountInfoDtoMapper;
 import ewallet.backend.model.UserAccountInfoModel;
 import ewallet.backend.model.tbl_personal_info_mst;
