@@ -39,4 +39,5 @@ public class FriendFeatureRestController
     {
         return friendFeatureService.declineFriendRequest(friendId);
     }
+    
 }
