@@ -45,6 +45,8 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
     tbl_transaction transaction = new tbl_transaction();
     List<tbl_withdrawDto> withdraws = new ArrayList<tbl_withdrawDto>();
     Map<String, Object> response = new HashMap<String, Object>();
+    Double overAllBalance;
+    public static final Double proxyWithdraw = 0.00;
 
     @Override
     public ResponseEntity<Map<String, Object>> getAllWithdrawPerWallet(Long walletId) 
@@ -109,6 +111,7 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
                 if(body != null) 
                 {
                     Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(userId, walletId);
+                    Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(userId, walletId);
 
                     if(totalDeposit == null)
                     {
@@ -116,7 +119,16 @@ public class tbl_withdrawServiceImpl implements tbl_withdrawService
                         return ResponseEntity.status(402).body(response);
                     }
 
-                    if(totalDeposit < body.getAmount())
+                    if(totalWithdraw == null)
+                    {
+                        overAllBalance = totalDeposit - proxyWithdraw;
+                    }
+                    else 
+                    {
+                        overAllBalance = totalDeposit - totalWithdraw;
+                    }
+
+                    if(overAllBalance < 0 || overAllBalance < body.getAmount())
                     {
                         response.put("message", "Insufficient Funds");
                         return ResponseEntity.status(402).body(response);
