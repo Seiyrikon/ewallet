@@ -1,0 +1,12 @@
+<div class="bg-gray-800 text-white h-screen flex flex-col">
+  <!-- Your app logo or title -->
+  <div class="p-4 text-xl font-bold">My App</div>
+
+  <!-- Navigation links -->
+  <div class="flex-1 overflow-y-auto">
+    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['friend'] } }]" class="block py-2 px-4 hover:bg-gray-700">Friends</a>
+    <a routerLink="/about" class="block py-2 px-4 hover:bg-gray-700">About</a>
+    <a routerLink="/contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
+    <!-- Add more links as needed -->
+  </div>
+</div>
