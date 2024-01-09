@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ewallet.backend.service.tbl_friend_request_mstService;
 import ewallet.backend.service.tbl_user_friend_mstService;
 import lombok.RequiredArgsConstructor;
 
