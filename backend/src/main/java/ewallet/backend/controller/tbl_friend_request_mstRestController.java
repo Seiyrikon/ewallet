@@ -29,12 +29,5 @@ public class tbl_friend_request_mstRestController
     {
         return tbl_friend_request_mstService.getAllFriendRequestofUser();
     }
-
-    //for add friend button
-    @PostMapping("user/friend-request/insert/{requesteeId}")
-    public ResponseEntity<Map<String, Object>> insertFriendRequest(@PathVariable Long requesteeId) 
-    {
-        return tbl_friend_request_mstService.insertFriendRequest(requesteeId);
-    }
     
 }
