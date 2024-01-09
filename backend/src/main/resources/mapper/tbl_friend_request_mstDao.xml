@@ -10,6 +10,7 @@
         SELECT 
             friend_account.user_id AS friendId,
             friend_account.username AS username,
+            friend_account.role AS role,
             friend_pi.first_name AS firstName,
             friend_pi.middle_name AS middleName,
             friend_pi.last_name AS lastName
