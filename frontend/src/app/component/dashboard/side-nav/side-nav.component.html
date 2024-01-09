@@ -5,7 +5,7 @@
   <!-- Navigation links -->
   <div class="flex-1 overflow-y-auto">
     <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['friend'] } }]" class="block py-2 px-4 hover:bg-gray-700">Friends</a>
-    <a routerLink="/about" class="block py-2 px-4 hover:bg-gray-700">About</a>
+    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['request'] } }]" class="block py-2 px-4 hover:bg-gray-700">Requests</a>
     <a routerLink="/contact" class="block py-2 px-4 hover:bg-gray-700">Contact</a>
     <!-- Add more links as needed -->
   </div>
