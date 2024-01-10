@@ -13,7 +13,7 @@ export class RequestComponent implements OnInit, OnDestroy
 {
 
   private _subscription!: Subscription
-  requests!: Friend[] | null;
+  confirmRequests!: Friend[] | null;
   searchText!: string;
   errorMessage: string = '';
   showProgressBar: boolean = false;
@@ -26,12 +26,12 @@ export class RequestComponent implements OnInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
-    this.getAllFriendRequest();
+    this.getAllConfirmRequest();
   }
 
-  getAllFriendRequest(): any {
+  getAllConfirmRequest(): any {
       this.showProgressBar = true;
-      const requests$ = this._friendService.getAllFriendRequest();
+      const requests$ = this._friendService.getAllConfirmRequest();
 
       requests$.subscribe
       (
@@ -40,14 +40,15 @@ export class RequestComponent implements OnInit, OnDestroy
           {
             console.error('Response is empty');
           }
-          this.requests = response.message[0];
+          this.confirmRequests = response.message;
           this.errorMessage = ''
+          console.log(response);
+
         },
         (error) => {
           console.error('An error occured', error);
           this.errorMessage = error;
           this.showProgressBar = false;
-          this.requests = null
         },
         () => {
           this.showProgressBar = false;
@@ -59,7 +60,35 @@ export class RequestComponent implements OnInit, OnDestroy
   onConfirm(friendId: number)
   {
     console.log(friendId);
+    this.showProgressBar = true;
+      const accept$ = this._friendService.acceptFriend(friendId);
 
+      accept$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
+          }
+          this.errorMessage = ''
+          console.log(response);
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+          this.showProgressBar = false;
+          this.confirmRequests = null
+          this.getAllConfirmRequest();
+          console.log(this.confirmRequests);
+
+        },
+        () => {
+          this.showProgressBar = false;
+          this.errorMessage = ''
+          this.confirmRequests = null
+          this.getAllConfirmRequest();
+        }
+      )
   }
   onDecline(friendId: number)
   {
