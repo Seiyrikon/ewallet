@@ -46,4 +46,28 @@
             requested_id = #{requestedId} AND requesting_id = #{requestingId}
     </delete>
 
+    <!-- getAllFriendRequestofUser --> 
+
+    <select id="getAllFriendRequestofUser">
+        SELECT 
+            friend_account.user_id AS friendId,
+            friend_account.username AS username,
+            friend_account.role AS role,
+            friend_pi.first_name AS firstName,
+            friend_pi.middle_name AS middleName,
+            friend_pi.last_name AS lastName
+        FROM 
+            tbl_confirm_request_mst AS requests
+        INNER JOIN 
+            tbl_personal_info_mst AS friend_pi
+            ON requests.requesting_id = friend_pi.user_id
+        LEFT JOIN 
+            tbl_user_mst AS friend_account
+            ON requests.requesting_id = friend_account.user_id
+        LEFT JOIN 
+            tbl_user_mst AS user_account
+            ON requests.requested_id = user_account.user_id
+        WHERE user_account.user_id = #{userId} AND user_account.del_flag = 0 AND friend_account.del_flag = 0 AND requests.del_flag = 0
+    </select>
+
 </mapper>
