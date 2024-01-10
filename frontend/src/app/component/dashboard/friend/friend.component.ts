@@ -12,7 +12,8 @@ import { FriendService } from 'src/app/service/friend/friend.service';
 export class FriendComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription
-  friend!: Friend | null;
+  searchedFriends!: Friend[] | null;
+  friends!: Friend[];
   searchText!: string;
   errorMessage: string = '';
   showProgressBar: boolean = false;
@@ -25,30 +26,56 @@ export class FriendComponent implements OnInit, OnDestroy
   ) {}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.getAllFriendsOfUser();
   }
 
-  searchUserByUsername(): any {
-    if(this.searchText)
-    {
+  getAllFriendsOfUser(): any {
       this.showProgressBar = true;
-      const friend$ = this._friendService.searchUserByUsername(this.searchText);
+      const friends$ = this._friendService.getAllFriendsOfUser();
 
-      friend$.subscribe
+      friends$.subscribe
       (
         (response) => {
           if(!response)
           {
             console.error('Response is empty');
           }
-          this.friend = response.message[0];
+          this.friends = response.message;
           this.errorMessage = ''
         },
         (error) => {
           console.error('An error occured', error);
           this.errorMessage = error;
           this.showProgressBar = false;
-          this.friend = null
+        },
+        () => {
+          this.showProgressBar = false;
+          this.errorMessage = ''
+        }
+      )
+  }
+
+  searchUserByUsername(): any {
+    if(this.searchText)
+    {
+      this.showProgressBar = true;
+      const searchedFriends$ = this._friendService.searchUserByUsername(this.searchText);
+
+      searchedFriends$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
+          }
+          this.searchedFriends = response.message;
+          this.errorMessage = ''
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+          this.showProgressBar = false;
+          this.searchedFriends = null
         },
         () => {
           this.showProgressBar = false;
@@ -83,6 +110,8 @@ export class FriendComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
+          console.log(response);
+
         },
         (error) => {
           console.error('An error occured', error);
