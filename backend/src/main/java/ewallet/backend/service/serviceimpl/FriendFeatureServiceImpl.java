@@ -87,8 +87,8 @@ public class FriendFeatureServiceImpl implements FriendFeatureService
                 {
                     tbl_user_friend_mstDao.insertFriend(userId, friendId);
                     tbl_user_friend_mstDao.insertFriend(friendId, userId);
-                    tbl_friend_request_mstDao.deleteFriendRequest(userId, friendId);
-                    tbl_confirm_request_mstDao.deleteConfirmRequest(friendId, userId);
+                    tbl_friend_request_mstDao.deleteFriendRequest(friendId, userId);
+                    tbl_confirm_request_mstDao.deleteConfirmRequest(userId, friendId);
                     response.put("message", "Friend Request Confirmed");
                 }
                 else
