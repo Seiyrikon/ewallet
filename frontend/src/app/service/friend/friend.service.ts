@@ -18,7 +18,25 @@ export class FriendService {
   //get the currently logged in user
   searchUserByUsername(username: string): Observable<any>
   {
-    return this._http.get<Friend>(`${this.baseUrl}user/search/${username}`)
+    return this._http.get<Friend[]>(`${this.baseUrl}user/search/${username}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent)
+        {
+          errorMessage = `error: ${error.error.message}`;
+        }
+        else
+        {
+          errorMessage = `${error.error.message}`
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+  getAllFriendsOfUser(): Observable<any>
+  {
+    return this._http.get<Friend[]>(`${this.baseUrl}user/friend/all`)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
@@ -89,6 +107,24 @@ export class FriendService {
   getAllFriendRequest(): Observable<any>
   {
     return this._http.get<Friend[]>(`${this.baseUrl}user/pending-request/all`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent)
+        {
+          errorMessage = `error: ${error.error.message}`;
+        }
+        else
+        {
+          errorMessage = `${error.error.message}`
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
+  getAllConfirmRequest(): Observable<any>
+  {
+    return this._http.get<Friend[]>(`${this.baseUrl}user/confirm-request/all`)
     .pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
