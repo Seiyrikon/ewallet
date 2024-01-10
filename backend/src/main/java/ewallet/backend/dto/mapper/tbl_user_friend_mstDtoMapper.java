@@ -17,6 +17,7 @@ public class tbl_user_friend_mstDtoMapper implements Function<tbl_user_friend_ms
         return new tbl_user_friend_mstDto(
             friend.getFriendId(),
             friend.getUsername(), 
+            friend.getRole(), 
             friend.getFirstName(),
             friend.getMiddleName(),
             friend.getLastName()

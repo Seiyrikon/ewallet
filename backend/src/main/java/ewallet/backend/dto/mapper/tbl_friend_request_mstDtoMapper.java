@@ -18,6 +18,7 @@ public class tbl_friend_request_mstDtoMapper implements Function<tbl_friend_requ
         (
             friendRequest.getFriendId(),
             friendRequest.getUsername(), 
+            friendRequest.getRole(), 
             friendRequest.getFirstName(),
             friendRequest.getMiddleName(),
             friendRequest.getLastName()

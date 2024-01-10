@@ -10,6 +10,7 @@ import ewallet.backend.model.tbl_friend_request_mst;
 public interface tbl_friend_request_mstDao 
 {
     List<tbl_friend_request_mst> getAllFriendRequestofUser(Long requestorId);
+    tbl_friend_request_mst friendChecker(Long friendId);
     void insertFriendRequest(Long requestorId, Long requesteeId);
     void deleteFriendRequest(Long requestorId, Long requesteeId);
 }

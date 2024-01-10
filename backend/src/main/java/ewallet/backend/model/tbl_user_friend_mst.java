@@ -21,6 +21,7 @@ public class tbl_user_friend_mst
     //joined data
     private Long friendId;
     private String username;
+    private String role;
     private String firstName;
     private String middleName;
     private String lastName;
