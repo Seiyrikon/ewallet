@@ -47,4 +47,16 @@
         WHERE
             requestor_id = #{requestorId} AND requestee_id = #{requesteeId}
     </delete>
+
+    <!-- friendChecker --> 
+
+    <select id="friendRequestChecker">
+        SELECT 
+            * 
+        FROM
+            tbl_friend_request_mst
+        WHERE
+            requestor_id = #{requestorId} AND requestee_id = #{requesteeId}
+    </select>
+
 </mapper>

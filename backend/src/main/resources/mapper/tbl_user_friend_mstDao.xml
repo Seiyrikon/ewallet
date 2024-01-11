@@ -38,4 +38,16 @@
             (#{userId}, #{friendId})
     </insert>
 
+    <!-- friendChecker --> 
+
+    <select id="friendChecker">
+        SELECT 
+            * 
+        FROM
+            tbl_user_friend_mst
+        WHERE
+            user_id = #{userId} AND friend_id = #{friendId}
+    </select>
+
+
 </mapper>
