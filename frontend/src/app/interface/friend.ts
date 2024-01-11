@@ -6,5 +6,6 @@ export interface Friend {
   firstName: string,
   middleName: string,
   lastName: string,
+  friendRequestFlag: boolean,
   friendFlag: boolean
 }

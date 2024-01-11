@@ -27,6 +27,8 @@ export class FriendComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     this.getAllFriendsOfUser();
+    // console.log(this.friendRequestChecker(2));
+
   }
 
   getAllFriendsOfUser(): any {
@@ -70,6 +72,7 @@ export class FriendComponent implements OnInit, OnDestroy
           }
           this.searchedFriends = response.message;
           this.errorMessage = ''
+          console.log(response.message);
         },
         (error) => {
           console.error('An error occured', error);
@@ -80,6 +83,7 @@ export class FriendComponent implements OnInit, OnDestroy
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
+
         }
       )
     }
@@ -110,6 +114,7 @@ export class FriendComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
+
           console.log(response);
 
         },
@@ -121,6 +126,45 @@ export class FriendComponent implements OnInit, OnDestroy
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
+          this.searchUserByUsername();
+        }
+      )
+    }
+    else
+    {
+      console.error('No search data found in the route');
+    }
+  }
+
+  onCancel(friendId: number)
+  {
+    console.log(friendId);
+    if(friendId)
+    {
+      this.showProgressBar = true;
+      const cancelFriend$ = this._friendService.cancelFriendRequest(+friendId);
+
+      cancelFriend$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
+          }
+          this.errorMessage = ''
+
+          console.log(response);
+
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+          this.showProgressBar = false;
+        },
+        () => {
+          this.showProgressBar = false;
+          this.errorMessage = ''
+          this.searchUserByUsername();
         }
       )
     }

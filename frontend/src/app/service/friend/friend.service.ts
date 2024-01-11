@@ -87,9 +87,26 @@ export class FriendService {
       );
   }
 
+  cancelFriendRequest(friendId: number): Observable<any>
+  {
+    return this._http.delete<Response>(`${this.baseUrl}friend/cancel-friend/${friendId}`, {})
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
+
   declineFriendRequest(friendId: number): Observable<any>
   {
-    return this._http.post<Response>(`${this.baseUrl}friend/decline-friend/${friendId}`, {})
+    return this._http.delete<Response>(`${this.baseUrl}friend/decline-friend/${friendId}`, {})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
@@ -139,5 +156,22 @@ export class FriendService {
         return throwError(errorMessage);
       })
     );
+  }
+
+  friendRequestChecker(friendId: number): Observable<any>
+  {
+    return this._http.get<Response>(`${this.baseUrl}user/frend-request-check/${friendId}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
   }
 }
