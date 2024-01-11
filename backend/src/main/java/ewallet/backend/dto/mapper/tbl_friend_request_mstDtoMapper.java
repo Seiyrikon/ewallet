@@ -10,7 +10,6 @@ import ewallet.backend.model.tbl_friend_request_mst;
 @Service
 public class tbl_friend_request_mstDtoMapper implements Function<tbl_friend_request_mst, tbl_friend_request_mstDto>
 {
-
     @Override
     public tbl_friend_request_mstDto apply(tbl_friend_request_mst friendRequest) 
     {

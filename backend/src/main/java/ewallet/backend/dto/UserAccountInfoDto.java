@@ -7,7 +7,9 @@ public record UserAccountInfoDto
     String role,
     String firstName,
     String middleName,
-    String lastName
+    String lastName,
+    boolean friendRequestFlag,
+    boolean friendFlag
 ) 
 {
     

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ewallet.backend.dao.tbl_friend_request_mstDao;
 import ewallet.backend.dto.tbl_friend_request_mstDto;
 import ewallet.backend.dto.mapper.tbl_friend_request_mstDtoMapper;
+import ewallet.backend.model.tbl_friend_request_mst;
 import ewallet.backend.service.tbl_friend_request_mstService;
 
 @Service
@@ -29,6 +30,7 @@ public class tbl_friend_request_mstServiceImpl implements tbl_friend_request_mst
 
     Map<String, Object> response = new HashMap<String, Object>();
     List<tbl_friend_request_mstDto> requests = new ArrayList<tbl_friend_request_mstDto>();
+    tbl_friend_request_mst isFriend = new tbl_friend_request_mst();
 
     @Override
     public ResponseEntity<Map<String, Object>> getAllFriendRequestofUser() 
@@ -71,6 +73,4 @@ public class tbl_friend_request_mstServiceImpl implements tbl_friend_request_mst
         return ResponseEntity.ok(response);
     }
 
-    
-    
 }

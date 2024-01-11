@@ -11,6 +11,7 @@ import ewallet.backend.service.tbl_friend_request_mstService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
