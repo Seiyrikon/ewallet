@@ -128,7 +128,45 @@ public class FriendFeatureServiceImpl implements FriendFeatureService
                 {
                     tbl_friend_request_mstDao.deleteFriendRequest(userId, friendId);
                     tbl_confirm_request_mstDao.deleteConfirmRequest(friendId, userId);
-                    response.put("message", "Friend Request Confirmed");
+                    response.put("message", "Friend Request Declined");
+                }
+                else
+                {
+                    response.put("message", "Something went wrong");
+                    return ResponseEntity.status(401).body(response);
+                }
+            } 
+            else 
+            {
+                response.put("message", "You must login first");
+                return ResponseEntity.status(403).body(response);
+            }
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(500).body(response);
+        }  
+        return ResponseEntity.ok(response); 
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> cancelFriendRequest(Long friendId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try 
+        {
+            if (authentication != null && authentication.isAuthenticated()) 
+            {
+                //gets the username of the logged in user
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
+                
+                if(friendId != null)
+                {
+                    tbl_friend_request_mstDao.deleteFriendRequest(userId, friendId);
+                    tbl_confirm_request_mstDao.deleteConfirmRequest(friendId, userId);
+                    response.put("message", "Friend Request Cancelled");
                 }
                 else
                 {

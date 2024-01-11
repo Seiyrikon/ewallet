@@ -39,5 +39,11 @@ public class FriendFeatureRestController
     {
         return friendFeatureService.declineFriendRequest(friendId);
     }
+
+    @DeleteMapping("friend/cancel-friend/{friendId}")
+    private ResponseEntity<Map<String, Object>> cancelFriendRequest(@PathVariable Long friendId) 
+    {
+        return friendFeatureService.cancelFriendRequest(friendId);
+    }
     
 }
