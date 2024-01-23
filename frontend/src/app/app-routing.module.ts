@@ -19,6 +19,7 @@ import { AddWithdrawFormGuard } from './service/withdraw/guard/add-withdraw-form
 import { EditProfileFormGuard } from './service/profile/guard/edit-profile-form.guard';
 import { FriendComponent } from './component/dashboard/friend/friend.component';
 import { RequestComponent } from './component/dashboard/request/request.component';
+import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -101,6 +102,12 @@ const routes: Routes = [
       {
         path: 'request',
         component: RequestComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'chat',
+        component: ChatComponent,
         canActivate: [GuardService],
         outlet: 'contentOutlet'
       },

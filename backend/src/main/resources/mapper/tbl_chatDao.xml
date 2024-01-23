@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_chatDao">
+
+    <!-- getAllChatOfUserWithUser --> 
+
+    <select id="getAllChatOfUserWithUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+        SELECT * 
+        FROM tbl_chat 
+        WHERE sender_id = #{sender_id}
+            AND receiver_id = #{receiver_id}
+            AND del_flag = 0
+    </select>    
+
+    <!-- inserChat --> 
+
+    <insert id="inserChat" parameterType="ewallet.backend.model.ChatInfoModel">
+        INSERT INTO tbl_chat
+            (sender_id, receiver_id, message)
+        VALUES
+            (#{sender_id}, #{receiver_id}, #{message})
+    </insert>
+
+    <!-- getAllSentMessageOfUser --> 
+
+    <select id="getAllSentMessageOfUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+    </select>
+
+    <!-- getAllReceivedMessageOfUser --> 
+
+    <select id="getAllReceivedMessageOfUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+    </select>
+
+</mapper>
