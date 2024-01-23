@@ -13,7 +13,7 @@ public class tbl_chat
 {
     private Long c_id;
     private Long sender_id;
-    private Long reciever_id;
+    private Long receiver_id;
     private String message;
     private int del_flag;
     private Timestamp created_at;

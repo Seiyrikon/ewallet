@@ -2,9 +2,10 @@ package ewallet.backend.dto;
 
 import java.sql.Timestamp;
 
-public record ChatSenderDto
+public record ChatSessionDto
 (
-    Long user_id,
+    Long sender_id,
+    Long receiver_id,
     String username,
     String first_name,
     String middle_name,

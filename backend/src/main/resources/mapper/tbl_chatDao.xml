@@ -26,12 +26,58 @@
 
     <!-- getAllSentMessageOfUser --> 
 
-    <select id="getAllSentMessageOfUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+    <select id="getAllSentMessageOfUserToUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+        SELECT 
+            chat.sender_id AS sender_id,
+            chat.receiver_id AS receiver_id,
+            users.username AS username,
+            pi.first_name AS first_name,
+            pi.middle_name AS middle_name,
+            pi.last_name AS last_name,
+            chat.message AS message,
+            chat.created_at AS created_at
+        FROM 
+            tbl_user_mst AS users
+        INNER JOIN 
+            tbl_personal_info_mst AS pi
+                ON users.user_id = pi.user_id
+        LEFT JOIN 
+            tbl_chat AS chat
+                ON users.user_id = chat.sender_id
+        WHERE 
+            chat.sender_id = #{sender_id}
+            AND
+                chat.receiver_id = #{receiver_id}
+            AND 
+                chat.del_flag = 0;
     </select>
 
     <!-- getAllReceivedMessageOfUser --> 
 
-    <select id="getAllReceivedMessageOfUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+    <select id="getAllReceivedMessageOfUserFromUser" resultType="ewallet.backend.model.tbl_chat" parameterType="long">
+        SELECT 
+            chat.sender_id AS sender_id,
+            chat.receiver_id AS receiver_id,
+            users.username AS username,
+            pi.first_name AS first_name,
+            pi.middle_name AS middle_name,
+            pi.last_name AS last_name,
+            chat.message AS message,
+            chat.created_at AS created_at
+        FROM 
+            tbl_user_mst AS users
+        INNER JOIN 
+            tbl_personal_info_mst AS pi
+                ON users.user_id = pi.user_id
+        LEFT JOIN 
+            tbl_chat AS chat
+                ON users.user_id = chat.sender_id
+        WHERE 
+            chat.receiver_id = #{user_id}
+            AND
+                chat.sender_id = #{sender_id}
+            AND 
+                chat.del_flag = 0;
     </select>
 
 </mapper>
