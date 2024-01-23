@@ -3,6 +3,12 @@ CREATE DATABASE EWALLET_DB;
 
 USE EWALLET_DB;
 
+DROP USER 'ewallet'@'localhost';
+CREATE USER 'ewallet'@'localhost' IDENTIFIED BY 'ewallet';
+GRANT ALL PRIVILEGES ON EWALLET_DB.* TO 'ewallet'@'localhost';
+
+FLUSH PRIVILEGES;
+
 DROP TABLE IF EXISTS tbl_user_mst;
 CREATE TABLE tbl_user_mst (
 	user_id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -117,4 +123,29 @@ CREATE TABLE tbl_confirm_request_mst (
     updated_at TIMESTAMP NULL,
     FOREIGN KEY(requested_id) REFERENCES tbl_user_mst (user_id),
     FOREIGN KEY(requesting_id) REFERENCES tbl_user_mst (user_id)
+);
+
+DROP TABLE IF EXISTS tbl_chat;
+CREATE TABLE tbl_chat(
+	c_id INT(9) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT(9) UNSIGNED NOT NULL,
+    reciever_id INT(9) UNSIGNED NOT NULL,
+    message TEXT NOT NULL,
+    del_flag INT(1) NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (sender_id) REFERENCES tbl_user_mst(user_id),
+    FOREIGN KEY (reciever_id) REFERENCES tbl_user_mst(user_id)
+);
+
+DROP TABLE IF EXISTS tbl_chat_history;
+CREATE TABLE tbl_chat_history(
+	ch_id INT(9) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT(9) UNSIGNED NOT NULL,
+    reciever_id INT(9) UNSIGNED NOT NULL,
+    del_flag INT(1) NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (sender_id) REFERENCES tbl_user_mst(user_id),
+    FOREIGN KEY (reciever_id) REFERENCES tbl_user_mst(user_id)
 );
