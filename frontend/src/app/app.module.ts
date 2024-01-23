@@ -38,6 +38,8 @@ import { DeleteModalComponent } from './component/common/delete-modal/delete-mod
 import { SideNavComponent } from './component/dashboard/side-nav/side-nav.component';
 import { FriendComponent } from './component/dashboard/friend/friend.component';
 import { RequestComponent } from './component/dashboard/request/request.component';
+import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
+import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { RequestComponent } from './component/dashboard/request/request.componen
     DeleteModalComponent,
     SideNavComponent,
     FriendComponent,
-    RequestComponent
+    RequestComponent,
+    ChatComponent,
+    ChatSessionComponent
   ],
   imports: [
     BrowserModule,
