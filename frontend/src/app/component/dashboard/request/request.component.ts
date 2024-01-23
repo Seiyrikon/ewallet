@@ -93,6 +93,35 @@ export class RequestComponent implements OnInit, OnDestroy
   onDecline(friendId: number)
   {
     console.log(friendId);
+    this.showProgressBar = true;
+      const accept$ = this._friendService.declineFriendRequest(friendId);
+
+      accept$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
+          }
+          this.errorMessage = ''
+          console.log(response);
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+          this.showProgressBar = false;
+          this.confirmRequests = null
+          this.getAllConfirmRequest();
+          console.log(this.confirmRequests);
+
+        },
+        () => {
+          this.showProgressBar = false;
+          this.errorMessage = ''
+          this.confirmRequests = null
+          this.getAllConfirmRequest();
+        }
+      )
   }
 
   ngOnDestroy(): void {

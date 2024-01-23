@@ -126,8 +126,8 @@ public class FriendFeatureServiceImpl implements FriendFeatureService
                 
                 if(friendId != null)
                 {
-                    tbl_friend_request_mstDao.deleteFriendRequest(userId, friendId);
-                    tbl_confirm_request_mstDao.deleteConfirmRequest(friendId, userId);
+                    tbl_friend_request_mstDao.deleteFriendRequest(friendId, userId);
+                    tbl_confirm_request_mstDao.deleteConfirmRequest(userId, friendId);
                     response.put("message", "Friend Request Declined");
                 }
                 else
