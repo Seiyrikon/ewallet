@@ -31,24 +31,11 @@
                         user.username AS username,
                         pi.first_name AS first_name,
                         pi.middle_name AS middle_name,
-                        pi.last_name AS last_name,
-                        chat.message AS last_message,
-                        chat.created_at AS created_at
+                        pi.last_name AS last_name
                 FROM tbl_user_mst AS user
                 INNER JOIN tbl_chat_history AS ch ON user.user_id = ch.recipient_id
                 LEFT JOIN tbl_personal_info_mst AS pi ON ch.recipient_id = pi.user_id
-                LEFT JOIN (
-                SELECT 
-                        sender_id,
-                        receiver_id,
-                        MAX(created_at) AS max_created_at
-                FROM tbl_chat
-                GROUP BY sender_id, receiver_id
-                ) AS latest_chat ON ch.user_id = latest_chat.sender_id AND ch.recipient_id = latest_chat.receiver_id
-                LEFT JOIN tbl_chat AS chat ON ch.user_id = chat.sender_id 
-                                        AND ch.recipient_id = chat.receiver_id 
-                                        AND chat.created_at = latest_chat.max_created_at
-                WHERE ch.user_id = #{user_id} AND ch.del_flag = 0 ORDER BY DESC;
+                WHERE ch.user_id = #{user_id} AND ch.del_flag = 0 ORDER BY ch.updated_at DESC;
         </select>
 
         <!-- getChatHistoryOfUserWithRecipient --> 
