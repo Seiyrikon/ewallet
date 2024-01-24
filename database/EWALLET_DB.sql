@@ -141,11 +141,11 @@ CREATE TABLE tbl_chat(
 DROP TABLE IF EXISTS tbl_chat_history;
 CREATE TABLE tbl_chat_history(
 	ch_id INT(9) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    sender_id INT(9) UNSIGNED NOT NULL,
-    receiver_id INT(9) UNSIGNED NOT NULL,
+    user_id INT(9) UNSIGNED NOT NULL,
+    recipient_id INT(9) UNSIGNED NOT NULL,
     del_flag INT(1) NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL DEFAULT NULL,
-    FOREIGN KEY (sender_id) REFERENCES tbl_user_mst(user_id),
-    FOREIGN KEY (receiver_id) REFERENCES tbl_user_mst(user_id)
+    FOREIGN KEY (user_id) REFERENCES tbl_user_mst(user_id),
+    FOREIGN KEY (recipient_id) REFERENCES tbl_user_mst(user_id)
 );

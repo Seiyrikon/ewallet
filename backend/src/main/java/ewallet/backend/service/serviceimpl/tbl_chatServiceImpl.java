@@ -13,10 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_chatDao;
+import ewallet.backend.dao.tbl_chat_historyDao;
 import ewallet.backend.dto.ChatSessionDto;
 import ewallet.backend.dto.tbl_confirm_request_mstDto;
 import ewallet.backend.dto.mapper.ChatSessionDtoMapper;
 import ewallet.backend.model.ChatInfoModel;
+import ewallet.backend.model.tbl_chat_history;
 import ewallet.backend.service.tbl_chatService;
 
 @Service
@@ -27,6 +29,9 @@ public class tbl_chatServiceImpl implements tbl_chatService
 
     @Autowired
     private ChatSessionDtoMapper chatSessionDtoMapper;
+
+    @Autowired
+    private tbl_chat_historyDao tbl_chat_historyDao;
 
     Map<String, Object> response = new HashMap<String, Object>();
     List<ChatSessionDto> messages = new ArrayList<ChatSessionDto>();
@@ -56,6 +61,18 @@ public class tbl_chatServiceImpl implements tbl_chatService
                     message.setReceiver_id(receiver_id);
                     message.setMessage(body.getMessage());
                     tblChatDao.inserChat(message);
+
+                    tbl_chat_history history = tbl_chat_historyDao.getChatHistoryOfUserWithRecipient(userId, receiver_id);
+                    if(history == null)
+                    {
+                        tbl_chat_historyDao.insertChatHistory(userId, receiver_id);
+                        tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
+                    }
+                    else 
+                    {
+                        tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
+                    }
+
                     response.put("message", "Message sent");
                 }
                 else

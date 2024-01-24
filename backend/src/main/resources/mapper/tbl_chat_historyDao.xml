@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_chat_historyDao">
+
+        <!-- getAllChatHistoryOfUser --> 
+
+        <select id="getAllChatHistoryOfUser">
+                SELECT * 
+                FROM tbl_chat_history 
+                WHERE user_id = #{user_id}
+                        AND del_flag = 0
+        </select>
+        <!-- insertChatHistory --> 
+
+        <insert id="insertChatHistory" parameterType="long">
+                INSERT INTO tbl_chat_history
+                        (user_id, recipient_id)
+                VALUES
+                        (#{user_id}, #{recipient_id})
+        </insert>
+
+        <!-- getAllChatHistoryInfoOfUser --> 
+
+        <select id="getAllChatHistoryInfoOfUser">
+                SELECT 
+                        ch.user_id AS user_id,
+                        ch.recipient_id AS recipient_id,
+                        user.username AS username,
+                        pi.first_name AS first_name,
+                        pi.middle_name AS middle_name,
+                        pi.last_name AS last_name,
+                        chat.message AS last_message,
+                        chat.created_at AS created_at
+                FROM tbl_user_mst AS user
+                INNER JOIN tbl_chat_history AS ch ON user.user_id = ch.recipient_id
+                LEFT JOIN tbl_personal_info_mst AS pi ON ch.recipient_id = pi.user_id
+                LEFT JOIN (
+                SELECT 
+                        sender_id,
+                        receiver_id,
+                        MAX(created_at) AS max_created_at
+                FROM tbl_chat
+                GROUP BY sender_id, receiver_id
+                ) AS latest_chat ON ch.user_id = latest_chat.sender_id AND ch.recipient_id = latest_chat.receiver_id
+                LEFT JOIN tbl_chat AS chat ON ch.user_id = chat.sender_id 
+                                        AND ch.recipient_id = chat.receiver_id 
+                                        AND chat.created_at = latest_chat.max_created_at
+                WHERE ch.user_id = #{user_id} AND ch.del_flag = 0 ORDER BY DESC;
+        </select>
+
+        <!-- getChatHistoryOfUserWithRecipient --> 
+
+        <select id="getChatHistoryOfUserWithRecipient">
+                SELECT * 
+                FROM tbl_chat_history 
+                WHERE user_id = #{user_id}
+                        AND recipient_id = #{recipient_id}
+                        AND del_flag = 0
+        </select>
+
+        <!-- updateChatHistory --> 
+
+        <update id="updateChatHistory" parameterType="long">
+                UPDATE
+                        tbl_chat_history
+                SET 
+                        updated_at = CURRENT_TIMESTAMP
+                WHERE 
+                        user_id = #{user_id}
+                AND 
+                        recipient_id = #{recipient_id}
+        </update>
+
+</mapper>
