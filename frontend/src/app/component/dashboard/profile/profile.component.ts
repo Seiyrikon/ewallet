@@ -37,11 +37,13 @@ export class ProfileComponent implements OnInit, OnDestroy
   first_name!: FormControl;
   middle_name!: FormControl;
   last_name!: FormControl;
+  profilePicture!: FormControl;
   isSubmitted: boolean = false;
   isCancelled: boolean = false;
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
+  fileSizeExceedsLimit: boolean = false;
 
   matcher = new MyErrorStateMatcher();
 
@@ -91,20 +93,23 @@ export class ProfileComponent implements OnInit, OnDestroy
       username: this.principal.username, // Provide initial values according to the interface
       first_name: this.principal.firstName,
       middle_name: this.principal.middleName,
-      last_name: this.principal.lastName
+      last_name: this.principal.lastName,
+      profilePicture: this.principal.profilePicture // Set an initial value if needed
     };
 
     this.username = new FormControl(initialFormValues.username, [Validators.required]);
     this.first_name = new FormControl(initialFormValues.first_name, [Validators.required]);
     this.middle_name = new FormControl(initialFormValues.middle_name);
     this.last_name = new FormControl(initialFormValues.last_name);
+    this.profilePicture = new FormControl(initialFormValues.profilePicture);
 
     // Create a new FormGroup based on the LoginForm interface
     this.editProfile = new FormGroup({
       username: this.username,
       firstName: this.first_name,
       middleName: this.middle_name,
-      lastName: this.last_name
+      lastName: this.last_name,
+      profilePicture: this.profilePicture
     });
   }
 
@@ -188,6 +193,25 @@ export class ProfileComponent implements OnInit, OnDestroy
           });
         }
       );
+    }
+  }
+
+  handleProfilePictureChange(event: any): void {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (file) {
+      // Read the selected file as a data URL and set it to the profilePicture form control
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if(e.target){
+          this.profilePicture.setValue(e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // Clear the profilePicture form control if no file is selected
+      this.profilePicture.setValue('');
     }
   }
 

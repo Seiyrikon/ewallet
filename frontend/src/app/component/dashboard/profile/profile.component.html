@@ -38,6 +38,11 @@
 
   <form class="mt-8 space-y-6" [formGroup]="editProfile" (ngSubmit)="onSubmit()">
 
+    <div class="mt-4">
+      <label for="profilePictureInput" class="text-gray-700">Profile Picture</label>
+      <input type="file" id="profilePictureInput" (change)="handleProfilePictureChange($event)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-800">
     <mat-form-field class="example-full-width">
       <mat-label class="text-gray-700">Username</mat-label>
