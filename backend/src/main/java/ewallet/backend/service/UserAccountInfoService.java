@@ -8,6 +8,7 @@ import ewallet.backend.model.UserAccountInfoModel;
 
 public interface UserAccountInfoService 
 {
+    public ResponseEntity<Map<String, Object>> getAllUserAccountInfo();
     public ResponseEntity<Map<String, Object>> getUserAccountInfo(Long userId);
     
     public ResponseEntity<Map<String, Object>> updateUserAccount(UserAccountInfoModel body);

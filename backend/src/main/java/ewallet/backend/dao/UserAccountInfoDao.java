@@ -10,6 +10,7 @@ import ewallet.backend.model.tbl_user_mst;
 @Mapper
 public interface UserAccountInfoDao 
 {
+    List<UserAccountInfoModel> getAllUserAccountInfo(Long user_id);
     List<UserAccountInfoModel> getUserAccountInfo(Long userId);
 
     List<UserAccountInfoModel> searchUserByUsername(String username);

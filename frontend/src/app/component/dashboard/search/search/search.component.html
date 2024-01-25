@@ -11,24 +11,24 @@
     <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
   </div>
 
-  <div *ngFor="let searchedFriend of searchedFriends">
-    <div *ngIf="searchedFriend" class="friend-container border border-black p-4">
-      <div class="mb-2 font-bold">{{ searchedFriend.username }}</div>
-      <div class="mb-2">{{ searchedFriend.firstName }}</div>
-      <div class="mb-2">{{ searchedFriend.middleName }} Hello</div>
-      <div class="mb-2">{{ searchedFriend.lastName }}</div>
+  <div *ngFor="let user of allUserInfo">
+    <div *ngIf="user" class="friend-container border border-black p-4">
+      <div class="mb-2 font-bold">{{ user.username }}</div>
+      <div class="mb-2">{{ user.firstName }}</div>
+      <div class="mb-2">{{ user.middleName }}</div>
+      <div class="mb-2">{{ user.lastName }}</div>
 
       <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
-        (click)="onChat(searchedFriend.userId)">
+        (click)="onChat(user.userId)">
         Chat
       </button>
 
-      <button *ngIf="!searchedFriend.friendRequestFlag && !searchedFriend.friendFlag" (click)="onAdd(searchedFriend.userId)"
+      <button *ngIf="!user.friendRequestFlag && !user.friendFlag" (click)="onAdd(user.userId)"
         class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
         Add Friend
       </button>
 
-      <button *ngIf="searchedFriend.friendRequestFlag && !searchedFriend.friendFlag" (click)="onCancel(searchedFriend.userId)"
+      <button *ngIf="user.friendRequestFlag && !user.friendFlag" (click)="onCancel(user.userId)"
         class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
         Cancel Request
       </button>

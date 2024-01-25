@@ -46,7 +46,7 @@ public class UserAccountInfoDtoMapper implements Function<UserAccountInfoModel, 
                     user.setFriendRequestFlag(false);
                 }
 
-                if(isFriend != null)
+                if(isFriend != null || user.getUserId() == userId)
                 {
                   user.setFriendFlag(true);
                 }

@@ -189,5 +189,46 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
         }
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getAllUserAccountInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+            // Check if the user is authenticated
+            if (authentication != null && authentication.isAuthenticated()) 
+            {
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
+                
+                //fetch all the info of user from db using it's userId
+                userAccountInfo = userAccountInfoDao.getAllUserAccountInfo(userId)
+                .stream()
+                .map(userAccountInfoDtoMapper).collect(Collectors.toList());
+
+                if(userAccountInfo.size() != 0)
+                {
+                    response.put("message", userAccountInfo);
+                }
+                else
+                {
+                    response.put("message", "No users yet");
+                    return ResponseEntity.status(404).body(response);
+                }
+            } 
+            else 
+            {
+                response.put("message", "You must login first");
+                return ResponseEntity.status(403).body(response);
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(500).body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
     
 }

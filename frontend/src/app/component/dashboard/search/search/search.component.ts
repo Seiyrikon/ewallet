@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Friend } from 'src/app/interface/friend';
+import { User } from 'src/app/interface/user';
 import { FriendService } from 'src/app/service/friend/friend.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-search',
@@ -13,6 +15,7 @@ export class SearchComponent implements OnInit, OnDestroy
 {
   private _subscription!: Subscription
   searchedFriends!: Friend[] | null;
+  allUserInfo!: User[];
   friends!: Friend[];
   searchText!: string;
   errorMessage: string = '';
@@ -21,47 +24,48 @@ export class SearchComponent implements OnInit, OnDestroy
   constructor
   (
     private _friendService: FriendService,
+    private _userService: UserService,
     private _route: ActivatedRoute,
     private _router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getAllFriendsOfUser();
-    // console.log(this.friendRequestChecker(2));
-
+    this.getAllUserInfo();
   }
 
-  getAllFriendsOfUser(): any {
-      this.showProgressBar = true;
-      const friends$ = this._friendService.getAllFriendsOfUser();
+  getAllUserInfo(): any {
+    this.showProgressBar = true;
+    const allUserInfo$ = this._userService.getAllUserInfo();
 
-      friends$.subscribe
-      (
-        (response) => {
-          if(!response)
-          {
-            console.error('Response is empty');
-          }
-          this.friends = response.message;
-          this.errorMessage = ''
-        },
-        (error) => {
-          console.error('An error occured', error);
-          this.errorMessage = error;
-          this.showProgressBar = false;
-        },
-        () => {
-          this.showProgressBar = false;
-          this.errorMessage = ''
+    allUserInfo$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
         }
-      )
+        this.allUserInfo = response.message;
+        this.errorMessage = ''
+        console.log(response.message);
+      },
+      (error) => {
+        console.error('An error occured', error);
+        this.errorMessage = error;
+        this.showProgressBar = false;
+      },
+      () => {
+        this.showProgressBar = false;
+        this.errorMessage = ''
+
+      }
+    )
   }
 
   searchUserByUsername(): any {
     if(this.searchText)
     {
       this.showProgressBar = true;
-      const searchedFriends$ = this._friendService.searchUserByUsername(this.searchText);
+      const searchedFriends$ = this._userService.searchUserByUsername(this.searchText);
 
       searchedFriends$.subscribe
       (
@@ -70,7 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy
           {
             console.error('Response is empty');
           }
-          this.searchedFriends = response.message;
+          this.allUserInfo = response.message;
           this.errorMessage = ''
           console.log(response.message);
         },
@@ -78,18 +82,16 @@ export class SearchComponent implements OnInit, OnDestroy
           console.error('An error occured', error);
           this.errorMessage = error;
           this.showProgressBar = false;
-          this.searchedFriends = null
         },
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
-
         }
       )
     }
     else
     {
-      console.error('No search data found in the route');
+      this.getAllUserInfo();
     }
   }
 

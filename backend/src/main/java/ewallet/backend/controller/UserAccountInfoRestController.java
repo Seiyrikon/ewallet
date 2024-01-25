@@ -24,6 +24,11 @@ public class UserAccountInfoRestController
     @Autowired
     private UserAccountInfoService userAccountInfoService;
 
+    @GetMapping("all-user-account-info")
+    public ResponseEntity<Map<String, Object>> getAllUserAccountInfo()
+    {
+        return userAccountInfoService.getAllUserAccountInfo();
+    }
     @GetMapping("user-account-info/{userId}")
     public ResponseEntity<Map<String, Object>> getUserAccountInfo(@PathVariable Long userId)
     {
