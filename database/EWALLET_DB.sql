@@ -27,6 +27,7 @@ CREATE TABLE tbl_personal_info_mst(
     first_name VARCHAR(20) NOT NULL,
     middle_name VARCHAR(20) NULL,
     last_name VARCHAR(20) NULL,
+    profile_picture BLOB NULL,
     del_flag INT(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
