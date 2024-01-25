@@ -21,6 +21,7 @@ import { FriendComponent } from './component/dashboard/friend/friend.component';
 import { RequestComponent } from './component/dashboard/request/request.component';
 import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
+import { SearchComponent } from './component/dashboard/search/search/search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -94,6 +95,12 @@ const routes: Routes = [
       //top nav
 
       //side nav
+      {
+        path: 'search',
+        component: SearchComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
       {
         path: 'friend',
         component: FriendComponent,

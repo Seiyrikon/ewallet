@@ -1,6 +1,8 @@
 package ewallet.backend.service.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_chat_historyDao;
 import ewallet.backend.dto.ChatHistoryDto;
+import ewallet.backend.dto.ChatSessionDto;
 import ewallet.backend.dto.mapper.ChatHistoryDtoMapper;
 import ewallet.backend.model.tbl_chat_history;
 import ewallet.backend.service.tbl_chat_historyService;
@@ -84,7 +87,6 @@ public class tbl_chat_histroyServiceImpl implements tbl_chat_historyService
                 .map(chatHistoryDtoMapper).collect(Collectors.toList());
     
                 if(historyInfo.size() != 0)
-
                 {
                     response.put("message", historyInfo);
                 }

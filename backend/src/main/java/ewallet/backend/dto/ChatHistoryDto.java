@@ -11,7 +11,8 @@ public record ChatHistoryDto
     String middle_name,
     String last_name,
     String last_message,
-    Timestamp created_at
+    Timestamp created_at,
+    Timestamp updated_at
 ) 
 {
     

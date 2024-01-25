@@ -40,6 +40,7 @@ import { FriendComponent } from './component/dashboard/friend/friend.component';
 import { RequestComponent } from './component/dashboard/request/request.component';
 import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
+import { SearchComponent } from './component/dashboard/search/search/search.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ChatSessionComponent } from './component/dashboard/chat-session/chat-se
     FriendComponent,
     RequestComponent,
     ChatComponent,
-    ChatSessionComponent
+    ChatSessionComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
