@@ -1,1 +1,26 @@
-<p>chat-session works!</p>
+<!-- chat-session.component.html -->
+
+<div class="chat-session-container bg-black text-white p-4">
+  <div class="session-container">
+    <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+    <div *ngFor="let session of chatSession" class="mb-4 bg-gray-800 p-3 rounded-lg">
+      <div class="flex items-center justify-between">
+        <p class="font-bold text-lg">{{ session.username }}</p>
+        <p class="text-gray-500">{{ session.created_at | date:'short' }}</p>
+      </div>
+      <p class="text-gray-300">{{ session.message }}</p>
+    </div>
+    <div *ngIf="errorMessage" class="text-red-600 text-sm mb-4">{{ errorMessage }}</div>
+  </div>
+  <div class="chat-box flex">
+    <textarea
+      [(ngModel)]="chatText"
+      name="chat-container"
+      id="chat-container"
+      cols="30"
+      rows="3"
+      class="flex-1 bg-gray-800 text-white p-3 rounded-lg mr-2"
+    ></textarea>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" (click)="onSend(chatText)">Send</button>
+  </div>
+</div>

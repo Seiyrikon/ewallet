@@ -27,7 +27,7 @@
           </span>
         </td>
         <td class="py-2">{{ transaction.transaction_desc }}</td>
-        <td class="py-2">{{ transaction.created_at }}</td>
+        <td class="py-2">{{ transaction.created_at | date:'short' }}</td>
       </tr>
     </tbody>
   </table>

@@ -66,6 +66,7 @@ public class tbl_chatServiceImpl implements tbl_chatService
                     if(history == null)
                     {
                         tbl_chat_historyDao.insertChatHistory(userId, receiver_id);
+                        tbl_chat_historyDao.insertChatHistory(receiver_id, userId);
                         tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
                     }
                     else 

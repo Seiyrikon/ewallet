@@ -13,5 +13,6 @@ public interface tbl_chatDao
     public List<tbl_chat> getAllChatOfUserWithUser(Long sender_id, Long receiver_id);
     public List<tbl_chat> getAllSentMessageOfUserToUser(Long sender_id, Long receiver_id);
     public List<tbl_chat> getAllReceivedMessageOfUserFromUser(Long user_id, Long sender_id);
+    public List<tbl_chat> getChatSession(Long sender_id, Long receiver_id);
     public void inserChat(ChatInfoModel body);
 }

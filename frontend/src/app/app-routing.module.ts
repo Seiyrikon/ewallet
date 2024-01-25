@@ -20,6 +20,7 @@ import { EditProfileFormGuard } from './service/profile/guard/edit-profile-form.
 import { FriendComponent } from './component/dashboard/friend/friend.component';
 import { RequestComponent } from './component/dashboard/request/request.component';
 import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
+import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -102,6 +103,12 @@ const routes: Routes = [
       {
         path: 'request',
         component: RequestComponent,
+        canActivate: [GuardService],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'chat/session/:recipient_id',
+        component: ChatSessionComponent,
         canActivate: [GuardService],
         outlet: 'contentOutlet'
       },

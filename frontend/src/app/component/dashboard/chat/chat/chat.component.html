@@ -1,1 +1,13 @@
-<p>chat works!</p>
+<!-- chat-history.component.html -->
+
+<div class="chat-history-container bg-black text-white p-4">
+  <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+  <div *ngFor="let history of chatHistory" class="mb-4" (click)="onChatSession(history.recipient_id)">
+    <div class="flex items-center justify-between">
+      <p class="font-bold text-lg">{{ history.username }}</p>
+      <p class="text-gray-500">{{ history.created_at | date:'short' }}</p>
+    </div>
+    <p class="text-gray-300">{{ history.last_message }}</p>
+  </div>
+  <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+</div>

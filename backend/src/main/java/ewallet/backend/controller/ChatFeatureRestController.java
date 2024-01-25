@@ -26,4 +26,10 @@ public class ChatFeatureRestController
     {
         return chatFeatureService.chats(user_id);
     }
+
+    @GetMapping("chat-session/{user_id}")
+    public ResponseEntity<Map<String, Object>> getChatSession(@PathVariable Long user_id)
+    {
+        return chatFeatureService.getChatSession(user_id);
+    }
 }
