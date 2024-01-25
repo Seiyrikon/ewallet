@@ -3,6 +3,7 @@ package ewallet.backend.service;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import ewallet.backend.model.UserAccountInfoModel;
 

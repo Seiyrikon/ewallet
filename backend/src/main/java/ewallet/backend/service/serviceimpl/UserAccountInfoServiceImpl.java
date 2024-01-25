@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ewallet.backend.dao.UserAccountInfoDao;
 import ewallet.backend.dao.tbl_personal_info_mstDao;
+import ewallet.backend.dao.tbl_profile_pictureDao;
 import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.dto.UserAccountInfoDto;
 import ewallet.backend.dto.mapper.UserAccountInfoDtoMapper;
@@ -37,6 +39,9 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
 
     @Autowired
     private tbl_personal_info_mstDao tbl_personal_info_mstDao;
+
+    @Autowired
+    private tbl_profile_pictureDao tbl_profile_pictureDao;
 
     List<UserAccountInfoDto> userAccountInfo = new ArrayList<UserAccountInfoDto>();
     Map<String, Object> response = new HashMap<String, Object>();
@@ -120,6 +125,9 @@ public class UserAccountInfoServiceImpl implements UserAccountInfoService
                 }
 
                 Timestamp updateTimestamp = new Timestamp(System.currentTimeMillis());
+
+                // Check if a new profile picture is provided
+                
 
                 userBody.setUsername(body.getUsername());
                 userBody.setUpdated_at(updateTimestamp);

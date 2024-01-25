@@ -1,5 +1,7 @@
 package ewallet.backend.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public record UserAccountInfoDto
 (
     Long userId,

@@ -3,5 +3,4 @@ export interface EditProfileForm {
   first_name: string,
   middle_name: string,
   last_name: string,
-  profilePicture: string; // Add this line
 }

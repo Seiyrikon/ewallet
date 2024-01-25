@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_profile_pictureDao">
+
+    <!-- insertProfilePicture --> 
+
+    <insert id="insertProfilePicture">
+        INSERT INTO 
+            tbl_profile_picture
+            (user_id, profile_picture)
+        VALUES
+            (#{user_id}, #{picture})
+    </insert>
+
+</mapper>

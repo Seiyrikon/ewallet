@@ -13,6 +13,7 @@ import { CancelModalComponent } from '../../common/cancel-modal/cancel-modal.com
 import { LeaveModalComponent } from '../../common/leave-modal/leave-modal.component';
 import { ProfileService } from 'src/app/service/profile/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileService } from 'src/app/service/file/file.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -37,13 +38,12 @@ export class ProfileComponent implements OnInit, OnDestroy
   first_name!: FormControl;
   middle_name!: FormControl;
   last_name!: FormControl;
-  profilePicture!: FormControl;
   isSubmitted: boolean = false;
   isCancelled: boolean = false;
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
-  fileSizeExceedsLimit: boolean = false;
+  selectedFile: File | null = null;
 
   matcher = new MyErrorStateMatcher();
 
@@ -52,6 +52,7 @@ export class ProfileComponent implements OnInit, OnDestroy
     private _principalService: PrincipalService,
     private _profileService: ProfileService,
     private _logoutService: LogoutService,
+    private _fileService: FileService,
     private _router: Router,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar
@@ -93,23 +94,20 @@ export class ProfileComponent implements OnInit, OnDestroy
       username: this.principal.username, // Provide initial values according to the interface
       first_name: this.principal.firstName,
       middle_name: this.principal.middleName,
-      last_name: this.principal.lastName,
-      profilePicture: this.principal.profilePicture // Set an initial value if needed
+      last_name: this.principal.lastName
     };
 
     this.username = new FormControl(initialFormValues.username, [Validators.required]);
     this.first_name = new FormControl(initialFormValues.first_name, [Validators.required]);
     this.middle_name = new FormControl(initialFormValues.middle_name);
     this.last_name = new FormControl(initialFormValues.last_name);
-    this.profilePicture = new FormControl(initialFormValues.profilePicture);
 
     // Create a new FormGroup based on the LoginForm interface
     this.editProfile = new FormGroup({
       username: this.username,
       firstName: this.first_name,
       middleName: this.middle_name,
-      lastName: this.last_name,
-      profilePicture: this.profilePicture
+      lastName: this.last_name
     });
   }
 
@@ -193,25 +191,27 @@ export class ProfileComponent implements OnInit, OnDestroy
           });
         }
       );
+
+      this.uploadProfilePicture();
     }
   }
 
-  handleProfilePictureChange(event: any): void {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
 
-    if (file) {
-      // Read the selected file as a data URL and set it to the profilePicture form control
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if(e.target){
-          this.profilePicture.setValue(e.target.result);
+  uploadProfilePicture(): void {
+    if (this.selectedFile) {
+      this._fileService.uploadFile(this.selectedFile).subscribe(
+        (response) => {
+          console.log('File uploaded successfully', response);
+        },
+        (error) => {
+          console.error('File upload failed', error);
         }
-      };
-      reader.readAsDataURL(file);
+      );
     } else {
-      // Clear the profilePicture form control if no file is selected
-      this.profilePicture.setValue('');
+      console.warn('No file selected');
     }
   }
 
