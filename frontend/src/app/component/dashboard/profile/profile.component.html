@@ -1,12 +1,12 @@
 <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
-<button *ngIf="!isEditFormVisible" type="button" (click)="onUpdate()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+<button *ngIf="!isEditFormVisible" type="button" (click)="onUpdate()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
   Update
 </button>
 
-<div *ngIf="!isEditFormVisible" class="bg-gradient-to-r from-blue-200 to-blue-100 py-8 px-6 rounded-lg shadow-md">
-  <h2 class="text-3xl font-bold text-blue-900 mb-4">User Information</h2>
+<div *ngIf="!isEditFormVisible" class="bg-gradient-to-r from-gray-700 to-gray-500 py-8 px-6 rounded-lg shadow-md">
+  <h2 class="text-3xl font-bold text-white mb-4">User Information</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-800">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-white">
     <div class="mb-4">
       <label for="profilePictureInput" class="font-semibold w-32">Profile Picture</label>
       <img [src]="getSanitizedImage(principal.profilePicture)" alt="Profile Picture" class="rounded-full w-20 h-20 object-cover">
@@ -37,13 +37,13 @@
   <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
 </div>
 
-<div *ngIf="isEditFormVisible" class="bg-gradient-to-r from-blue-200 to-blue-100 py-8 px-6 rounded-lg shadow-md">
-  <h2 class="text-3xl font-bold text-blue-900 mb-4">User Information</h2>
+<div *ngIf="isEditFormVisible" class="bg-gradient-to-r from-gray-700 to-gray-500 py-8 px-6 rounded-lg shadow-md">
+  <h2 class="text-3xl font-bold text-white mb-4">User Information</h2>
 
 
   <form class="mt-8 space-y-6" [formGroup]="editProfile" (ngSubmit)="onSubmit()">
 
-    <div class="mt-4 text-blue-800">
+    <div class="mt-4 text-white">
       <label for="profilePictureInput" class="font-semibold w-32">Profile Picture</label>
       <div class="mb-4">
         <img [src]="getSanitizedImage(principal.profilePicture)" alt="Profile Picture" class="rounded-full w-20 h-20 object-cover">
@@ -51,7 +51,7 @@
       <input type="file" id="profilePictureInput" (change)="onFileSelected($event)" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-blue-800">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
     <mat-form-field class="example-full-width">
       <mat-label class="text-gray-700">Username</mat-label>
       <input type="text" matInput [formControl]="username" [errorStateMatcher]="matcher"
@@ -81,10 +81,10 @@
     </mat-form-field>
     </div>
 
-    <button *ngIf="isEditFormVisible === true" type="button" (click)="openCancelConfirmationDialog()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    <button *ngIf="isEditFormVisible === true" type="button" (click)="openCancelConfirmationDialog()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
       Cancel
     </button>
-    <button *ngIf="isEditFormVisible === true" type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    <button *ngIf="isEditFormVisible === true" type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
       Save
     </button>
     <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>

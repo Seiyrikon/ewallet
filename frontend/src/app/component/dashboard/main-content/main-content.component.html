@@ -1,9 +1,9 @@
 <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
-<div class="p-6 bg-gradient-to-r from-blue-200 to-blue-100 shadow-md rounded-lg text-center">
-  <h1 class="text-3xl font-bold mb-4 text-blue-900">Welcome, {{ principal.firstName }}</h1>
-  <h2 class="text-xl font-semibold mb-2 text-blue-800">Your Total Wallet Balance</h2>
-  <h3 class="text-2xl font-bold mb-6 text-blue-900">{{ overAllBalance | currency: 'PHP': 'symbol': '1.2-3'}}</h3>
-  <p class="text-sm text-blue-700 mb-4">Explore your transactions, manage wallets, or add new transactions for better control.</p>
+<div class="p-6 bg-gradient-to-r from-gray-700 to-gray-500 shadow-md rounded-lg text-center">
+  <h1 class="text-3xl font-bold mb-4 text-white">Welcome, {{ principal.firstName }}</h1>
+  <h2 class="text-xl font-semibold mb-2 text-white">Your Total Wallet Balance</h2>
+  <h3 class="text-2xl font-bold mb-6 text-white">{{ overAllBalance | currency: 'PHP': 'symbol': '1.2-3'}}</h3>
+  <p class="text-sm text-white mb-4">Explore your transactions, manage wallets, or add new transactions for better control.</p>
   <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
   <button (click)="openLogoutConfirmationDialog()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
     Logout

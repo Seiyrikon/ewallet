@@ -1,14 +1,14 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full bg-blue-100 rounded-lg shadow-md p-8 space-y-6 flex flex-col items-center">
+  <div class="max-w-md w-full bg-gray-600 rounded-lg shadow-md p-8 space-y-6 flex flex-col items-center">
     <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
     <div class="flex items-center space-x-2 flex-col">
-      <h2 class="text-3xl font-extrabold text-gray-900">Deposit Funds</h2>
-      <span class="text-gray-500">({{ wallet.wallet_name }})</span>
+      <h2 class="text-3xl font-extrabold text-white">Deposit Funds</h2>
+      <span class="text-white">({{ wallet.wallet_name }})</span>
     </div>
 
     <div class="flex justify-between items-center w-full">
-      <span class="text-lg font-semibold">Current Balance:</span>
-      <span class="text-lg font-semibold">{{ wallet.balance| currency: 'PHP': 'symbol': '1.2-3'}}</span>
+      <span class="text-lg font-semibold text-white">Current Balance:</span>
+      <span class="text-lg font-semibold text-white">{{ wallet.balance| currency: 'PHP': 'symbol': '1.2-3'}}</span>
     </div>
     <form class="w-full space-y-4 flex flex-col items-center" [formGroup]="depositForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-col w-full">

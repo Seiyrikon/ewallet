@@ -1,21 +1,63 @@
-<div class="bg-black text-white p-8">
+<div class="bg-black text-white p-8 rounded-lg">
+  <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+
   <div class="max-w-md mx-auto">
     <div class="text-center mb-6">
       <h1 class="text-2xl font-bold">Transfer Fund</h1>
     </div>
 
     <div class="flex gap-3">
-      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray" (click)="onOwn(principal.userId)">
+      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray" (click)="onOwnClick()">
         Own Wallet
       </button>
 
-      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray">
+      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray" (click)="onFriendWalletClick()">
         Friend's Wallet
       </button>
 
-      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray">
+      <button class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline-gray" (click)="onOtherClick()">
         Other User's Wallet
       </button>
     </div>
   </div>
 </div>
+<div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+<div *ngIf="isOwnWalletFormVisible" >
+  <div>
+    <h1>Transfer From</h1>
+  </div>
+  <div class="wallet-list grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-600 rounded-lg shadow-md">
+      <div class="p-6">
+        <div class="text-lg font-semibold mb-4 text-white">{{ wallet.wallet_name }}</div>
+        <div class="border-t border-blue-200 pt-4">
+          <div class="mb-2">
+            <span class="font-semibold text-white">Balance:</span>
+            <span class="text-white">{{ wallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">Wallet Description:</span>
+            <span class="text-white">{{ wallet.wallet_desc }}</span>
+          </div>
+        </div>
+        <div class="flex justify-between mt-4">
+          <button (click)="onView(wallet.wallet_id)" class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+            Select
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+<!-- <div>
+  <form class="w-full space-y-4 flex flex-col items-center" [formGroup]="ownWalletForm" (ngSubmit)="onOwnWalletSubmit()">
+    <div class="flex flex-col w-full">
+      <mat-form-field class="example-full-width">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+      </mat-form-field>
+    </div>
+  </form>
+</div> -->
