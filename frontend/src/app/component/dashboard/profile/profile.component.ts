@@ -201,7 +201,15 @@ export class ProfileComponent implements OnInit, OnDestroy
   }
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    const maxSizeInBytes = 6 * 1024 * 1024; // 6 MB
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile.size > maxSizeInBytes) {
+      console.warn('Selected file exceeds the maximum allowed size. 5(mb)');
+      // Optionally, you can clear the input field or show an error message to the user.
+    } else {
+      this.selectedFile = selectedFile;
+    }
   }
 
   uploadProfilePicture(): void {
