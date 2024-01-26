@@ -22,6 +22,7 @@ import { RequestComponent } from './component/dashboard/request/request.componen
 import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 import { SearchComponent } from './component/dashboard/search/search/search.component';
+import { TransferFundComponent } from './component/dashboard/wallet/transfer-fund/transfer-fund.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -64,6 +65,12 @@ const routes: Routes = [
         component: AddWalletComponent,
         canActivate: [GuardService],
         canDeactivate: [AddWalletFormGuard],
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'wallet/transfer',
+        component: TransferFundComponent,
+        canActivate: [GuardService],
         outlet: 'contentOutlet'
       },
       //top nav

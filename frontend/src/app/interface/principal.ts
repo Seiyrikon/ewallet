@@ -1,4 +1,5 @@
 export interface Principal {
+  userId: number,
   username: string,
   role: string,
   firstName: string,

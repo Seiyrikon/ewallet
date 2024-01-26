@@ -28,6 +28,7 @@ public class PrincipalDtoMapper implements Function<PrincipalModel, PrincipalDto
 
         return new PrincipalDto
         (
+        principal.getUserId(),
         principal.getUsername(), 
         principal.getRole(),
         principal.getFirstName(),

@@ -41,6 +41,7 @@ import { RequestComponent } from './component/dashboard/request/request.componen
 import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 import { SearchComponent } from './component/dashboard/search/search/search.component';
+import { TransferFundComponent } from './component/dashboard/wallet/transfer-fund/transfer-fund.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { SearchComponent } from './component/dashboard/search/search/search.comp
     RequestComponent,
     ChatComponent,
     ChatSessionComponent,
-    SearchComponent
+    SearchComponent,
+    TransferFundComponent,
   ],
   imports: [
     BrowserModule,
