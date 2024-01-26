@@ -24,4 +24,5 @@ public class tbl_chat_history
     private String middle_name;
     private String last_name;
     private String last_message;
+    private byte[] profilePicture;
 }

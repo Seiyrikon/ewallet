@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChatHistory } from 'src/app/interface/chat-history';
@@ -21,7 +22,8 @@ export class ChatComponent implements OnInit, OnDestroy
   (
     private _chatService: ChatService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,12 @@ export class ChatComponent implements OnInit, OnDestroy
   {
     console.log(recipient_id);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['chat', 'session', `${recipient_id}`] } }]);
+  }
+
+  getSanitizedImage(image: any): any {
+    // Assuming profilePicture is a base64 string
+    const imageSrc = `data:image/png;base64,${image}`;
+    return this._sanitizer.bypassSecurityTrustResourceUrl(imageSrc);
   }
 
   ngOnDestroy(): void {

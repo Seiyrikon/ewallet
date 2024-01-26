@@ -11,6 +11,7 @@ public record ChatHistoryDto
     String middle_name,
     String last_name,
     String last_message,
+    byte[] profilePicture,
     Timestamp created_at,
     Timestamp updated_at
 ) 

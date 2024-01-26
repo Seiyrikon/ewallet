@@ -10,6 +10,7 @@ public record UserAccountInfoDto
     String firstName,
     String middleName,
     String lastName,
+    byte[] profilePicture,
     boolean friendRequestFlag,
     boolean friendFlag
 ) 

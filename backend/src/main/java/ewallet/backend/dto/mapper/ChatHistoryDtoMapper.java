@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_chatDao;
 import ewallet.backend.dao.tbl_chat_historyDao;
+import ewallet.backend.dao.tbl_profile_pictureDao;
 import ewallet.backend.dto.ChatHistoryDto;
 import ewallet.backend.dto.ChatSessionDto;
 import ewallet.backend.model.tbl_chat_history;
+import ewallet.backend.model.tbl_profile_picture;
 import ewallet.backend.service.ChatFeatureService;
 
 @Service
@@ -34,6 +36,9 @@ public class ChatHistoryDtoMapper implements Function<tbl_chat_history, ChatHist
     @Autowired
     private ChatSessionDtoMapper chatSessionDtoMapper;
 
+    @Autowired
+    private tbl_profile_pictureDao tbl_profile_pictureDao; 
+
     @Override
     public ChatHistoryDto apply(tbl_chat_history history) {
 
@@ -48,6 +53,13 @@ public class ChatHistoryDtoMapper implements Function<tbl_chat_history, ChatHist
 
         ChatSessionDto lastChatSession = chatSessions.isEmpty() ? null : chatSessions.get(chatSessions.size() - 1);
 
+        tbl_profile_picture userProfile = tbl_profile_pictureDao.getSingleProfileRecord(history.getRecipient_id());
+
+        if(userProfile != null)
+        {
+            history.setProfilePicture(userProfile.getProfile_picture());
+        }
+
         history.setLast_message(lastChatSession.message());
         history.setCreated_at(lastChatSession.created_at());
 
@@ -59,6 +71,7 @@ public class ChatHistoryDtoMapper implements Function<tbl_chat_history, ChatHist
             history.getMiddle_name(),
             history.getLast_name(),
             history.getLast_message(),
+            history.getProfilePicture(),
             history.getCreated_at(),
             history.getUpdated_at()
         );

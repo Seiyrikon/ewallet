@@ -65,10 +65,18 @@ public class tbl_chatServiceImpl implements tbl_chatService
                     tbl_chat_history history = tbl_chat_historyDao.getChatHistoryOfUserWithRecipient(userId, receiver_id);
                     if(history == null)
                     {
-                        tbl_chat_historyDao.insertChatHistory(userId, receiver_id);
-                        tbl_chat_historyDao.insertChatHistory(receiver_id, userId);
-                        tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
-                        tbl_chat_historyDao.updateChatHistory(receiver_id, userId);
+                        if(userId != receiver_id)
+                        {
+                            tbl_chat_historyDao.insertChatHistory(userId, receiver_id);
+                            tbl_chat_historyDao.insertChatHistory(receiver_id, userId);
+                            tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
+                            tbl_chat_historyDao.updateChatHistory(receiver_id, userId);
+                        }
+                        else 
+                        {
+                            tbl_chat_historyDao.insertChatHistory(userId, receiver_id);
+                            tbl_chat_historyDao.updateChatHistory(userId, receiver_id);
+                        }
                     }
                     else 
                     {

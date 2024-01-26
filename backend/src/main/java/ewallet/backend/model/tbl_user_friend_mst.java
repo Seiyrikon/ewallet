@@ -25,4 +25,5 @@ public class tbl_user_friend_mst
     private String firstName;
     private String middleName;
     private String lastName;
+    private byte[] profilePicture;
 }

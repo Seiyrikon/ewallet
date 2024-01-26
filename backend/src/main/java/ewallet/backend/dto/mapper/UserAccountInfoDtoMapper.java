@@ -8,10 +8,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ewallet.backend.dao.tbl_friend_request_mstDao;
+import ewallet.backend.dao.tbl_profile_pictureDao;
 import ewallet.backend.dao.tbl_user_friend_mstDao;
 import ewallet.backend.dto.UserAccountInfoDto;
 import ewallet.backend.model.UserAccountInfoModel;
 import ewallet.backend.model.tbl_friend_request_mst;
+import ewallet.backend.model.tbl_profile_picture;
 import ewallet.backend.model.tbl_user_friend_mst;
 
 @Service
@@ -23,6 +25,9 @@ public class UserAccountInfoDtoMapper implements Function<UserAccountInfoModel, 
     @Autowired
     private tbl_user_friend_mstDao tbl_user_friend_mstDao;
 
+    @Autowired
+    private tbl_profile_pictureDao tbl_profile_pictureDao;
+
     @Override
     public UserAccountInfoDto apply(UserAccountInfoModel user) 
     {
@@ -33,6 +38,13 @@ public class UserAccountInfoDtoMapper implements Function<UserAccountInfoModel, 
             {
                 //gets the user_id of the currently logged in user
                 Long userId = Long.parseLong(authentication.getName());
+
+                tbl_profile_picture userProfile = tbl_profile_pictureDao.getSingleProfileRecord(user.getUserId());
+
+                if(userProfile != null)
+                {
+                    user.setProfilePicture(userProfile.getProfile_picture());
+                }
 
                 tbl_friend_request_mst isFriendRequestSent = tbl_friend_request_mstDao.friendRequestChecker(userId, user.getUserId());
                 tbl_user_friend_mst isFriend = tbl_user_friend_mstDao.friendChecker(userId, user.getUserId());
@@ -69,6 +81,7 @@ public class UserAccountInfoDtoMapper implements Function<UserAccountInfoModel, 
             user.getFirstName(),
             user.getMiddleName(),
             user.getLastName(),
+            user.getProfilePicture(),
             user.isFriendRequestFlag(),
             user.isFriendFlag()
         );

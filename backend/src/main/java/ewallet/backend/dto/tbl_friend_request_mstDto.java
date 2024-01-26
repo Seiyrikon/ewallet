@@ -7,7 +7,8 @@ public record tbl_friend_request_mstDto
     String role,
     String firstName,
     String middleName,
-    String lastName
+    String lastName,
+    byte[] profilePicture
 ) 
 {
     

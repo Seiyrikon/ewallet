@@ -11,27 +11,31 @@
     <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
   </div>
 
-  <div *ngFor="let user of allUserInfo">
-    <div *ngIf="user" class="friend-container border border-black p-4">
+  <div *ngFor="let user of allUserInfo" class="flex flex-col items-center mb-8">
+    <div *ngIf="user" class="friend-container border border-black p-4 bg-black text-white rounded-md w-full">
+      <div class="mb-4">
+        <img [src]="getSanitizedImage(user.profilePicture)" alt="Profile Picture" class="rounded-full w-20 h-20 object-cover">
+      </div>
       <div class="mb-2 font-bold">{{ user.username }}</div>
       <div class="mb-2">{{ user.firstName }}</div>
       <div class="mb-2">{{ user.middleName }}</div>
       <div class="mb-2">{{ user.lastName }}</div>
 
-      <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none mt-2"
         (click)="onChat(user.userId)">
         Chat
       </button>
 
       <button *ngIf="!user.friendRequestFlag && !user.friendFlag" (click)="onAdd(user.userId)"
-        class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+        class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
         Add Friend
       </button>
 
       <button *ngIf="user.friendRequestFlag && !user.friendFlag" (click)="onCancel(user.userId)"
-        class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">
+        class="w-full mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
         Cancel Request
       </button>
     </div>
   </div>
+
 </div>

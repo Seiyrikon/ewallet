@@ -10,6 +10,7 @@ public record ChatSessionDto
     String first_name,
     String middle_name,
     String last_name,
+    byte[] profilePicture,
     String message,
     Timestamp created_at
 ) 

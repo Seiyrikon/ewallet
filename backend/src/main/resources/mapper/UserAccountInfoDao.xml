@@ -15,7 +15,6 @@
             pi.first_name AS firstName, 
             pi.middle_name AS middleName, 
             pi.last_name AS lastName,
-            pi.profile_picture AS profilePicture,
             account.del_flag AS del_flag, 
             account.created_at AS created_at, 
             account.updated_at AS updated_at
@@ -37,7 +36,6 @@
             pi.first_name AS firstName, 
             pi.middle_name AS middleName, 
             pi.last_name AS lastName,
-            pi.profile_picture AS profilePicture,
             account.del_flag AS del_flag, 
             account.created_at AS created_at, 
             account.updated_at AS updated_at
@@ -60,7 +58,6 @@
             pi.first_name AS firstName, 
             pi.middle_name AS middleName, 
             pi.last_name AS lastName,
-            pi.profile_picture AS profilePicture,
             account.del_flag AS del_flag, 
             account.created_at AS created_at, 
             account.updated_at AS updated_at

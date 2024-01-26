@@ -45,7 +45,7 @@
                 FROM tbl_chat_history 
                 WHERE user_id = #{user_id}
                         AND recipient_id = #{recipient_id}
-                        AND del_flag = 0
+                        AND del_flag = 0 LIMIT 1
         </select>
 
         <!-- updateChatHistory --> 

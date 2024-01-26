@@ -5,6 +5,9 @@
     <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
     <div *ngFor="let session of chatSession" class="mb-4 bg-gray-800 p-3 rounded-lg">
       <div class="flex items-center justify-between">
+        <div class="mb-4">
+          <img [src]="getSanitizedImage(session.profilePicture)" alt="Profile Picture" class="rounded-full w-20 h-20 object-cover">
+        </div>
         <p class="font-bold text-lg">{{ session.username }}</p>
         <p class="text-gray-500">{{ session.created_at | date:'short' }}</p>
       </div>

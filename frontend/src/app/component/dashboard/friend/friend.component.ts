@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Friend } from 'src/app/interface/friend';
@@ -22,7 +23,8 @@ export class FriendComponent implements OnInit, OnDestroy
   (
     private _friendService: FriendService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,8 @@ export class FriendComponent implements OnInit, OnDestroy
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
+          console.log(this.friends);
+
         }
       )
   }
@@ -61,6 +65,12 @@ export class FriendComponent implements OnInit, OnDestroy
   {
     console.log(friendId);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['chat', 'session', `${friendId}`] } }]);
+  }
+
+  getSanitizedImage(image: any): any {
+    // Assuming profilePicture is a base64 string
+    const imageSrc = `data:image/png;base64,${image}`;
+    return this._sanitizer.bypassSecurityTrustResourceUrl(imageSrc);
   }
 
   ngOnDestroy(): void {

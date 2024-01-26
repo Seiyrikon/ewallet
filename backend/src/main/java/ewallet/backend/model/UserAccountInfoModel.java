@@ -19,6 +19,7 @@ public class UserAccountInfoModel
     private String firstName;
     private String middleName;
     private String lastName;
+    private byte[] profilePicture;
     private boolean friendRequestFlag;
     private boolean friendFlag;
 }

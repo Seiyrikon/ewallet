@@ -5,6 +5,7 @@ export interface ChatSession {
   first_name: string,
   middle_name: string,
   last_name: string,
+  profilePicture: string | null;
   message: string,
   created_at: Date
 }
