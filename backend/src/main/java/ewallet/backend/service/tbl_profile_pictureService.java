@@ -7,4 +7,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface tbl_profile_pictureService {
     public ResponseEntity<Map<String, Object>> insertProfilePicture(MultipartFile profile_picture);
+    public ResponseEntity<Map<String, Object>> getAllProfileRecord();
 }

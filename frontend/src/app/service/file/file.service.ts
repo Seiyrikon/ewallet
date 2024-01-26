@@ -20,7 +20,7 @@ export class FileService {
     const formData = new FormData();
     formData.append('profilePicture', file);
 
-    return this._http.post<Response>(`${this.baseUrl}upload`, formData)
+    return this._http.post<Response>(`${this.baseUrl}profile/upload`, formData)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';

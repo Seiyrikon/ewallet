@@ -15,4 +15,33 @@
             (#{user_id}, #{picture})
     </insert>
 
+    <!-- getProfileRecord --> 
+
+    <select id="getProfileRecord" parameterType="java.lang.Long" resultType="ewallet.backend.model.tbl_profile_picture">
+        SELECT 
+            *
+        FROM
+            tbl_profile_picture
+        WHERE user_id = #{user_id};
+    </select>
+
+
+    <!-- deleteProfileRecord --> 
+
+    <delete id="deleteProfileRecord" parameterType="java.lang.Long">
+        DELETE FROM
+            tbl_profile_picture
+        WHERE user_id = #{user_id};
+    </delete>    
+
+    <!-- getSingleProfileRecord --> 
+
+    <select id="getSingleProfileRecord">
+        SELECT 
+            *
+        FROM
+            tbl_profile_picture
+        WHERE user_id = #{user_id} ORDER BY pp_id DESC LIMIT 1;
+    </select>
+
 </mapper>
