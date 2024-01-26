@@ -4,5 +4,5 @@ export interface Principal {
   firstName: string,
   middleName: string,
   lastName: string,
-  profilePicture: string
+  profilePicture: string | null,
 }

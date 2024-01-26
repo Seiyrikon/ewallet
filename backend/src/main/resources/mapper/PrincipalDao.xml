@@ -9,6 +9,7 @@
 
     <select id="getPrincipal" parameterType="java.lang.Long">
         SELECT 
+            account.user_id AS userId,
             account.username AS username, 
             account.role AS role, 
             pi.first_name AS firstName, 

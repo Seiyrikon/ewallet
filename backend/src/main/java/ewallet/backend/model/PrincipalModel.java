@@ -17,4 +17,5 @@ public class PrincipalModel
     private String firstName;
     private String middleName;
     private String lastName;    
+    private byte[] profilePicture;
 }

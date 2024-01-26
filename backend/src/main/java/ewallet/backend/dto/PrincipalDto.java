@@ -6,7 +6,8 @@ public record PrincipalDto
     String role,
     String firstName,
     String middleName,
-    String lastName
+    String lastName,
+    byte[] profilePicture
 ) 
 {
     

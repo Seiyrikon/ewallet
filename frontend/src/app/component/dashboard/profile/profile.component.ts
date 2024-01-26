@@ -14,6 +14,7 @@ import { LeaveModalComponent } from '../../common/leave-modal/leave-modal.compon
 import { ProfileService } from 'src/app/service/profile/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileService } from 'src/app/service/file/file.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -55,7 +56,8 @@ export class ProfileComponent implements OnInit, OnDestroy
     private _fileService: FileService,
     private _router: Router,
     private _dialog: MatDialog,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _sanitizer: DomSanitizer
   )
   {}
 
@@ -84,6 +86,8 @@ export class ProfileComponent implements OnInit, OnDestroy
       },
       () => {
         this.showProgressBar = false;
+        console.log(this.principal);
+
       }
     )
   }
@@ -213,6 +217,12 @@ export class ProfileComponent implements OnInit, OnDestroy
     } else {
       console.warn('No file selected');
     }
+  }
+
+  getSanitizedImage(image: any): any {
+    // Assuming profilePicture is a base64 string
+    const imageSrc = `data:image/png;base64,${image}`;
+    return this._sanitizer.bypassSecurityTrustResourceUrl(imageSrc);
   }
 
   ngOnDestroy(): void {
