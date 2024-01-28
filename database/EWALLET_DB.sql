@@ -3,7 +3,7 @@ CREATE DATABASE EWALLET_DB;
 
 USE EWALLET_DB;
 
-DROP USER 'ewallet'@'localhost';
+DROP USER IF EXISTS 'ewallet'@'localhost';
 CREATE USER 'ewallet'@'localhost' IDENTIFIED BY 'ewallet';
 GRANT ALL PRIVILEGES ON EWALLET_DB.* TO 'ewallet'@'localhost';
 
@@ -28,6 +28,17 @@ CREATE TABLE tbl_personal_info_mst(
     middle_name VARCHAR(20) NULL,
     last_name VARCHAR(20) NULL,
     profile_picture BLOB NULL,
+    del_flag INT(1) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL,
+    FOREIGN KEY (user_id) REFERENCES tbl_user_mst (user_id)
+);
+
+DROP TABLE IF EXISTS tbl_profile_picture;
+CREATE TABLE tbl_profile_picture(
+	pp_id INT(9) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(9) UNSIGNED NOT NULL,
+    profile_picture MEDIUMBLOB NULL,
     del_flag INT(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL,
