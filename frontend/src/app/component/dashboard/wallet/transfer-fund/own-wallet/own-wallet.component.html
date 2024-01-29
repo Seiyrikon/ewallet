@@ -1,10 +1,12 @@
-<div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+<div class="text-5xl font-bold m-2">
+  <h1>Transfer on Own Wallet</h1>
+</div>
 
 <div>
   <div class="flex w-full justify-around">
     <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
-      <div>
-        <h1 class="text-white">Transfer To:</h1>
+      <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
+        <h1 class="text-white">Transfer From:</h1>
       </div>
       <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
         <div class="p-6">
@@ -39,7 +41,7 @@
     </div>
 
     <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
-      <div>
+      <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
         <h1 class="text-white">Transfer To:</h1>
       </div>
       <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
