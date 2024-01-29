@@ -215,5 +215,44 @@ public class tbl_wallet_mstServiceImpl implements tbl_wallet_mstService
         }  
         return ResponseEntity.ok(response); 
     }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getAllWalletOfUser(Long user_id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try 
+        {
+            if (authentication != null && authentication.isAuthenticated()) 
+            {
+                //gets the user_id of the currently logged in user
+                Long userId = Long.parseLong(authentication.getName());
+
+                wallets = tbl_wallet_mstDao.getAllWalletOfUser(user_id)
+                .stream()
+                .map(tbl_wallet_mstDtoMapper).collect(Collectors.toList());
+    
+                if(wallets.size() != 0)
+                {
+                    response.put("message", wallets);
+                }
+                else
+                {
+                    response.put("message", "This user have no wallet/s.");
+                    return ResponseEntity.status(404).body(response);
+                }
+            }
+            else 
+            {
+                response.put("message", "You must login first");
+                return ResponseEntity.status(403).body(response);
+            }
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            response.put("message", "Internal Server Error");
+            return ResponseEntity.status(500).body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
     
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ewallet.backend.service.TotalBalanceService;
@@ -20,10 +21,10 @@ public class TotalBalanceRestController
     @Autowired
     private TotalBalanceService totalBalanceService;
 
-    @GetMapping("total-balance/{walletId}")
-    public ResponseEntity<Map<String, Object>> getTotalBalancePerWallet(@PathVariable Long walletId)
+    @GetMapping("total-balance")
+    public ResponseEntity<Map<String, Object>> getTotalBalancePerWallet(@RequestParam Long user_id, @RequestParam Long walletId)
     {
-        return totalBalanceService.getTotalBalancePerWallet(walletId);
+        return totalBalanceService.getTotalBalancePerWallet(user_id, walletId);
     }
 
     // @GetMapping("over-all-balance")

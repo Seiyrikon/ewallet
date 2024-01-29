@@ -60,7 +60,7 @@ public class OverAllBalanceServiceImpl implements OverAllBalanceService
                         Double totalBalance = 0.00;
                         for(tbl_wallet_mst wallet : wallets)
                         {
-                            totalBalance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getWallet_id())
+                            totalBalance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getUser_id(), wallet.getWallet_id())
                                            .getBody().get("message").toString());
     
                             overAllBalance += totalBalance;

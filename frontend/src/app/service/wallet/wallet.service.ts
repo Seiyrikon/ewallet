@@ -33,6 +33,23 @@ export class WalletService {
       );
   }
 
+  getAllWalletOfUser(user_id: number): Observable<any>
+  {
+    return this._http.get<Wallet[]>(`${this.baseUrl}wallet/user?user_id=${user_id}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
+
   getWalletById(walletId: number): Observable<any>
   {
     return this._http.get<Wallet>(`${this.baseUrl}wallet/${walletId}`)

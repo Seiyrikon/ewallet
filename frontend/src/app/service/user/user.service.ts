@@ -52,4 +52,23 @@ export class UserService {
       })
     );
   }
+
+  getAllInfoOfUser(user_id: number): Observable<any>
+  {
+    return this._http.get<User>(`${this.baseUrl}user-account-info/${user_id}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if(error.error instanceof ErrorEvent)
+        {
+          errorMessage = `error: ${error.error.message}`;
+        }
+        else
+        {
+          errorMessage = `${error.error.message}`
+        }
+        return throwError(errorMessage);
+      })
+    );
+  }
 }

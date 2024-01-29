@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
+    <div *ngIf="isFriendHidden === false" class="flex flex-col w-full m-2">
       <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
         <h1 class="text-white">Transfer To:</h1>
       </div>
@@ -55,13 +55,49 @@
             <div class="mb-2">{{ friend.middleName }}</div>
             <div class="mb-2">{{ friend.lastName }}</div>
           </div>
+          <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
           <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
-            >
+            (click)="onTransfer(friend.friendId)">
             Transfer
           </button>
         </div>
       </div>
     </div>
+
+    <div *ngIf="isFriendHidden === true" class="flex flex-col w-full m-2">
+      <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
+        <h1 class="text-white">Transfer To: {{ friend.username }}</h1>
+      </div>
+      <div *ngFor="let friendWallet of friendWallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
+        <div class="p-6">
+          <div class="text-lg font-semibold mb-4 text-white">{{ friendWallet.wallet_name }}</div>
+          <div class="border-t border-blue-200 pt-4">
+            <div class="mb-2">
+              <span class="font-semibold text-white">Balance:</span>
+              <span class="text-white">{{ friendWallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+            </div>
+            <div>
+              <span class="font-semibold text-white">Wallet Description:</span>
+              <span class="text-white">{{ friendWallet.wallet_desc }}</span>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4">
+            <button
+            *ngIf="friendWallet.wallet_id !== transferToId"
+            (click)="onToSelect(friendWallet.wallet_id)"
+            [disabled]="friendWallet.wallet_id === transferFromId"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Select
+            </button>
+            <button
+            *ngIf="friendWallet.wallet_id === transferToId"
+            (click)="onDeselectTo()"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Deselect
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="wallets.length < 2" class="text-white"><h1>Must Have 2 Wallets</h1></div>
 </div>

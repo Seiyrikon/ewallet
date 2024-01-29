@@ -19,12 +19,13 @@ public class tbl_wallet_mstDtoMapper implements Function<tbl_wallet_mst, tbl_wal
     @Override
     public tbl_wallet_mstDto apply(tbl_wallet_mst wallet) 
     {
-        Double balance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getWallet_id())
+        Double balance = Double.parseDouble(totalBalanceService.getTotalBalancePerWallet(wallet.getUser_id(), wallet.getWallet_id())
                         .getBody().get("message").toString());
 
         wallet.setBalance(balance);
         return new tbl_wallet_mstDto
         (
+            wallet.getUser_id(),
             wallet.getWallet_id(),
             wallet.getWallet_name(), 
             wallet.getWallet_desc(),

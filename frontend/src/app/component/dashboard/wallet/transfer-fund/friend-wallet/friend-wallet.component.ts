@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Friend } from 'src/app/interface/friend';
 import { Wallet } from 'src/app/interface/wallet';
 import { FriendService } from 'src/app/service/friend/friend.service';
+import { UserService } from 'src/app/service/user/user.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class FriendWalletComponent implements OnInit, OnDestroy
   searchedFriends!: Friend[] | null;
   friends!: Friend[];
   wallets!: Wallet[];
+  friend!: Friend;
+  friendWallets!: Wallet[];
   searchText!: string;
   errorMessage: string = '';
   showProgressBar: boolean = false;
@@ -26,11 +29,13 @@ export class FriendWalletComponent implements OnInit, OnDestroy
   transferFromId: number = 0;
   transferToId: number = 0;
   isSubmitted: boolean = false;
+  isFriendHidden: boolean = false;
 
   constructor
   (
     private _friendService: FriendService,
     private _walletService: WalletService,
+    private _userService: UserService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _sanitizer: DomSanitizer
@@ -97,6 +102,60 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     )
   }
 
+  getAllWalletOfUser(user_id: number): any
+  {
+    this.showProgressBar = true;
+
+    const friendWallets$ = this._walletService.getAllWalletOfUser(user_id)
+
+    friendWallets$.subscribe
+    (
+      (response) => {
+        if (!response)
+        {
+          console.error('Response is empty');
+        }
+        this.friendWallets = response.message;
+      },
+      (error) => {
+        console.error('Get Wallet Failed', error);
+        this.errorMessage = error;
+        this.showProgressBar = false;
+      },
+      () => {
+        this.showProgressBar = false;
+        this.isFriendHidden = true;
+      }
+    )
+  }
+
+  getAllInfoOfUser(user_id: number): any
+  {
+      this.showProgressBar = true;
+      const friend$ = this._userService.getAllInfoOfUser(+user_id);
+
+      friend$.subscribe
+      (
+        (response) => {
+          if(!response)
+          {
+            console.error('Response is empty');
+          }
+          this.friend = response.message[0];
+        },
+        (error) => {
+          console.error('An error occured', error);
+          this.errorMessage = error;
+          this.showProgressBar = false;
+        },
+        () => {
+          this.showProgressBar = false;
+          console.log(this.friend);
+
+        }
+      )
+  }
+
   getSanitizedImage(image: any): any {
     // Assuming profilePicture is a base64 string
     const imageSrc = `data:image/png;base64,${image}`;
@@ -124,6 +183,12 @@ export class FriendWalletComponent implements OnInit, OnDestroy
   onDeselectTo()
   {
     this.transferToId = 0;
+  }
+
+  onTransfer(user_id: number): any
+  {
+    this.getAllWalletOfUser(user_id);
+    this.getAllInfoOfUser(user_id);
   }
 
   ngOnDestroy(): void {

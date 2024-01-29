@@ -50,7 +50,7 @@ public class TransferFundFeatureServiceImpl implements TransferFundFeatureServic
 
                 if(body != null) 
                 {
-                    ResponseEntity<Map<String, Object>> transferFromWallet = totalBalanceService.getTotalBalancePerWallet(transferFromId);
+                    ResponseEntity<Map<String, Object>> transferFromWallet = totalBalanceService.getTotalBalancePerWallet(userId, transferFromId);
 
                     Double transferFromWalletBalance = Double.parseDouble(transferFromWallet.getBody().get("message").toString());
 

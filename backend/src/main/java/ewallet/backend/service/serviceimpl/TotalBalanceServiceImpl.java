@@ -34,7 +34,7 @@ public class TotalBalanceServiceImpl implements TotalBalanceService
     Double totalBalance = 0.00;
 
     @Override
-    public ResponseEntity<Map<String, Object>> getTotalBalancePerWallet(Long walletId) 
+    public ResponseEntity<Map<String, Object>> getTotalBalancePerWallet(Long user_id, Long walletId) 
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try 
@@ -46,12 +46,12 @@ public class TotalBalanceServiceImpl implements TotalBalanceService
 
                 List<tbl_wallet_mst> wallets = new ArrayList<tbl_wallet_mst>();
     
-                wallets = tbl_wallet_mstDao.getWalletById(userId, walletId);
+                wallets = tbl_wallet_mstDao.getWalletById(user_id, walletId);
 
                 if(wallets.size() != 0) 
                 {
-                    Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(userId, walletId);
-                    Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(userId, walletId);
+                    Double totalWithdraw = tbl_withdrawDao.getTotalWithdrawPerWallet(user_id, walletId);
+                    Double totalDeposit = tbl_depositDao.getTotalDepositPerWallet(user_id, walletId);
 
                     if(totalWithdraw == null || totalDeposit == null)
                     {
