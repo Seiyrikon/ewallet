@@ -23,6 +23,9 @@ import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 import { SearchComponent } from './component/dashboard/search/search/search.component';
 import { TransferFundComponent } from './component/dashboard/wallet/transfer-fund/transfer-fund.component';
+import { OwnWalletComponent } from './component/dashboard/wallet/transfer-fund/own-wallet/own-wallet.component';
+import { FriendWalletComponent } from './component/dashboard/wallet/transfer-fund/friend-wallet/friend-wallet.component';
+import { OtherWalletComponent } from './component/dashboard/wallet/transfer-fund/other-wallet/other-wallet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -71,7 +74,27 @@ const routes: Routes = [
         path: 'wallet/transfer',
         component: TransferFundComponent,
         canActivate: [GuardService],
-        outlet: 'contentOutlet'
+        outlet: 'contentOutlet',
+        children: [
+          {
+            path: 'own',
+            component: OwnWalletComponent,
+            canActivate: [GuardService],
+            outlet: 'transferFundOutlet'
+          },
+          {
+            path: 'friend',
+            component: FriendWalletComponent,
+            canActivate: [GuardService],
+            outlet: 'transferFundOutlet'
+          },
+          {
+            path: 'other',
+            component: OtherWalletComponent,
+            canActivate: [GuardService],
+            outlet: 'transferFundOutlet'
+          },
+        ]
       },
       //top nav
       {
