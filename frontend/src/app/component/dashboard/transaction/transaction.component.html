@@ -12,22 +12,28 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let transaction of transactions" class="hover:bg-gray-100">
-        <td class="py-2">{{ transaction.wallet_name }}</td>
-        <td class="py-2">{{ transaction.transaction_type }}</td>
-        <td class="py-2">
+      <tr *ngFor="let transaction of transactions" class="hover:bg-gray-700">
+        <td class="py-2 text-white">{{ transaction.wallet_name }}</td>
+        <td class="py-2 text-white">{{ transaction.transaction_type }}</td>
+        <td class="py-2 text-white">
           <span
             [ngClass]="{
               'text-green-600': transaction.transaction_type === 'Deposit',
-              'text-red-600': transaction.transaction_type === 'Withdraw'
+              'text-red-600': transaction.transaction_type === 'Withdraw',
+              'text-blue-600': transaction.transaction_type === 'Transfer'
             }"
           >
-            {{ transaction.transaction_type === 'Deposit' ? '+' : '-' }}
+            {{
+              transaction.transaction_type === 'Deposit' ? '+' :
+              transaction.transaction_type === 'Withdraw' ? '-' :
+              transaction.transaction_type === 'Transfer' ? '+' : ''
+            }}
             {{ transaction.transaction_amount | currency: 'PHP': 'symbol': '1.2-3' }}
           </span>
         </td>
-        <td class="py-2">{{ transaction.transaction_desc }}</td>
-        <td class="py-2">{{ transaction.created_at | date:'short' }}</td>
+
+        <td class="py-2 text-white">{{ transaction.transaction_desc }}</td>
+        <td class="py-2 text-white">{{ transaction.created_at | date:'short' }}</td>
       </tr>
     </tbody>
   </table>
