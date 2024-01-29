@@ -42,6 +42,9 @@ import { ChatComponent } from './component/dashboard/chat/chat/chat.component';
 import { ChatSessionComponent } from './component/dashboard/chat-session/chat-session/chat-session.component';
 import { SearchComponent } from './component/dashboard/search/search/search.component';
 import { TransferFundComponent } from './component/dashboard/wallet/transfer-fund/transfer-fund.component';
+import { OwnWalletComponent } from './component/dashboard/wallet/transfer-fund/own-wallet/own-wallet.component';
+import { FriendWalletComponent } from './component/dashboard/wallet/transfer-fund/friend-wallet/friend-wallet.component';
+import { OtherWalletComponent } from './component/dashboard/wallet/transfer-fund/other-wallet/other-wallet.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,9 @@ import { TransferFundComponent } from './component/dashboard/wallet/transfer-fun
     ChatSessionComponent,
     SearchComponent,
     TransferFundComponent,
+    OwnWalletComponent,
+    FriendWalletComponent,
+    OtherWalletComponent,
   ],
   imports: [
     BrowserModule,

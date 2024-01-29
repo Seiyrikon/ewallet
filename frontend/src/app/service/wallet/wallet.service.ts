@@ -100,4 +100,21 @@ export class WalletService {
         })
       );
   }
+
+  transferToOwn(formBody: any, transferFromId: number, transferToId: number): Observable<any>
+  {
+    return this._http.post<Wallet>(`${this.baseUrl}transfer/own?transferFromId=${transferFromId}&transferToId=${transferToId}`, formBody)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
+          if (error.error instanceof ErrorEvent) {
+            errorMessage = `error: ${error.error.message}`;
+          }
+          else {
+            errorMessage = `${error.error.message}`
+          }
+          return throwError(errorMessage);
+        })
+      );
+  }
 }

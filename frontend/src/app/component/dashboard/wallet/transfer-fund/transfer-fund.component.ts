@@ -1,14 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteModalComponent } from 'src/app/component/common/delete-modal/delete-modal.component';
 import { Principal } from 'src/app/interface/principal';
+import { Transfer } from 'src/app/interface/transfer';
 import { Wallet } from 'src/app/interface/wallet';
 import { PrincipalService } from 'src/app/service/principal/principal.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-transfer-fund',
@@ -24,7 +33,16 @@ export class TransferFundComponent implements OnInit, OnDestroy
   ownWalletForm!: FormGroup;
   errorMessage: string = '';
   showProgressBar: boolean = false;
-  isOwnWalletFormVisible: boolean = false;
+  isOwnWalletClicked: boolean = false;
+  showSubmitButton: boolean = true;
+  transferFromId: number = 0;
+  transferToId: number = 0;
+  isSubmitted: boolean = false;
+
+  amount!: FormControl;
+  note!: FormControl;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
@@ -66,6 +84,22 @@ export class TransferFundComponent implements OnInit, OnDestroy
     )
   }
 
+  initializeOwnWalletForm() {
+    const initialFormValues: Transfer = {
+      amount: 0, // Provide initial values according to the interface
+      note: ''
+    };
+
+    this.amount = new FormControl(initialFormValues.amount, [Validators.required]);
+    this.note = new FormControl(initialFormValues.note);
+
+    // Create a new FormGroup based on the LoginForm interface
+    this.ownWalletForm = new FormGroup({
+      amount: this.amount,
+      note: this.note
+    });
+  }
+
   getAllUserWallet(): any
   {
     this.showProgressBar = true;
@@ -93,26 +127,91 @@ export class TransferFundComponent implements OnInit, OnDestroy
   }
 
   onOwnClick():any {
-    this.isOwnWalletFormVisible = !this.isOwnWalletFormVisible;
+    this.isOwnWalletClicked = !this.isOwnWalletClicked;
     this.getAllUserWallet();
+    this.initializeOwnWalletForm();
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'transfer', {outlets: { transferFundOutlet: ['own']}}] } }]);
+    // this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['transfer', 'own'] } }]);
   }
 
   onFriendWalletClick():any {
-    this.isOwnWalletFormVisible = false;
+    this.isOwnWalletClicked = false;
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'transfer', {outlets: { transferFundOutlet: ['friend']}}] } }]);
   }
 
   onOtherClick():any {
-    this.isOwnWalletFormVisible = false;
+    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'transfer', {outlets: { transferFundOutlet: ['other']}}] } }]);
+    this.isOwnWalletClicked = false;
+  }
+
+  onFromSelect(walletId: number)
+  {
+    this.transferFromId = 0;
+    this.transferFromId = walletId;
+    console.log(walletId);
+
+  }
+  onToSelect(walletId: number)
+  {
+    this.transferToId = 0;
+    this.transferToId = walletId;
+    console.log(walletId);
+  }
+
+  onDeselectFrom()
+  {
+    this.transferFromId = 0;
+  }
+  onDeselectTo()
+  {
+    this.transferToId = 0;
   }
 
   onOwnWalletSubmit(): any
   {
+    console.log("Form is submitted");
+    this.errorMessage = '';
+    this.isSubmitted = !this.isSubmitted;
+    if(this.ownWalletForm.valid)
+    {
+      this.showSubmitButton = false;
+      this.showProgressBar = true; // Show the progress bar
+      const ownWalletBody = this.ownWalletForm.value;
+      console.log(ownWalletBody);
 
-  }
+      const ownWalletTransfer$ = this._walletService.transferToOwn(ownWalletBody, +this.transferFromId, +this.transferToId);
 
-  onView(walletId: number): any {
-    console.log(walletId);
-    this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${walletId}`] } }]);
+      ownWalletTransfer$.subscribe
+      (
+        (response) => {
+          if (!response) {
+            console.error('Response is empty');
+
+          }
+        },
+        (error) => {
+          console.error('Transfer failed', error);
+          this.isSubmitted = !this.isSubmitted;
+          this.showProgressBar = false;
+          this.showSubmitButton = true;
+          this.errorMessage = error;
+        },
+        () => {
+          // Upon completion of wallet creation (when the observable completes)
+          this.showProgressBar = false; // Hide the progress bar
+          this.showSubmitButton = true; // Show the "Add Wallet" button
+
+          this._snackbar.open('Transfer Successful', 'Close', {
+            duration: 1000,
+          }).afterDismissed().subscribe(() => {
+            this.isOwnWalletClicked = false;
+            this.transferFromId = 0;
+            this.transferToId = 0;
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'transfer'] } }]);
+          })
+        }
+      );
+    }
   }
 
   ngOnDestroy(): void {
