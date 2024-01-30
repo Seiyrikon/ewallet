@@ -1,3 +1,147 @@
 <div class="text-5xl font-bold m-2">
-  <h1>Transfer on Other's Wallet</h1>
+  <h1>Transfer on Friend's Wallet</h1>
 </div>
+
+<div>
+  <div class="flex w-full justify-around">
+    <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
+      <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
+        <h1 class="text-white">Transfer From: {{ principal.username }}</h1>
+      </div>
+      <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
+        <div class="p-6">
+          <div class="text-lg font-semibold mb-4 text-white">{{ wallet.wallet_name }}</div>
+          <div class="border-t border-blue-200 pt-4">
+            <div class="mb-2">
+              <span class="font-semibold text-white">Balance:</span>
+              <span class="text-white">{{ wallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+            </div>
+            <div>
+              <span class="font-semibold text-white">Wallet Description:</span>
+              <span class="text-white">{{ wallet.wallet_desc }}</span>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4">
+            <button
+            *ngIf="wallet.wallet_id !== transferFromId"
+            (click)="onFromSelect(wallet.wallet_id)"
+            [disabled]="wallet.wallet_id === transferToId"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Select
+            </button>
+            <button
+            *ngIf="wallet.wallet_id === transferFromId"
+            (click)="onDeselectFrom()"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Deselect
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isOtherHidden === false" class="flex flex-col w-full m-2">
+      <div>
+        <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
+          <h1 class="text-white">Transfer To:</h1>
+        </div>
+        <div>
+          <input type="text" placeholder="Search..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-blue-500"
+            [(ngModel)]="searchText" />
+          <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
+            (click)="onSearch()">
+            Search
+          </button>
+          <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+        </div>
+      </div>
+      <div class="flex-1" *ngFor="let user of allUserInfo">
+        <div class="border border-black">
+          <div *ngIf="user" class="friend-container p-4">
+            <div class="mb-4">
+              <img [src]="getSanitizedImage(user.profilePicture)" alt="Profile Picture" class="rounded-full w-20 h-20 object-cover">
+            </div>
+            <div class="mb-2 font-bold">{{ user.username }}</div>
+            <div class="mb-2">{{ user.firstName }}</div>
+            <div class="mb-2">{{ user.middleName }}</div>
+            <div class="mb-2">{{ user.lastName }}</div>
+          </div>
+          <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+          <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
+            (click)="onTransfer(user.userId)">
+            Transfer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isOtherHidden === true" class="flex flex-col w-full m-2">
+      <div>
+        <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
+          <h1 class="text-white">Transfer To: {{ user.username }}</h1>
+        </div>
+      </div>
+      <div *ngFor="let otherWallet of otherWallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
+        <div class="p-6">
+          <div class="text-lg font-semibold mb-4 text-white">{{ otherWallet.wallet_name }}</div>
+          <div class="border-t border-blue-200 pt-4">
+            <div class="mb-2">
+              <span class="font-semibold text-white">Balance:</span>
+              <span class="text-white">{{ otherWallet.balance | currency: 'PHP': 'symbol': '1.2-3'}}</span>
+            </div>
+            <div>
+              <span class="font-semibold text-white">Wallet Description:</span>
+              <span class="text-white">{{ otherWallet.wallet_desc }}</span>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4">
+            <button
+            *ngIf="otherWallet.wallet_id !== transferToId"
+            (click)="onToSelect(otherWallet.wallet_id)"
+            [disabled]="otherWallet.wallet_id === transferFromId"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Select
+            </button>
+            <button
+            *ngIf="otherWallet.wallet_id === transferToId"
+            (click)="onDeselectTo()"
+            class="action-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-300">
+              Deselect
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none"
+        (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<form *ngIf="(transferFromId !== 0 && transferToId !== 0)" class="w-full space-y-4 flex flex-col items-center" [formGroup]="otherWalletForm" (ngSubmit)="onOtherWalletSubmit()">
+  <div class="flex flex-col w-full">
+    <mat-form-field class="example-full-width">
+      <mat-label class="text-gray-800">Amount</mat-label>
+      <input type="number" matInput [formControl]="amount" [errorStateMatcher]="matcher" placeholder="Ex. 1000.00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-white">
+      <mat-error *ngIf="amount.hasError('required')" class="text-red-600">Amount is <strong>required</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label class="text-gray-800">Note (optional)</mat-label>
+      <input type="text" matInput [formControl]="note" [errorStateMatcher]="matcher" placeholder="Ex. Weekly Allowance" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm text-white">
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
+
+  <div class="flex space-x-4">
+    <button type="submit" *ngIf="showSubmitButton" [disabled]="!otherWalletForm.valid" class="btn-black submit-btn">
+      Transfer
+    </button>
+    <button type="button" class="btn-gray cancel-btn">
+      Cancel
+    </button>
+  </div>
+</form>

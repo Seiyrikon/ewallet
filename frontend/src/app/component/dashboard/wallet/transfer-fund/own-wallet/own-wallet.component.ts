@@ -159,7 +159,7 @@ export class OwnWalletComponent {
       const ownWalletBody = this.ownWalletForm.value;
       console.log(ownWalletBody);
 
-      const ownWalletTransfer$ = this._walletService.transferToOwn(ownWalletBody, +this.transferFromId, +this.transferToId);
+      const ownWalletTransfer$ = this._walletService.transferToOwn(ownWalletBody, +this.principal.userId, +this.transferFromId, +this.transferToId);
 
       ownWalletTransfer$.subscribe
       (

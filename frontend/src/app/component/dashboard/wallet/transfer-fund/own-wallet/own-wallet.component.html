@@ -6,7 +6,7 @@
   <div class="flex w-full justify-around">
     <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
       <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
-        <h1 class="text-white">Transfer From:</h1>
+        <h1 class="text-white">Transfer From: {{ principal.username }}</h1>
       </div>
       <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
         <div class="p-6">
@@ -42,7 +42,7 @@
 
     <div *ngIf="wallets.length > 1" class="flex flex-col w-full m-2">
       <div class="bg-gray-800 rounded-lg shadow-md p-2 m-1">
-        <h1 class="text-white">Transfer To:</h1>
+        <h1 class="text-white">Transfer To: {{ principal.username }}</h1>
       </div>
       <div *ngFor="let wallet of wallets" class="wallet-container bg-gray-800 rounded-lg shadow-md m-1 p-4">
         <div class="p-6">

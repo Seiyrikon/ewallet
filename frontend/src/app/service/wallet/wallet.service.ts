@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AddWalletForm } from 'src/app/interface/add-wallet-form';
+import { Transfer } from 'src/app/interface/transfer';
 import { Wallet } from 'src/app/interface/wallet';
 
 @Injectable({
@@ -118,9 +119,9 @@ export class WalletService {
       );
   }
 
-  transferToOwn(formBody: any, transferFromId: number, transferToId: number): Observable<any>
+  transferToOwn(formBody: Transfer, recipientId: number, transferFromId: number, transferToId: number): Observable<any>
   {
-    return this._http.post<Wallet>(`${this.baseUrl}transfer/own?transferFromId=${transferFromId}&transferToId=${transferToId}`, formBody)
+    return this._http.post<Wallet>(`${this.baseUrl}transfer/own?recipientId=${recipientId}&transferFromId=${transferFromId}&transferToId=${transferToId}`, formBody)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
