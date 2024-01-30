@@ -1,12 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Friend } from 'src/app/interface/friend';
+import { Principal } from 'src/app/interface/principal';
+import { Transfer } from 'src/app/interface/transfer';
 import { Wallet } from 'src/app/interface/wallet';
 import { FriendService } from 'src/app/service/friend/friend.service';
+import { PrincipalService } from 'src/app/service/principal/principal.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-friend-wallet',
@@ -17,35 +30,90 @@ export class FriendWalletComponent implements OnInit, OnDestroy
 {
 
   private _subscription!: Subscription
+  principal!: Principal;
   searchedFriends!: Friend[] | null;
-  friends!: Friend[];
+  friends!: Friend[] | null;
   wallets!: Wallet[];
   friend!: Friend;
   friendWallets!: Wallet[];
+  friendWalletForm!: FormGroup;
   searchText!: string;
   errorMessage: string = '';
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   transferFromId: number = 0;
   transferToId: number = 0;
+  recipientId: number = 0;
   isSubmitted: boolean = false;
   isFriendHidden: boolean = false;
+
+  amount!: FormControl;
+  note!: FormControl;
+
+  matcher = new MyErrorStateMatcher();
 
   constructor
   (
     private _friendService: FriendService,
     private _walletService: WalletService,
     private _userService: UserService,
+    private _principalService: PrincipalService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private _snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.getAllFriendsOfUser();
     this.getAllUserWallet();
+    this.getPrincipalInfo();
+    this.initializeFriendWalletForm();
     // console.log(this.friendRequestChecker(2));
 
+  }
+
+  getPrincipalInfo(): any {
+    this.showProgressBar = true;
+
+    const principal$ = this._principalService.getPrincipalInfo();
+
+    principal$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.principal = response.message[0];
+      },
+      (error) => {
+        console.error('Principal Info not found', error);
+        this.errorMessage = error;
+        this.showProgressBar = false;
+      },
+      () => {
+        this.showProgressBar = false;
+        console.log(this.principal);
+
+      }
+    )
+  }
+
+  initializeFriendWalletForm() {
+    const initialFormValues: Transfer = {
+      amount: 0, // Provide initial values according to the interface
+      note: ''
+    };
+
+    this.amount = new FormControl(initialFormValues.amount, [Validators.required]);
+    this.note = new FormControl(initialFormValues.note);
+
+    // Create a new FormGroup based on the LoginForm interface
+    this.friendWalletForm = new FormGroup({
+      amount: this.amount,
+      note: this.note
+    });
   }
 
   getAllFriendsOfUser(): any {
@@ -156,6 +224,54 @@ export class FriendWalletComponent implements OnInit, OnDestroy
       )
   }
 
+  onFriendWalletSubmit(): any
+  {
+    console.log("Form is submitted");
+    this.errorMessage = '';
+    this.isSubmitted = !this.isSubmitted;
+    if(this.friendWalletForm.valid)
+    {
+      this.showSubmitButton = false;
+      this.showProgressBar = true; // Show the progress bar
+      const friendWalletForm = this.friendWalletForm.value;
+      console.log(friendWalletForm);
+      console.log(this.friend.friendId);
+
+      const ownWalletTransfer$ = this._walletService.transferToOwn(friendWalletForm, +this.recipientId, +this.transferFromId, +this.transferToId);
+
+
+      ownWalletTransfer$.subscribe
+      (
+        (response) => {
+          if (!response) {
+            console.error('Response is empty');
+
+          }
+        },
+        (error) => {
+          console.error('Transfer failed', error);
+          this.isSubmitted = !this.isSubmitted;
+          this.showProgressBar = false;
+          this.showSubmitButton = true;
+          this.errorMessage = error;
+        },
+        () => {
+          // Upon completion of wallet creation (when the observable completes)
+          this.showProgressBar = false; // Hide the progress bar
+          this.showSubmitButton = true; // Show the "Add Wallet" button
+
+          this._snackbar.open('Transfer Successful', 'Close', {
+            duration: 1000,
+          }).afterDismissed().subscribe(() => {
+            this.transferFromId = 0;
+            this.transferToId = 0;
+            this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'transfer'] } }]);
+          })
+        }
+      );
+    }
+  }
+
   getSanitizedImage(image: any): any {
     // Assuming profilePicture is a base64 string
     const imageSrc = `data:image/png;base64,${image}`;
@@ -185,8 +301,15 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     this.transferToId = 0;
   }
 
+  onCancel(): any
+  {
+    this.isFriendHidden = false;
+    this.getAllFriendsOfUser();
+  }
+
   onTransfer(user_id: number): any
   {
+    this.recipientId = user_id;
     this.getAllWalletOfUser(user_id);
     this.getAllInfoOfUser(user_id);
   }
