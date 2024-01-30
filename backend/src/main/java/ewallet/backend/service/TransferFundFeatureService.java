@@ -9,5 +9,5 @@ import ewallet.backend.model.tbl_deposit;
 
 public interface TransferFundFeatureService 
 {
-    public ResponseEntity<Map<String, Object>> transferFund(TransferModel body, Long transferFromId, Long transferToId);
+    public ResponseEntity<Map<String, Object>> transferFund(TransferModel body, Long recipientId, Long transferFromId, Long transferToId);
 }

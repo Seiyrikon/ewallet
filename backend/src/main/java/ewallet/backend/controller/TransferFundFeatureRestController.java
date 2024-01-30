@@ -24,9 +24,9 @@ public class TransferFundFeatureRestController
     private TransferFundFeatureService transferFundFeatureService;
 
     @PostMapping("transfer/own")
-    public ResponseEntity<Map<String, Object>> transferToOwn(@RequestBody TransferModel body, @RequestParam Long transferFromId, @RequestParam Long transferToId)
+    public ResponseEntity<Map<String, Object>> transferToOwn(@RequestBody TransferModel body, @RequestParam Long recipientId, @RequestParam Long transferFromId, @RequestParam Long transferToId)
     {
-        return transferFundFeatureService.transferFund(body, transferFromId, transferToId);
+        return transferFundFeatureService.transferFund(body, recipientId, transferFromId, transferToId);
     }
 
 }

@@ -39,7 +39,7 @@ public class TransferFundFeatureServiceImpl implements TransferFundFeatureServic
     tbl_transaction transaction = new tbl_transaction();
 
     @Override
-    public ResponseEntity<Map<String, Object>> transferFund(TransferModel body, Long transferFromId, Long transferToId) {
+    public ResponseEntity<Map<String, Object>> transferFund(TransferModel body, Long recipientId, Long transferFromId, Long transferToId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try 
         {
@@ -68,7 +68,7 @@ public class TransferFundFeatureServiceImpl implements TransferFundFeatureServic
                     toBeWithdrawn.setWithdraw_desc(body.getNote());
                     tbl_withdrawDao.insertWithdraw(toBeWithdrawn);
 
-                    toBeTransferred.setUser_id(userId);
+                    toBeTransferred.setUser_id(recipientId);
                     toBeTransferred.setWallet_id(transferToId);
                     toBeTransferred.setAmount(body.getAmount());
                     toBeTransferred.setDeposit_desc(body.getNote());
