@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ewallet.backend.service.JwtService;
@@ -14,12 +15,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtServiceImpl implements JwtService
 {
 
     private static final String SECRET_KEY = "A404AD4B5E8655F686922AB29CB59052DBD8018487D8DC95E8D0F2A6EE2E775F";
+    Map<String, Object> response = new HashMap<String, Object>();
 
     @Override
     public String extractUserId(String jwt) 
@@ -87,6 +90,16 @@ public class JwtServiceImpl implements JwtService
     public Date extractExpiration(String jwt) 
     {
         return extractClaim(jwt, Claims::getExpiration);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getToken(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        jwt = authHeader.substring(7);
+
+        response.put("message", jwt);
+        return ResponseEntity.ok(response);
     }
 
 }

@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ewallet.backend.config.TokenBlacklist;
 import ewallet.backend.service.JwtBlacklistService;
+import ewallet.backend.service.tbl_invalid_tokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -25,10 +27,13 @@ public class LogoutRestController
     @Autowired
     private JwtBlacklistService jwtBlacklistService;
 
+    @Autowired 
+    private tbl_invalid_tokenService tbl_invalid_tokenService;
+
     Map<String, Object> response = new HashMap<String, Object>();
 
-    @PostMapping("logout")
-    public ResponseEntity<Map<String, Object>> logout(HttpServletRequest request) 
+    @PostMapping("logout1")
+    public ResponseEntity<Map<String, Object>> logout1(HttpServletRequest request) 
     {
         // Get the JWT token from the request header
         String token = jwtBlacklistService.extractTokenFromRequest(request);
@@ -57,5 +62,11 @@ public class LogoutRestController
         // Optionally, perform additional logout actions if needed
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("logout")
+    public ResponseEntity<Map<String, Object>> logout(HttpServletRequest request) 
+    {
+        return tbl_invalid_tokenService.getInvalidToken(request);
     }
 }

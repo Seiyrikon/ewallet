@@ -95,6 +95,15 @@
 			<version>2.15.3</version> <!-- Use the latest version available -->
 		</dependency>
 
+		<!-- Selenium -->
+		<dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.17.0</version>
+        </dependency>
+		<!-- Selenium -->
+
+
 	</dependencies>
 
 	<build>

@@ -10,8 +10,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ewallet.backend.dao.tbl_invalid_tokenDao;
 import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.model.LoginModel;
+import ewallet.backend.model.tbl_invalid_token;
 import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.service.JwtService;
 import ewallet.backend.service.LoginService;
@@ -19,6 +21,8 @@ import ewallet.backend.service.LoginService;
 @Service
 public class LoginServiceImpl implements LoginService
 {
+    @Autowired
+    private tbl_invalid_tokenDao tbl_invalid_tokenDao;
 
     @Autowired
     private tbl_user_mstDao TBL_USER_MSTDao;
@@ -103,6 +107,14 @@ public class LoginServiceImpl implements LoginService
                     body.getPassword())
             );
             var jwt = jwtService.generateToken(user.getUserId());
+
+            tbl_invalid_token isInvalid = tbl_invalid_tokenDao.getInvalidToken(user.getUserId(), jwt);
+
+            if(isInvalid != null)
+            {
+                response.put("message", "Invalid Token");
+            }
+
             response.put("message", jwt);
         }
         else 

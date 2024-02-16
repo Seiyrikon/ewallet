@@ -25,7 +25,8 @@ public class SecurityConfiguration
     {
         "/api/v1/register",
         "/api/v1/authenticate",
-        "/api/v1/logout"
+        "/api/v1/logout",
+        "/api/v1/get-token"
     };
 
     @Bean

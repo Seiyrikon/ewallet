@@ -5,12 +5,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ewallet.backend.dao.tbl_invalid_tokenDao;
 import ewallet.backend.dao.tbl_personal_info_mstDao;
 import ewallet.backend.dao.tbl_user_mstDao;
 import ewallet.backend.model.RegisterModel;
+import ewallet.backend.model.tbl_invalid_token;
 import ewallet.backend.model.tbl_personal_info_mst;
 import ewallet.backend.model.tbl_user_mst;
 import ewallet.backend.service.JwtService;
@@ -19,6 +23,8 @@ import ewallet.backend.service.ResgisterService;
 @Service
 public class RegisterServiceImpl implements ResgisterService
 {
+    @Autowired
+    private tbl_invalid_tokenDao tbl_invalid_tokenDao;
 
     @Autowired
     private tbl_user_mstDao TBL_USER_MSTDao;
@@ -41,6 +47,8 @@ public class RegisterServiceImpl implements ResgisterService
     @Override
     public ResponseEntity<Map<String, Object>> register(RegisterModel body) 
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         try 
         {
             if(body != null)
@@ -78,6 +86,13 @@ public class RegisterServiceImpl implements ResgisterService
                 TBL_PERSONAL_INFO_MSTDao.insertPersonalInfo(personalInfo, userId);
 
                 var jwt = jwtService.generateToken(userId);
+
+                tbl_invalid_token isInvalid = tbl_invalid_tokenDao.getInvalidToken(userId, jwt);
+
+                if(isInvalid != null)
+                {
+                    response.put("message", "Invalid Token");
+                }
                 response.put("message", jwt);
             }
             else

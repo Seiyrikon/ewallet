@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper for tbl project   -->
+<mapper namespace="ewallet.backend.dao.tbl_invalid_tokenDao">
+
+    <!-- getInvalidToken --> 
+
+    <select id="getInvalidToken">
+        SELECT 
+            * 
+        FROM
+            tbl_invalid_token
+        WHERE 
+            user_id = #{user_id} AND invalid_token = #{invalid_token}
+    </select>
+
+    <!-- insertInvalidToken --> 
+
+    <insert id="insertInvalidToken">
+        INSERT INTO 
+            tbl_invalid_token
+            (user_id, invalid_token)
+        VALUES 
+            (#{user_id}, #{invalid_token})
+    </insert>
+
+</mapper>

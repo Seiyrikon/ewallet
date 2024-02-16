@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.http.ResponseEntity;
+
 import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface JwtService 
 {
@@ -16,5 +19,5 @@ public interface JwtService
     public boolean isTokenValid(String jwt, Long userId);
     public boolean isTokenExpired(String jwt);
     public Date extractExpiration(String jwt);
-    
+    public ResponseEntity<Map<String, Object>> getToken(HttpServletRequest request);
 }
