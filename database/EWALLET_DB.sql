@@ -161,3 +161,13 @@ CREATE TABLE tbl_chat_history(
     FOREIGN KEY (user_id) REFERENCES tbl_user_mst(user_id),
     FOREIGN KEY (recipient_id) REFERENCES tbl_user_mst(user_id)
 );
+
+DROP TABLE IF EXISTS tbl_invalid_token;
+CREATE TABLE tbl_invalid_token(
+	it_id INT(9) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT(9) UNSIGNED NOT NULL,
+    invalid_token VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES tbl_user_mst(user_id)
+);
