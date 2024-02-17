@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
+import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { Wallet } from 'src/app/interface/wallet';
 import { Withdraw } from 'src/app/interface/withdraw';
@@ -136,6 +137,8 @@ export class WithdrawComponent implements OnInit, OnDestroy
           (error) => {
             console.error("An Error Occured", error);
             this.errorMessage = error;
+            this.openExpiredSessionDialog();
+            this._router.navigate(['/login']);
           }
         )
     } else {
@@ -169,6 +172,21 @@ export class WithdrawComponent implements OnInit, OnDestroy
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           resolve(true); // User confirmed leaving
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
         } else {
           resolve(false); // User canceled leaving
         }
