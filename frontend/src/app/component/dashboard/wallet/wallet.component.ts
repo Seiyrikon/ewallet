@@ -52,8 +52,6 @@ export class WalletComponent implements OnInit, OnDestroy
         console.error('Get Wallet Failed', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
