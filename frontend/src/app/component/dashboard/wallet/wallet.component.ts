@@ -6,6 +6,7 @@ import { Wallet } from 'src/app/interface/wallet';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { DeleteModalComponent } from '../../common/delete-modal/delete-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ExpiredSessionComponent } from '../../common/expired-session/expired-session.component';
 
 @Component({
   selector: 'app-wallet',
@@ -51,6 +52,8 @@ export class WalletComponent implements OnInit, OnDestroy
         console.error('Get Wallet Failed', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
@@ -131,6 +134,21 @@ export class WalletComponent implements OnInit, OnDestroy
             }
           )
         }
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
         } else {
           resolve(false); // User canceled leaving
         }
