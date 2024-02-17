@@ -57,8 +57,6 @@ export class MainContentComponent implements OnInit, OnDestroy
         console.error('Overall Balance Missing', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false; // Hide the progress bar
