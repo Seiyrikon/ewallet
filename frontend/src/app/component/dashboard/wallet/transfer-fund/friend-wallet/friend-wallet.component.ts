@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { Friend } from 'src/app/interface/friend';
 import { Principal } from 'src/app/interface/principal';
 import { Transfer } from 'src/app/interface/transfer';
@@ -61,7 +63,8 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     private _route: ActivatedRoute,
     private _router: Router,
     private _sanitizer: DomSanitizer,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +94,8 @@ export class FriendWalletComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
@@ -312,6 +317,21 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     this.recipientId = user_id;
     this.getAllWalletOfUser(user_id);
     this.getAllInfoOfUser(user_id);
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {
