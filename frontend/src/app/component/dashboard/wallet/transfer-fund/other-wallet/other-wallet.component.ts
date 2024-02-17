@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { Friend } from 'src/app/interface/friend';
 import { Principal } from 'src/app/interface/principal';
 import { Transfer } from 'src/app/interface/transfer';
@@ -62,7 +63,8 @@ export class OtherWalletComponent implements OnInit, OnDestroy
     private _route: ActivatedRoute,
     private _router: Router,
     private _sanitizer: DomSanitizer,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +91,8 @@ export class OtherWalletComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
@@ -322,6 +326,21 @@ export class OtherWalletComponent implements OnInit, OnDestroy
     this.searchText = '';
     this.isOtherHidden = false;
     this.allUserInfo = null;
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {
