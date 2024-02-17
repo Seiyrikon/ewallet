@@ -45,6 +45,7 @@ import { TransferFundComponent } from './component/dashboard/wallet/transfer-fun
 import { OwnWalletComponent } from './component/dashboard/wallet/transfer-fund/own-wallet/own-wallet.component';
 import { FriendWalletComponent } from './component/dashboard/wallet/transfer-fund/friend-wallet/friend-wallet.component';
 import { OtherWalletComponent } from './component/dashboard/wallet/transfer-fund/other-wallet/other-wallet.component';
+import { ExpiredSessionComponent } from './component/common/expired-session/expired-session.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { OtherWalletComponent } from './component/dashboard/wallet/transfer-fund
     OwnWalletComponent,
     FriendWalletComponent,
     OtherWalletComponent,
+    ExpiredSessionComponent,
   ],
   imports: [
     BrowserModule,

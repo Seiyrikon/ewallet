@@ -7,6 +7,8 @@ import { LogoutService } from 'src/app/service/logout/logout.service';
 import { OverallbalanceService } from 'src/app/service/overall/overallbalance.service';
 import { PrincipalService } from 'src/app/service/principal/principal.service';
 import { LogoutModalComponent } from '../../common/logout-modal/logout-modal.component';
+import { AuthService } from 'src/app/service/auth/auth.service';
+import { ExpiredSessionComponent } from '../../common/expired-session/expired-session.component';
 
 @Component({
   selector: 'app-main-content',
@@ -27,7 +29,8 @@ export class MainContentComponent implements OnInit, OnDestroy
     private _principalService: PrincipalService,
     private _logoutService: LogoutService,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _authService: AuthService
   )
   {}
 
@@ -54,6 +57,8 @@ export class MainContentComponent implements OnInit, OnDestroy
         console.error('Overall Balance Missing', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false; // Hide the progress bar
@@ -79,6 +84,8 @@ export class MainContentComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
@@ -94,6 +101,21 @@ export class MainContentComponent implements OnInit, OnDestroy
         if (result === true) {
           resolve(true); // User confirmed leaving
           this._logoutService.logout();
+          this._router.navigate(['/login']);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
           this._router.navigate(['/login']);
         } else {
           resolve(false); // User canceled leaving

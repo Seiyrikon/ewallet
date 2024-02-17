@@ -43,4 +43,10 @@ export class AuthService {
       })
     );
   }
+
+  invalidTokenHandler()
+  {
+    localStorage.removeItem(this.tokenKey);
+    console.log("Token Handler");
+  }
 }

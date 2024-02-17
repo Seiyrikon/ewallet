@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginForm } from 'src/app/interface/login-form';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { LoginService } from 'src/app/service/login/login.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -30,6 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
+  isSessionExpired!: any;
+  sessionKey: string = "expiredSession"
 
   matcher = new MyErrorStateMatcher();
 
@@ -37,11 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy
   (
     private _loginService: LoginService,
     private _router: Router,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _authService: AuthService
   )
   {}
 
   ngOnInit(): void {
+    this.isSessionExpired = localStorage.getItem(this.sessionKey)
     this.initializeForm()
   }
 
@@ -81,6 +86,8 @@ export class LoginComponent implements OnInit, OnDestroy
           {
             this.showProgressBar = false;
             console.error('Response is empty');
+            console.log("Hello");
+
           }
           else
           {
@@ -121,6 +128,7 @@ export class LoginComponent implements OnInit, OnDestroy
   }
 
   ngOnDestroy(): void {
+    localStorage.removeItem(this.sessionKey);
     if(this._subscription)
     {
       this._subscription.unsubscribe();

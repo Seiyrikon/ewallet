@@ -15,6 +15,7 @@ import { ProfileService } from 'src/app/service/profile/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileService } from 'src/app/service/file/file.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ExpiredSessionComponent } from '../../common/expired-session/expired-session.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -83,6 +84,8 @@ export class ProfileComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
@@ -179,6 +182,8 @@ export class ProfileComponent implements OnInit, OnDestroy
         (error) => {
           console.error('Edit profile failed', error);
           this.errorMessage = error;
+          this.openExpiredSessionDialog();
+          this._router.navigate(['/login']);
         },
         () => {
           // Upon completion of wallet creation (when the observable completes)
@@ -231,6 +236,21 @@ export class ProfileComponent implements OnInit, OnDestroy
     // Assuming profilePicture is a base64 string
     const imageSrc = `data:image/png;base64,${image}`;
     return this._sanitizer.bypassSecurityTrustResourceUrl(imageSrc);
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {
