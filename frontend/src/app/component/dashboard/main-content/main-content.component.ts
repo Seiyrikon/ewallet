@@ -22,6 +22,7 @@ export class MainContentComponent implements OnInit, OnDestroy
   overAllBalance: number = 0.00;
   errorMessage: string = '';
   showProgressBar: boolean = false;
+  session!: any;
 
   constructor
   (
@@ -35,8 +36,34 @@ export class MainContentComponent implements OnInit, OnDestroy
   {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.getPrincipalInfo();
     this.getOverAllBalancePerUser();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getOverAllBalancePerUser(): any {
@@ -82,8 +109,6 @@ export class MainContentComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
