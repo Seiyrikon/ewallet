@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileService } from 'src/app/service/file/file.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ExpiredSessionComponent } from '../../common/expired-session/expired-session.component';
+import { AuthService } from 'src/app/service/auth/auth.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -46,6 +47,7 @@ export class ProfileComponent implements OnInit, OnDestroy
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
   selectedFile: File | null = null;
+  session!: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -58,12 +60,39 @@ export class ProfileComponent implements OnInit, OnDestroy
     private _router: Router,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private _authService: AuthService
   )
   {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.getPrincipalInfo();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getPrincipalInfo(): any {
@@ -84,8 +113,6 @@ export class ProfileComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
