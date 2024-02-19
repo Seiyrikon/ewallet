@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { Wallet } from 'src/app/interface/wallet';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 
 @Component({
@@ -18,18 +19,46 @@ export class ViewWalletComponent implements OnInit, OnDestroy
   walletId!: any;
   errorMessage: string = '';
   showProgressBar: boolean = false;
+  session!: any;
 
   constructor
   (
     private _walletService: WalletService,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.walletId = this._route.snapshot.paramMap.get('walletId');
     this.getWalletById();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getWalletById(): any {
@@ -51,8 +80,6 @@ export class ViewWalletComponent implements OnInit, OnDestroy
           console.error('An error occured', error);
           this.errorMessage = error;
           this.showProgressBar = false;
-          this.openExpiredSessionDialog();
-          this._router.navigate(['/login']);
         },
         () => {
           this.showProgressBar = false;
