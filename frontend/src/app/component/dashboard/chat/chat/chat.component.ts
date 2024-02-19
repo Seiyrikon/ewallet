@@ -56,8 +56,6 @@ export class ChatComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -75,8 +73,6 @@ export class ChatComponent implements OnInit, OnDestroy
         }
         this.chatHistory = response.message;
         this.errorMessage = ''
-        console.log(this.chatHistory);
-
       },
       (error) => {
         console.error('An error occured', error);
@@ -92,7 +88,6 @@ export class ChatComponent implements OnInit, OnDestroy
 
   onChatSession(recipient_id: number): any
   {
-    console.log(recipient_id);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['chat', 'session', `${recipient_id}`] } }]);
   }
 

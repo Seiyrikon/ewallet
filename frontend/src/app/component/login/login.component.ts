@@ -86,8 +86,6 @@ export class LoginComponent implements OnInit, OnDestroy
           {
             this.showProgressBar = false;
             console.error('Response is empty');
-            console.log("Hello");
-
           }
           else
           {

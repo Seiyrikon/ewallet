@@ -36,8 +36,6 @@ export class FriendComponent implements OnInit, OnDestroy
   ngOnInit(): void {
     this.isSessionExpired();
     this.getAllFriendsOfUser();
-    // console.log(this.friendRequestChecker(2));
-
   }
 
   isSessionExpired(): any {
@@ -59,8 +57,6 @@ export class FriendComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -87,15 +83,12 @@ export class FriendComponent implements OnInit, OnDestroy
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
-          console.log(this.friends);
-
         }
       )
   }
 
   onChat(friendId: number):any
   {
-    console.log(friendId);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['chat', 'session', `${friendId}`] } }]);
   }
 

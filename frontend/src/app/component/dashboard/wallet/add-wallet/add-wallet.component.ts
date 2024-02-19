@@ -73,8 +73,6 @@ export class AddWalletComponent implements OnInit, OnDestroy {
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -105,7 +103,6 @@ export class AddWalletComponent implements OnInit, OnDestroy {
       this.showProgressBar = true; // Show the progress bar
 
       const addWalletBody = this.addWalletForm.value;
-      console.log(addWalletBody);
 
       // Display the progress bar while the wallet creation is in progress
       const walletCreation$ = this._walletService.inserWallet(addWalletBody);

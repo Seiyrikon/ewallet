@@ -55,8 +55,6 @@ export class ViewWalletComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }

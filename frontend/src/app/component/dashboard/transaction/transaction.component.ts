@@ -52,8 +52,6 @@ export class TransactionComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }

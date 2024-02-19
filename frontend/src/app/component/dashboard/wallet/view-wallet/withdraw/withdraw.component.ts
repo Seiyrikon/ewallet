@@ -82,8 +82,6 @@ export class WithdrawComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -113,7 +111,6 @@ export class WithdrawComponent implements OnInit, OnDestroy
       this.showCancelButton = false;
       this.showProgressBar = true; // Show the progress bar
       const withdrawBody = this.withdrawForm.value;
-      console.log(withdrawBody);
 
       const withdrawCreation$ = this._withdrawService.inserWithdraw(+this.walletId, withdrawBody);
 

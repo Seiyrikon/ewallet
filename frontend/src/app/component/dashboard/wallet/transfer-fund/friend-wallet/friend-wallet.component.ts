@@ -76,8 +76,6 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     this.getAllUserWallet();
     this.getPrincipalInfo();
     this.initializeFriendWalletForm();
-    // console.log(this.friendRequestChecker(2));
-
   }
 
   isSessionExpired(): any {
@@ -99,8 +97,6 @@ export class FriendWalletComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -126,8 +122,6 @@ export class FriendWalletComponent implements OnInit, OnDestroy
       },
       () => {
         this.showProgressBar = false;
-        console.log(this.principal);
-
       }
     )
   }
@@ -170,8 +164,6 @@ export class FriendWalletComponent implements OnInit, OnDestroy
         () => {
           this.showProgressBar = false;
           this.errorMessage = ''
-          console.log(this.friends);
-
         }
       )
   }
@@ -250,15 +242,12 @@ export class FriendWalletComponent implements OnInit, OnDestroy
         },
         () => {
           this.showProgressBar = false;
-          console.log(this.friend);
-
         }
       )
   }
 
   onFriendWalletSubmit(): any
   {
-    console.log("Form is submitted");
     this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if(this.friendWalletForm.valid)
@@ -266,11 +255,8 @@ export class FriendWalletComponent implements OnInit, OnDestroy
       this.showSubmitButton = false;
       this.showProgressBar = true; // Show the progress bar
       const friendWalletForm = this.friendWalletForm.value;
-      console.log(friendWalletForm);
-      console.log(this.friend.friendId);
 
       const ownWalletTransfer$ = this._walletService.transferToOwn(friendWalletForm, +this.recipientId, +this.transferFromId, +this.transferToId);
-
 
       ownWalletTransfer$.subscribe
       (
@@ -314,14 +300,11 @@ export class FriendWalletComponent implements OnInit, OnDestroy
   {
     this.transferFromId = 0;
     this.transferFromId = walletId;
-    console.log(walletId);
-
   }
   onToSelect(walletId: number)
   {
     this.transferToId = 0;
     this.transferToId = walletId;
-    console.log(walletId);
   }
 
   onDeselectFrom()

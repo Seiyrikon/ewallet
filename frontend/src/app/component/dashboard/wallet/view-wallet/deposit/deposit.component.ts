@@ -82,8 +82,6 @@ export class DepositComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -113,7 +111,6 @@ export class DepositComponent implements OnInit, OnDestroy
       this.showCancelButton = false;
       this.showProgressBar = true; // Show the progress bar
       const depositBody = this.depositForm.value;
-      console.log(depositBody);
 
       const depositCreation$ = this._depositService.inserDeposit(+this.walletId, depositBody);
 

@@ -56,8 +56,6 @@ export class WalletComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -89,12 +87,10 @@ export class WalletComponent implements OnInit, OnDestroy
   }
 
   onView(walletId: number): any {
-    console.log(walletId);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['wallet', 'view', `${walletId}`] } }]);
   }
 
   onDelete(walletId: number): any {
-    console.log(walletId);
     if(walletId)
     {
       const walletDeletion$ = this._walletService.logicalDeleteWalletById(walletId);

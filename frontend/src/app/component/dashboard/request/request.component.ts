@@ -57,8 +57,6 @@ export class RequestComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -76,8 +74,6 @@ export class RequestComponent implements OnInit, OnDestroy
           }
           this.confirmRequests = response.message;
           this.errorMessage = ''
-          console.log(response);
-
         },
         (error) => {
           console.error('An error occured', error);
@@ -93,7 +89,6 @@ export class RequestComponent implements OnInit, OnDestroy
 
   onConfirm(friendId: number)
   {
-    console.log(friendId);
     this.showProgressBar = true;
       const accept$ = this._friendService.acceptFriend(friendId);
 
@@ -105,7 +100,6 @@ export class RequestComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
-          console.log(response);
         },
         (error) => {
           console.error('An error occured', error);
@@ -113,8 +107,6 @@ export class RequestComponent implements OnInit, OnDestroy
           this.showProgressBar = false;
           this.confirmRequests = null
           this.getAllConfirmRequest();
-          console.log(this.confirmRequests);
-
         },
         () => {
           this.showProgressBar = false;
@@ -126,7 +118,6 @@ export class RequestComponent implements OnInit, OnDestroy
   }
   onDecline(friendId: number)
   {
-    console.log(friendId);
     this.showProgressBar = true;
       const accept$ = this._friendService.declineFriendRequest(friendId);
 
@@ -138,7 +129,6 @@ export class RequestComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
-          console.log(response);
         },
         (error) => {
           console.error('An error occured', error);
@@ -146,8 +136,6 @@ export class RequestComponent implements OnInit, OnDestroy
           this.showProgressBar = false;
           this.confirmRequests = null
           this.getAllConfirmRequest();
-          console.log(this.confirmRequests);
-
         },
         () => {
           this.showProgressBar = false;

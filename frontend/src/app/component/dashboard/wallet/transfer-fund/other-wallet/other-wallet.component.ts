@@ -96,8 +96,6 @@ export class OtherWalletComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -123,8 +121,6 @@ export class OtherWalletComponent implements OnInit, OnDestroy
       },
       () => {
         this.showProgressBar = false;
-        console.log(this.principal);
-
       }
     )
   }
@@ -219,15 +215,12 @@ export class OtherWalletComponent implements OnInit, OnDestroy
         },
         () => {
           this.showProgressBar = false;
-          console.log(this.user);
-
         }
       )
   }
 
   onOtherWalletSubmit(): any
   {
-    console.log("Form is submitted");
     this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if(this.otherWalletForm.valid)
@@ -235,7 +228,6 @@ export class OtherWalletComponent implements OnInit, OnDestroy
       this.showSubmitButton = false;
       this.showProgressBar = true; // Show the progress bar
       const otherWalletForm = this.otherWalletForm.value;
-      console.log(otherWalletForm);
 
       const ownWalletTransfer$ = this._walletService.transferToOwn(otherWalletForm, +this.recipientId, +this.transferFromId, +this.transferToId);
 
@@ -287,7 +279,6 @@ export class OtherWalletComponent implements OnInit, OnDestroy
           }
           this.allUserInfo = response.message;
           this.errorMessage = ''
-          console.log(response.message);
         },
         (error) => {
           console.error('An error occured', error);
@@ -308,7 +299,6 @@ export class OtherWalletComponent implements OnInit, OnDestroy
   }
 
   onSearch(): void {
-    console.log('Searched Text:', this.searchText);
     this.searchUserByUsername();
   }
 
@@ -322,14 +312,11 @@ export class OtherWalletComponent implements OnInit, OnDestroy
   {
     this.transferFromId = 0;
     this.transferFromId = walletId;
-    console.log(walletId);
-
   }
   onToSelect(walletId: number)
   {
     this.transferToId = 0;
     this.transferToId = walletId;
-    console.log(walletId);
   }
 
   onDeselectFrom()

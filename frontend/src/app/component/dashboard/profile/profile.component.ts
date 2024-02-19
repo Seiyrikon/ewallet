@@ -89,8 +89,6 @@ export class ProfileComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -116,8 +114,6 @@ export class ProfileComponent implements OnInit, OnDestroy
       },
       () => {
         this.showProgressBar = false;
-        console.log(this.principal);
-
       }
     )
   }
@@ -195,7 +191,6 @@ export class ProfileComponent implements OnInit, OnDestroy
       this.showProgressBar = true; // Show the progress bar
 
       const editProfileBody = this.editProfile.value;
-      console.log(editProfileBody);
 
       // Display the progress bar while the wallet creation is in progress
       const editProfile$ = this._profileService.editProfile(editProfileBody);
@@ -248,7 +243,6 @@ export class ProfileComponent implements OnInit, OnDestroy
     if (this.selectedFile) {
       this._fileService.uploadFile(this.selectedFile).subscribe(
         (response) => {
-          console.log('File uploaded successfully', response);
         },
         (error) => {
           console.error('File upload failed', error);

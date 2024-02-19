@@ -53,8 +53,6 @@ export class MainContentComponent implements OnInit, OnDestroy
           console.error('Response is empty');
         }
         this.session = response.message;
-        console.log(this.session);
-
       },
       (error) => {
         console.error('Sesssion is expired', error);
@@ -123,7 +121,6 @@ export class MainContentComponent implements OnInit, OnDestroy
     logout$.subscribe
     (
       (response) => {
-          console.log('Logout Success: ', response.message);
       },
       (error) => {
         console.error('Logout Failed', error);

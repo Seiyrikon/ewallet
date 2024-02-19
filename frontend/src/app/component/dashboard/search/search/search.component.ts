@@ -61,8 +61,6 @@ export class SearchComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -80,7 +78,6 @@ export class SearchComponent implements OnInit, OnDestroy
         }
         this.allUserInfo = response.message;
         this.errorMessage = ''
-        console.log(response.message);
       },
       (error) => {
         console.error('An error occured', error);
@@ -110,7 +107,6 @@ export class SearchComponent implements OnInit, OnDestroy
           }
           this.allUserInfo = response.message;
           this.errorMessage = ''
-          console.log(response.message);
         },
         (error) => {
           console.error('An error occured', error);
@@ -130,13 +126,11 @@ export class SearchComponent implements OnInit, OnDestroy
   }
 
   onSearch(): void {
-    console.log('Searched Text:', this.searchText);
     this.searchUserByUsername();
   }
 
   onAdd(friendId: number)
   {
-    console.log(friendId);
     if(friendId)
     {
       this.showProgressBar = true;
@@ -150,9 +144,6 @@ export class SearchComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
-
-          console.log(response);
-
         },
         (error) => {
           console.error('An error occured', error);
@@ -174,7 +165,6 @@ export class SearchComponent implements OnInit, OnDestroy
 
   onCancel(friendId: number)
   {
-    console.log(friendId);
     if(friendId)
     {
       this.showProgressBar = true;
@@ -188,9 +178,6 @@ export class SearchComponent implements OnInit, OnDestroy
             console.error('Response is empty');
           }
           this.errorMessage = ''
-
-          console.log(response);
-
         },
         (error) => {
           console.error('An error occured', error);
@@ -212,7 +199,6 @@ export class SearchComponent implements OnInit, OnDestroy
 
   onChat(friendId: number):any
   {
-    console.log(friendId);
     this._router.navigate(['/dashboard', { outlets: { contentOutlet: ['chat', 'session', `${friendId}`] } }]);
   }
 

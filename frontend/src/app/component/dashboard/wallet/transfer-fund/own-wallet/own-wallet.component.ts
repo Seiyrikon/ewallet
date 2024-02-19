@@ -79,8 +79,6 @@ export class OwnWalletComponent {
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -106,8 +104,6 @@ export class OwnWalletComponent {
       },
       () => {
         this.showProgressBar = false;
-        console.log(this.principal);
-
       }
     )
   }
@@ -160,14 +156,11 @@ export class OwnWalletComponent {
   {
     this.transferFromId = 0;
     this.transferFromId = walletId;
-    console.log(walletId);
-
   }
   onToSelect(walletId: number)
   {
     this.transferToId = 0;
     this.transferToId = walletId;
-    console.log(walletId);
   }
 
   onDeselectFrom()
@@ -181,7 +174,6 @@ export class OwnWalletComponent {
 
   onOwnWalletSubmit(): any
   {
-    console.log("Form is submitted");
     this.errorMessage = '';
     this.isSubmitted = !this.isSubmitted;
     if(this.ownWalletForm.valid)
@@ -189,8 +181,7 @@ export class OwnWalletComponent {
       this.showSubmitButton = false;
       this.showProgressBar = true; // Show the progress bar
       const ownWalletBody = this.ownWalletForm.value;
-      console.log(ownWalletBody);
-
+      
       const ownWalletTransfer$ = this._walletService.transferToOwn(ownWalletBody, +this.principal.userId, +this.transferFromId, +this.transferToId);
 
       ownWalletTransfer$.subscribe
