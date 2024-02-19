@@ -53,6 +53,8 @@ export class MainContentComponent implements OnInit, OnDestroy
           console.error('Response is empty');
         }
         this.session = response.message;
+        console.log(this.session);
+
       },
       (error) => {
         console.error('Sesssion is expired', error);
@@ -60,8 +62,6 @@ export class MainContentComponent implements OnInit, OnDestroy
         this._router.navigate(['/login']);
       },
       () => {
-        console.log("Session: ", this.session);
-
       }
     )
   }
@@ -116,6 +116,24 @@ export class MainContentComponent implements OnInit, OnDestroy
     )
   }
 
+  logout(): any {
+
+    const logout$ = this._logoutService.logout();
+
+    logout$.subscribe
+    (
+      (response) => {
+          console.log('Logout Success: ', response.message);
+      },
+      (error) => {
+        console.error('Logout Failed', error);
+      },
+      () => {
+        this._authService.invalidTokenHandler();
+      }
+    )
+  }
+
   openLogoutConfirmationDialog(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const dialogRef = this._dialog.open(LogoutModalComponent);
@@ -123,7 +141,7 @@ export class MainContentComponent implements OnInit, OnDestroy
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           resolve(true); // User confirmed leaving
-          this._logoutService.logout();
+          this.logout();
           this._router.navigate(['/login']);
         } else {
           resolve(false); // User canceled leaving
