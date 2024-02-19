@@ -10,6 +10,7 @@ import { ExpiredSessionComponent } from 'src/app/component/common/expired-sessio
 import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { Wallet } from 'src/app/interface/wallet';
 import { Withdraw } from 'src/app/interface/withdraw';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { WithdrawService } from 'src/app/service/withdraw/withdraw.service';
 
@@ -42,6 +43,7 @@ export class WithdrawComponent implements OnInit, OnDestroy
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
+  session!: any;
 
   constructor
   (
@@ -51,12 +53,39 @@ export class WithdrawComponent implements OnInit, OnDestroy
     private _router: Router,
     private _dialog: MatDialog,
     private _snackbar: MatSnackBar,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.walletId = this._route.snapshot.paramMap.get('walletId');
     this.getWalletById();
     this.initializeForm();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   initializeForm() {
@@ -137,8 +166,6 @@ export class WithdrawComponent implements OnInit, OnDestroy
           (error) => {
             console.error("An Error Occured", error);
             this.errorMessage = error;
-            this.openExpiredSessionDialog();
-            this._router.navigate(['/login']);
           }
         )
     } else {
