@@ -25,7 +25,7 @@ export class AuthService {
     return !!token; // Example: Return true if the token exists, modify this based on your validation logic
   }
 
-  checkToken(): Observable<any>
+  checkSession(): Observable<any>
   {
     return this._http.get<Response>(`${this.baseUrl}get-token`)
     .pipe(
