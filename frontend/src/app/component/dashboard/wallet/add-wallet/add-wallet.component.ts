@@ -6,8 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CancelModalComponent } from 'src/app/component/common/cancel-modal/cancel-modal.component';
+import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { AddWalletForm } from 'src/app/interface/add-wallet-form';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -34,6 +36,7 @@ export class AddWalletComponent implements OnInit, OnDestroy {
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
+  session!: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -42,11 +45,38 @@ export class AddWalletComponent implements OnInit, OnDestroy {
       private _walletService: WalletService,
       private _router: Router,
       private _dialog: MatDialog,
-      private _snackbar: MatSnackBar
+      private _snackbar: MatSnackBar,
+      private _authService: AuthService
     ) { }
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.initializeForm();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   initializeForm() {
@@ -132,6 +162,21 @@ export class AddWalletComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
           resolve(true); // User confirmed leaving
+        } else {
+          resolve(false); // User canceled leaving
+        }
+      });
+    });
+  }
+
+  openExpiredSessionDialog(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      const dialogRef = this._dialog.open(ExpiredSessionComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          resolve(true); // User confirmed leaving
+          this._router.navigate(['/login']);
         } else {
           resolve(false); // User canceled leaving
         }
