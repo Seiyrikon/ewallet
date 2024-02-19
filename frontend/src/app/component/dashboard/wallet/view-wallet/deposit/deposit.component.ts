@@ -10,6 +10,7 @@ import { ExpiredSessionComponent } from 'src/app/component/common/expired-sessio
 import { LeaveModalComponent } from 'src/app/component/common/leave-modal/leave-modal.component';
 import { Deposit } from 'src/app/interface/deposit';
 import { Wallet } from 'src/app/interface/wallet';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { DepositService } from 'src/app/service/deposit/deposit.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 
@@ -40,6 +41,7 @@ export class DepositComponent implements OnInit, OnDestroy
   showProgressBar: boolean = false;
   showSubmitButton: boolean = true;
   showCancelButton: boolean = true;
+  session!: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -50,13 +52,40 @@ export class DepositComponent implements OnInit, OnDestroy
     private _route: ActivatedRoute,
     private _router: Router,
     private _dialog: MatDialog,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.walletId = this._route.snapshot.paramMap.get('walletId');
     this.getWalletById();
     this.initializeForm();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   initializeForm() {
@@ -136,8 +165,6 @@ export class DepositComponent implements OnInit, OnDestroy
           (error) => {
             console.error("An Error Occured", error);
             this.errorMessage = error;
-            this.openExpiredSessionDialog();
-            this._router.navigate(['/login']);
           }
         )
     } else {
