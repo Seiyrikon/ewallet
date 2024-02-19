@@ -11,6 +11,7 @@ import { Friend } from 'src/app/interface/friend';
 import { Principal } from 'src/app/interface/principal';
 import { Transfer } from 'src/app/interface/transfer';
 import { Wallet } from 'src/app/interface/wallet';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { FriendService } from 'src/app/service/friend/friend.service';
 import { PrincipalService } from 'src/app/service/principal/principal.service';
 import { UserService } from 'src/app/service/user/user.service';
@@ -51,6 +52,7 @@ export class FriendWalletComponent implements OnInit, OnDestroy
 
   amount!: FormControl;
   note!: FormControl;
+  session!: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -64,16 +66,43 @@ export class FriendWalletComponent implements OnInit, OnDestroy
     private _router: Router,
     private _sanitizer: DomSanitizer,
     private _snackbar: MatSnackBar,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.getAllFriendsOfUser();
     this.getAllUserWallet();
     this.getPrincipalInfo();
     this.initializeFriendWalletForm();
     // console.log(this.friendRequestChecker(2));
 
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getPrincipalInfo(): any {
@@ -94,8 +123,6 @@ export class FriendWalletComponent implements OnInit, OnDestroy
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
