@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
 import { Friend } from 'src/app/interface/friend';
 import { User } from 'src/app/interface/user';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { FriendService } from 'src/app/service/friend/friend.service';
 import { UserService } from 'src/app/service/user/user.service';
 
@@ -23,6 +24,7 @@ export class SearchComponent implements OnInit, OnDestroy
   searchText!: string;
   errorMessage: string = '';
   showProgressBar: boolean = false;
+  session!: any;
 
   constructor
   (
@@ -31,11 +33,38 @@ export class SearchComponent implements OnInit, OnDestroy
     private _route: ActivatedRoute,
     private _router: Router,
     private _sanitizer: DomSanitizer,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.getAllUserInfo();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getAllUserInfo(): any {
@@ -57,8 +86,6 @@ export class SearchComponent implements OnInit, OnDestroy
         console.error('An error occured', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
