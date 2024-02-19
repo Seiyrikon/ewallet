@@ -11,6 +11,7 @@ import { PrincipalService } from 'src/app/service/principal/principal.service';
 import { WalletService } from 'src/app/service/wallet/wallet.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ExpiredSessionComponent } from 'src/app/component/common/expired-session/expired-session.component';
+import { AuthService } from 'src/app/service/auth/auth.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -38,6 +39,7 @@ export class OwnWalletComponent {
 
   amount!: FormControl;
   note!: FormControl;
+  session!: any;
 
   matcher = new MyErrorStateMatcher();
 
@@ -47,13 +49,40 @@ export class OwnWalletComponent {
     private _walletService: WalletService,
     private _router: Router,
     private _dialog: MatDialog,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private _authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isSessionExpired();
     this.getPrincipalInfo();
     this.getAllUserWallet();
     this.initializeOwnWalletForm();
+  }
+
+  isSessionExpired(): any {
+
+    const session$ = this._authService.checkSession();
+
+    session$.subscribe
+    (
+      (response) => {
+        if(!response)
+        {
+          console.error('Response is empty');
+        }
+        this.session = response.message;
+      },
+      (error) => {
+        console.error('Sesssion is expired', error);
+        this.openExpiredSessionDialog();
+        this._router.navigate(['/login']);
+      },
+      () => {
+        console.log("Session: ", this.session);
+
+      }
+    )
   }
 
   getPrincipalInfo(): any {
@@ -74,8 +103,6 @@ export class OwnWalletComponent {
         console.error('Principal Info not found', error);
         this.errorMessage = error;
         this.showProgressBar = false;
-        this.openExpiredSessionDialog();
-        this._router.navigate(['/login']);
       },
       () => {
         this.showProgressBar = false;
