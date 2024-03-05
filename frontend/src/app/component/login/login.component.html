@@ -1,18 +1,21 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-image">
-  <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
+<video autoplay muted loop id="bgVideo">
+  <source src="../../../assets/bg1.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+<div class="h-screen flex justify-center items-center flex-row">
+  <div class="bg-white rounded-lg shadow-md p-10">
     <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
-    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-      Log in to your account
-    </h2>
+    <h2 class="text-center font-extrabold text-3xl">Login to your account</h2>
     <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="rounded-md shadow-sm -space-y-px">
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="w-full">
           <mat-label class="text-gray-700">Username</mat-label>
           <input type="text" matInput [formControl]="username" [errorStateMatcher]="matcher"
             placeholder="Ex. JohnDoe" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
           <mat-error *ngIf="username.hasError('required')" class="text-red-600">Username is <strong>required</strong></mat-error>
         </mat-form-field>
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="w-full">
           <mat-label class="text-gray-700">Password</mat-label>
           <input type="password" matInput [formControl]="password" [errorStateMatcher]="matcher"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
@@ -37,12 +40,11 @@
           Login
         </button>
       </div>
-
+      <div class="register-link-container">
+        <span class="text-gray-600">Create an account? </span>
+        <a [routerLink]="['/register']" class="text-blue-500 hover:underline">Register</a>
+      </div>
     </form>
-    <div class="register-link-container">
-      <span class="text-gray-600">Create an account? </span>
-      <a [routerLink]="['/register']" class="text-blue-500 hover:underline">Register</a>
-    </div>
   </div>
 </div>
 
