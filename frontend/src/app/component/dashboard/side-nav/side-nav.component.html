@@ -1,13 +1,54 @@
-<div class="bg-gray-900 text-white h-screen flex flex-col">
+<div class="side-nav-bg-color text-white h-screen flex flex-col w-60">
   <!-- Your app logo or title -->
   <div class="p-4 text-xl font-bold">EWallet</div>
-
+  <hr>
   <!-- Navigation links -->
-  <div class="flex-1 overflow-y-auto">
-    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['search'] } }]" class="block py-2 px-4 hover:bg-gray-700">Search</a>
-    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['friend'] } }]" class="block py-2 px-4 hover:bg-gray-700">Friends</a>
-    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['request'] } }]" class="block py-2 px-4 hover:bg-gray-700">Requests</a>
-    <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['chat'] } }]" class="block py-2 px-4 hover:bg-gray-700">Chats</a>
-    <!-- Add more links as needed -->
+  <div class="m-5 h-screen">
+    <div >
+      <div class="p-4">MENU</div>
+      <div name="dashboard-link">
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['home'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/dashboard1.png" alt="dashboard logo" class="ml-3 w-7">
+          Dashboard
+        </a>
+      </div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['wallet'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/wallet2.png" alt="wallet logo" class="ml-3.5 mr-1 w-6">
+          Wallet
+        </a>
+      </div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['transaction'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/transaction1.png" alt="summary logo" class="ml-3.5 w-7 p-1">
+          Summary
+        </a>
+      </div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['chat'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/chat1.png" alt="chat logo" class="ml-3.5 w-7 p-1">
+          Chat
+        </a>
+      </div>
+      <div class="p-4">OTHERS</div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['profile'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/profile2.png" alt="chat logo" class="ml-3.5 w-7 p-1">
+          Profile
+        </a>
+      </div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['friend'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/friend1.png" alt="chat logo" class="ml-3.5 w-7 p-1">
+          Friends
+        </a>
+      </div>
+      <div>
+        <a [routerLink]="['/dashboard', { outlets: { contentOutlet: ['request'] } }]" class="flex items-center hover:bg-gray-600 nav-link">
+          <img src="../../../../assets/request1.png" alt="chat logo" class="ml-3.5 w-7 p-1">
+          Requests
+        </a>
+      </div>
+    </div>
   </div>
 </div>
