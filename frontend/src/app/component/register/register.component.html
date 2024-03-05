@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-image">
+<!-- <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 bg-image">
     <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8 space-y-6">
       <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -67,4 +67,79 @@
         <a [routerLink]="[('/login')]" class="text-blue-500 hover:underline">Login</a>
       </div>
     </div>
+  </div> -->
+<video autoplay muted loop id="bgVideo">
+  <source src="../../../assets/bg1.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+<div class="h-screen flex justify-center items-center flex-row">
+  <div class="max-w-md w-full bg-white rounded-lg shadow-md p-10">
+    <mat-progress-bar class="w-full" mode="indeterminate" *ngIf="showProgressBar"></mat-progress-bar>
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Create an account
+    </h2>
+    <form class="mt-8 space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="rounded-md shadow-sm -space-y-px">
+
+        <mat-form-field class=w-full>
+          <mat-label class="text-gray-700">Username</mat-label>
+          <input type="text" matInput [formControl]="username" [errorStateMatcher]="matcher"
+            placeholder="Ex. JohnDoe" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+          <mat-error *ngIf="username.hasError('required')" class="text-red-600">Username is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="text-gray-700">Password</mat-label>
+          <input type="password" matInput [formControl]="password" [errorStateMatcher]="matcher"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+          <mat-error *ngIf="password.hasError('required')" class="text-red-600">Password is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="text-gray-700">First Name</mat-label>
+          <input type="text" matInput [formControl]="firstName" [errorStateMatcher]="matcher"
+            placeholder="Ex. John" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+          <mat-error *ngIf="firstName.hasError('required')" class="text-red-600">First Name is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="text-gray-700">Middle Name</mat-label>
+          <input type="text" matInput [formControl]="middleName" [errorStateMatcher]="matcher"
+            placeholder="Ex. Green"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label class="text-gray-700">Last Name</mat-label>
+          <input type="text" matInput [formControl]="lastName" [errorStateMatcher]="matcher"
+            placeholder="Ex. Doe"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm ">
+        </mat-form-field>
+      </div>
+      <div *ngIf="errorMessage" class="mt-2 text-red-600 text-sm">
+        {{ errorMessage }}
+      </div>
+      <div>
+        <button type="submit" *ngIf="showSubmitButton" [disabled]="!registerForm.valid"
+          class="submit-btn"
+          [ngClass]="{'submit-btn-enabled': registerForm.valid, 'submit-btn-disabled': !registerForm.valid}">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4 5a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 2V4H5v3h9zM4 9a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V9zm10 2V8H5v3h9zM4 13a1 1 0 011-1h10a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zm10 2v-1H5v1h9z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
+          Register
+        </button>
+      </div>
+
+    </form>
+    <div class="login-link-container">
+      <span class="text-gray-600">Already have an account? </span>
+      <a [routerLink]="[('/login')]" class="text-blue-500 hover:underline">Login</a>
+    </div>
   </div>
+</div>
