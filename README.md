@@ -74,5 +74,5 @@ ewalelt/
 ### Project Structure
 
 ```bash
-foreclosing-properties/
+ewalelt/
 ```
