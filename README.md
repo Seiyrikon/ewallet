@@ -39,7 +39,7 @@ Before you begin, make sure you have the following tools installed:
 
 - Node.js
 - npm (Node Package Manager)
-- Java Development Kit (JDK) preferably version 17
+- Java Development Kit, preferably version 17 or higher (JDK 17)
 - MySQL Server
 
 ### Installation
