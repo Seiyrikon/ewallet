@@ -14,7 +14,7 @@ Welcome to the E-Wallet repository! This project is developed using AngularJS wi
   - [Folder Structure](#folder-structure-frontend)
 - [Backend](#backend)
   - [Tech Stack](#tech-stack-backend)
-  - [Project Structure](#project-structure-backend)
+  - [Folder Structure](#project-structure-backend)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -61,7 +61,65 @@ Before you begin, make sure you have the following tools installed:
 ### Folder Structure
 
 ```bash
-ewalelt/
+ewalelt/frontend/src
+├───app
+│   ├───component
+│   │   ├───common
+│   │   │   ├───cancel-modal
+│   │   │   ├───delete-modal
+│   │   │   ├───expired-session
+│   │   │   ├───leave-modal
+│   │   │   └───logout-modal
+│   │   ├───dashboard
+│   │   │   ├───chat
+│   │   │   │   └───chat
+│   │   │   ├───chat-session
+│   │   │   │   └───chat-session
+│   │   │   ├───friend
+│   │   │   ├───main-content
+│   │   │   ├───profile
+│   │   │   ├───request
+│   │   │   ├───search
+│   │   │   │   └───search
+│   │   │   ├───side-nav
+│   │   │   ├───top-nav
+│   │   │   ├───transaction
+│   │   │   └───wallet
+│   │   │       ├───add-wallet
+│   │   │       ├───transfer-fund
+│   │   │       │   ├───friend-wallet
+│   │   │       │   ├───other-wallet
+│   │   │       │   └───own-wallet
+│   │   │       └───view-wallet
+│   │   │           ├───deposit
+│   │   │           └───withdraw
+│   │   ├───error404
+│   │   ├───login
+│   │   └───register
+│   ├───interface
+│   ├───service
+│   │   ├───auth
+│   │   ├───chat
+│   │   ├───deposit
+│   │   │   └───guard
+│   │   ├───file
+│   │   ├───friend
+│   │   ├───guard
+│   │   ├───login
+│   │   ├───logout
+│   │   ├───overall
+│   │   ├───principal
+│   │   ├───profile
+│   │   │   └───guard
+│   │   ├───register
+│   │   ├───transaction
+│   │   ├───user
+│   │   ├───wallet
+│   │   │   └───guard
+│   │   └───withdraw
+│   │       └───guard
+│   └───shared
+└───assets
 ```
 
 ## Backend
@@ -71,8 +129,28 @@ ewalelt/
 - Spring Boot Java
 - MySQL database 
 
-### Project Structure
+### Folder Structure
 
 ```bash
-ewalelt/
+ewalelt/backend/src
+├───main
+│   ├───java
+│   │   └───ewallet
+│   │       └───backend
+│   │           ├───config
+│   │           ├───controller
+│   │           ├───dao
+│   │           ├───dto
+│   │           │   └───mapper
+│   │           ├───model
+│   │           └───service
+│   │               └───serviceimpl
+│   └───resources
+│       ├───mapper
+│       ├───static
+│       └───templates
+└───test
+    └───java
+        └───ewallet
+            └───backend
 ```
