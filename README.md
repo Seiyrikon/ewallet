@@ -11,11 +11,11 @@ Welcome to the E-Wallet repository! This project is developed using AngularJS wi
   - [Installation](#installation)
 - [Frontend](#frontend)
   - [Tech Stack](#tech-stack-frontend)
-  - [Folder Structure](#folder-structure-frontend)
+  - [Folder Structure Frontend](#folder-structure-frontend)
 - [Backend](#backend)
   - [Tech Stack](#tech-stack-backend)
-  - [Folder Structure](#project-structure-backend)
-- [Steps for running the E-Wallet Application](#steps-for-running-e-wallet-application)
+  - [Folder Structure Backend](#project-structure-backend)
+- [Run Application](#run-application)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -157,7 +157,7 @@ ewalelt/backend/src
             └───backend
 ```
 
-## Steps for running E-Wallet
+## Run Application
 - Clone the E-Wallet repository.
 - Open it on Visual Studio Code.
 - Run MySQL Workbench and connect to your server.
