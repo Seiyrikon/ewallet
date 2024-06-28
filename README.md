@@ -60,7 +60,7 @@ Before you begin, make sure you have the following tools installed:
 - Angular for UI components
 - Tailwind CSS
 
-### Folder Structure
+### Folder Structure Frontend
 
 ```bash
 ewalelt/frontend/src
@@ -131,7 +131,7 @@ ewalelt/frontend/src
 - Spring Boot Java
 - MySQL database 
 
-### Folder Structure
+### Folder Structure Backend
 
 ```bash
 ewalelt/backend/src
