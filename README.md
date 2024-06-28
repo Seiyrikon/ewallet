@@ -14,7 +14,7 @@ Welcome to the E-Wallet repository! This project is developed using AngularJS wi
   - [Folder Structure Frontend](#folder-structure-frontend)
 - [Backend](#backend)
   - [Tech Stack](#tech-stack-backend)
-  - [Folder Structure Backend](#project-structure-backend)
+  - [Folder Structure Backend](#folder-structure-backend)
 - [Run Application](#run-application)
 - [Contributing](#contributing)
 - [License](#license)
