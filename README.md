@@ -41,6 +41,7 @@ Before you begin, make sure you have the following tools installed:
 - npm (Node Package Manager)
 - Java Development Kit, preferably version 17 or higher (JDK 17)
 - MySQL Server
+- MySQL Workbench
 
 ### Installation
 
@@ -154,3 +155,13 @@ ewalelt/backend/src
         └───ewallet
             └───backend
 ```
+
+## Steps for running E-Wallet
+- Clone the E-Wallet repository.
+- Open it on Visual Studio Code.
+- Run MySQL Workbench and connect to your server.
+- Run the MySQL script located on database folder.
+- Go back to Visual Studio Code then run the backend system (Find BackendApplication.java file then click run).
+- Go to the file path of ewallet/frontend/.
+- Run npm install.
+- Run the frontend system by typing npm run start.
